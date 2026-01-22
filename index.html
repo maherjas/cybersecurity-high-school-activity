@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cyber Security: Password & Social Engineering Activity</title>
+    <title>Cyber Security: DeepFake, Password & Social Engineering</title>
     <style>
         :root {
             --primary-blue: #0066cc;
@@ -11,10 +11,14 @@
             --accent-green: #00cc66;
             --warning-red: #ff3366;
             --warning-yellow: #ffcc00;
+            --deepfake-purple: #9b51e0;
             --dark-bg: #1a1a2e;
             --light-bg: #f0f8ff;
             --text-dark: #333;
             --text-light: #fff;
+            --badge-gold: #ffd700;
+            --badge-silver: #c0c0c0;
+            --badge-bronze: #cd7f32;
         }
         
         * {
@@ -48,7 +52,7 @@
             padding: 30px 0;
             border-bottom: 3px solid var(--primary-blue);
             margin-bottom: 30px;
-            background: linear-gradient(90deg, var(--primary-blue), var(--secondary-blue));
+            background: linear-gradient(90deg, var(--primary-blue), var(--deepfake-purple));
             border-radius: 15px 15px 0 0;
             color: white;
         }
@@ -114,6 +118,14 @@
             box-shadow: 0 6px 12px rgba(0,102,204,0.3);
         }
         
+        .tab-btn.deepfake-btn.active {
+            background-color: var(--deepfake-purple);
+        }
+        
+        .tab-btn.deepfake-btn:hover {
+            background-color: #8a2be2;
+        }
+        
         .tab-btn i {
             font-size: 1.3rem;
         }
@@ -157,6 +169,44 @@
             margin-right: auto;
         }
         
+        .activity-icons {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+        
+        .activity-icon {
+            text-align: center;
+            max-width: 200px;
+            transition: transform 0.3s;
+        }
+        
+        .activity-icon:hover {
+            transform: scale(1.1);
+        }
+        
+        .icon-circle {
+            width: 100px;
+            height: 100px;
+            background-color: #e6f2ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 3rem;
+            color: var(--primary-blue);
+            border: 3px solid var(--primary-blue);
+        }
+        
+        .deepfake-icon .icon-circle {
+            background-color: #f0e6ff;
+            color: var(--deepfake-purple);
+            border-color: var(--deepfake-purple);
+        }
+        
         .start-btn {
             padding: 15px 40px;
             background-color: var(--accent-green);
@@ -176,6 +226,13 @@
             box-shadow: 0 10px 20px rgba(0,204,102,0.3);
         }
         
+        .start-btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
         /* Activity Cards */
         .activity-card {
             background-color: white;
@@ -187,9 +244,17 @@
             transition: all 0.3s;
         }
         
+        .activity-card.deepfake-card {
+            border-color: #e6e6ff;
+        }
+        
         .activity-card:hover {
             border-color: var(--secondary-blue);
             box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+        }
+        
+        .deepfake-card:hover {
+            border-color: var(--deepfake-purple);
         }
         
         .card-header {
@@ -199,6 +264,10 @@
             margin-bottom: 25px;
             padding-bottom: 15px;
             border-bottom: 2px solid #e6f2ff;
+        }
+        
+        .deepfake-card .card-header {
+            border-bottom-color: #e6e6ff;
         }
         
         .card-icon {
@@ -213,9 +282,18 @@
             color: var(--primary-blue);
         }
         
+        .deepfake-card .card-icon {
+            background-color: #f0e6ff;
+            color: var(--deepfake-purple);
+        }
+        
         .card-title {
             font-size: 1.8rem;
             color: var(--primary-blue);
+        }
+        
+        .deepfake-card .card-title {
+            color: var(--deepfake-purple);
         }
         
         .scenario-box {
@@ -226,10 +304,19 @@
             border-left: 5px solid var(--primary-blue);
         }
         
+        .deepfake-card .scenario-box {
+            background-color: #f9f9ff;
+            border-left-color: var(--deepfake-purple);
+        }
+        
         .scenario-title {
             color: var(--primary-blue);
             margin-bottom: 15px;
             font-size: 1.4rem;
+        }
+        
+        .deepfake-card .scenario-title {
+            color: var(--deepfake-purple);
         }
         
         .scenario-text {
@@ -237,67 +324,208 @@
             margin-bottom: 20px;
         }
         
-        /* Password Visuals */
-        .password-visual {
+        /* DeepFake Interactive Visual */
+        .deepfake-visual {
+            background-color: #f9f9ff;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 2px solid #e6e6ff;
+            text-align: center;
+        }
+        
+        .face-comparison {
             display: flex;
-            align-items: center;
             justify-content: center;
-            gap: 30px;
+            gap: 40px;
             margin: 30px 0;
             flex-wrap: wrap;
         }
         
-        .password-box {
+        .face-box {
+            width: 200px;
             padding: 20px;
             border-radius: 10px;
             text-align: center;
-            min-width: 200px;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             transition: all 0.3s;
-            cursor: pointer;
-            border: 2px solid transparent;
         }
         
-        .password-box:hover {
-            transform: translateY(-5px);
+        .face-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
         }
         
-        .password-weak {
-            background-color: rgba(255, 51, 102, 0.1);
-            border-color: var(--warning-red);
+        .face-image {
+            width: 150px;
+            height: 150px;
+            background-color: #e6e6ff;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--deepfake-purple);
+            border: 3px solid #d0d0ff;
         }
         
-        .password-medium {
-            background-color: rgba(255, 204, 0, 0.1);
-            border-color: var(--warning-yellow);
-        }
-        
-        .password-strong {
-            background-color: rgba(0, 204, 102, 0.1);
-            border-color: var(--accent-green);
-        }
-        
-        .password-text {
-            font-family: monospace;
-            font-size: 1.5rem;
-            margin: 15px 0;
+        .face-label {
             font-weight: bold;
+            margin-top: 10px;
+            color: var(--deepfake-purple);
         }
         
-        .password-rating {
+        .vs-text {
+            display: flex;
+            align-items: center;
+            font-size: 2rem;
             font-weight: bold;
-            font-size: 1.2rem;
-        }
-        
-        .password-weak .password-rating {
             color: var(--warning-red);
         }
         
-        .password-medium .password-rating {
-            color: var(--warning-yellow);
+        /* DeepFake Detection Game */
+        .detection-game {
+            background-color: #f0f8ff;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px dashed var(--deepfake-purple);
         }
         
-        .password-strong .password-rating {
+        .video-clips {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .video-clip {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid #e6e6ff;
+        }
+        
+        .video-clip:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        
+        .video-clip.selected {
+            border-color: var(--accent-green);
+            background-color: rgba(0, 204, 102, 0.1);
+        }
+        
+        .video-clip.fake {
+            border-color: var(--warning-red);
+        }
+        
+        .video-clip.real {
+            border-color: var(--accent-green);
+        }
+        
+        .video-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: var(--deepfake-purple);
+        }
+        
+        .video-clip.fake .video-icon {
+            color: var(--warning-red);
+        }
+        
+        .video-clip.real .video-icon {
             color: var(--accent-green);
+        }
+        
+        .clip-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .clip-description {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        /* Detection Indicators */
+        .detection-indicators {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .indicator {
+            background-color: white;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 5px solid var(--deepfake-purple);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .indicator:hover {
+            transform: translateX(10px);
+            background-color: #f9f9ff;
+        }
+        
+        .indicator.selected {
+            background-color: rgba(155, 81, 224, 0.1);
+            border-left-width: 8px;
+        }
+        
+        .indicator-title {
+            font-weight: bold;
+            color: var(--deepfake-purple);
+            margin-bottom: 5px;
+        }
+        
+        /* Audio DeepFake Demo */
+        .audio-demo {
+            background-color: #f9f9ff;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 2px solid #e6e6ff;
+        }
+        
+        .audio-player {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .play-btn {
+            padding: 15px 30px;
+            background-color: var(--deepfake-purple);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+        
+        .play-btn:hover {
+            background-color: #8a2be2;
+            transform: scale(1.05);
+        }
+        
+        .audio-label {
+            font-weight: bold;
+            color: var(--deepfake-purple);
         }
         
         /* Questions */
@@ -310,6 +538,10 @@
             margin-bottom: 20px;
             color: var(--primary-blue);
             font-weight: bold;
+        }
+        
+        .deepfake-card .question {
+            color: var(--deepfake-purple);
         }
         
         .options {
@@ -329,9 +561,18 @@
             text-align: left;
         }
         
+        .deepfake-card .option {
+            background-color: #f9f9ff;
+            border-color: #e6e6ff;
+        }
+        
         .option:hover {
             background-color: #e6f2ff;
             transform: translateX(10px);
+        }
+        
+        .deepfake-card .option:hover {
+            background-color: #f0e6ff;
         }
         
         .option.correct {
@@ -350,55 +591,6 @@
             border-width: 3px;
         }
         
-        /* Social Engineering Visual */
-        .social-scenario {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            margin: 30px 0;
-            padding: 25px;
-            background-color: #f9fdff;
-            border-radius: 15px;
-            border: 2px solid #cce6ff;
-            flex-wrap: wrap;
-        }
-        
-        .call-visual {
-            flex: 1;
-            min-width: 300px;
-        }
-        
-        .call-bubble {
-            background-color: #e6f2ff;
-            padding: 20px;
-            border-radius: 20px;
-            margin-bottom: 20px;
-            position: relative;
-            border: 2px solid var(--secondary-blue);
-        }
-        
-        .call-bubble::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 30px;
-            width: 0;
-            height: 0;
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-            border-top: 10px solid #e6f2ff;
-        }
-        
-        .caller {
-            font-weight: bold;
-            color: var(--primary-blue);
-            margin-bottom: 10px;
-        }
-        
-        .message-text {
-            font-size: 1.1rem;
-        }
-        
         /* Feedback Section */
         .feedback {
             background-color: #f9fdff;
@@ -407,6 +599,11 @@
             margin-top: 30px;
             border-left: 5px solid var(--accent-green);
             display: none;
+        }
+        
+        .deepfake-card .feedback {
+            background-color: #f9f9ff;
+            border-left-color: var(--deepfake-purple);
         }
         
         .feedback.show {
@@ -426,6 +623,10 @@
             display: flex;
             align-items: center;
             gap: 10px;
+        }
+        
+        .deepfake-card .feedback-title {
+            color: var(--deepfake-purple);
         }
         
         .feedback-tip {
@@ -465,6 +666,7 @@
             margin-bottom: 10px;
         }
         
+        /* Results Section */
         .results-container {
             text-align: center;
             padding: 40px;
@@ -482,25 +684,170 @@
             margin: 30px 0;
         }
         
+        /* Badges Section */
+        .badges-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+        
+        .badge {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: linear-gradient(145deg, #ffffff, #e6e6e6);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            opacity: 0.3;
+            transition: all 0.5s;
+        }
+        
+        .badge.unlocked {
+            opacity: 1;
+            transform: scale(1.1);
+            animation: badgeUnlock 1s ease;
+        }
+        
+        @keyframes badgeUnlock {
+            0% { transform: scale(0.5); opacity: 0; }
+            70% { transform: scale(1.2); }
+            100% { transform: scale(1.1); opacity: 1; }
+        }
+        
+        .badge i {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+        
+        .badge-text {
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        
+        .badge-gold {
+            border: 5px solid var(--badge-gold);
+            background: linear-gradient(145deg, #fff9c4, #ffeb3b);
+        }
+        
+        .badge-gold i {
+            color: var(--badge-gold);
+        }
+        
+        .badge-silver {
+            border: 5px solid var(--badge-silver);
+            background: linear-gradient(145deg, #f5f5f5, #bdbdbd);
+        }
+        
+        .badge-silver i {
+            color: var(--badge-silver);
+        }
+        
+        .badge-bronze {
+            border: 5px solid var(--badge-bronze);
+            background: linear-gradient(145deg, #ffcc80, #ff9800);
+        }
+        
+        .badge-bronze i {
+            color: var(--badge-bronze);
+        }
+        
+        .badge-blue {
+            border: 5px solid var(--primary-blue);
+            background: linear-gradient(145deg, #bbdefb, #2196f3);
+        }
+        
+        .badge-blue i {
+            color: var(--primary-blue);
+        }
+        
+        .badge-green {
+            border: 5px solid var(--accent-green);
+            background: linear-gradient(145deg, #c8e6c9, #4caf50);
+        }
+        
+        .badge-green i {
+            color: var(--accent-green);
+        }
+        
+        .badge-purple {
+            border: 5px solid var(--deepfake-purple);
+            background: linear-gradient(145deg, #e1bee7, #9c27b0);
+        }
+        
+        .badge-purple i {
+            color: var(--deepfake-purple);
+        }
+        
+        /* Certificate */
         .certificate {
             background-color: white;
             padding: 40px;
-            border: 10px solid var(--primary-blue);
+            border: 15px solid var(--primary-blue);
             border-radius: 20px;
-            max-width: 600px;
+            max-width: 700px;
             margin: 40px auto;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            position: relative;
+            background-image: linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(255,255,255,0.9)), 
+                              url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path fill="%230066cc" opacity="0.1" d="M20,20 L80,20 L80,80 L20,80 Z M10,10 L90,10 L90,90 L10,90 Z"/></svg>');
+        }
+        
+        .certificate::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 5px solid var(--accent-green);
+            border-radius: 30px;
+            pointer-events: none;
         }
         
         .certificate-title {
             color: var(--primary-blue);
             font-size: 2.5rem;
             margin-bottom: 30px;
+            text-align: center;
         }
         
         .certificate-text {
             font-size: 1.3rem;
             margin: 20px 0;
+            text-align: center;
+        }
+        
+        .certificate-achievement {
+            font-size: 1.5rem;
+            color: var(--primary-blue);
+            font-weight: bold;
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .certificate-badges {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .certificate-badge {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
         }
         
         .download-btn {
@@ -514,6 +861,11 @@
             cursor: pointer;
             margin-top: 30px;
             transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 30px auto;
         }
         
         .download-btn:hover {
@@ -543,6 +895,48 @@
             margin-bottom: 15px;
         }
         
+        /* Celebration Animation */
+        .confetti {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 20px;
+            background: var(--primary-blue);
+            top: -20px;
+            opacity: 0;
+        }
+        
+        .celebration-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            z-index: 1001;
+            text-align: center;
+            display: none;
+            animation: popIn 0.5s;
+            border: 5px solid var(--accent-green);
+        }
+        
+        @keyframes popIn {
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+        
         /* Responsive Design */
         @media (max-width: 768px) {
             .container {
@@ -558,21 +952,40 @@
                 font-size: 1rem;
             }
             
-            .password-visual {
+            .activity-icons {
+                gap: 20px;
+            }
+            
+            .icon-circle {
+                width: 80px;
+                height: 80px;
+                font-size: 2.5rem;
+            }
+            
+            .face-comparison {
                 flex-direction: column;
-                align-items: stretch;
+                align-items: center;
             }
             
-            .password-box {
-                min-width: auto;
+            .vs-text {
+                margin: 20px 0;
             }
             
-            .social-scenario {
-                flex-direction: column;
+            .badge {
+                width: 120px;
+                height: 120px;
             }
             
-            .call-visual {
-                min-width: auto;
+            .badge i {
+                font-size: 2.5rem;
+            }
+            
+            .certificate {
+                padding: 20px;
+            }
+            
+            .certificate-title {
+                font-size: 2rem;
             }
         }
     </style>
@@ -583,8 +996,8 @@
         <!-- Header -->
         <header>
             <h1>Cyber Security Workshop</h1>
-            <p class="subtitle">Interactive Password & Social Engineering Activities for High School Students</p>
-            <div class="grade-level">Grades 10-12 • 30-45 minute activity</div>
+            <p class="subtitle">Interactive Password, Social Engineering & DeepFake Activities</p>
+            <div class="grade-level">Grades 10-12 • 40-50 minute activity</div>
         </header>
         
         <!-- Navigation Tabs -->
@@ -598,6 +1011,9 @@
             <button class="tab-btn" data-tab="social">
                 <i class="fas fa-user-secret"></i> Social Engineering
             </button>
+            <button class="tab-btn deepfake-btn" data-tab="deepfake">
+                <i class="fas fa-robot"></i> DeepFake Detection
+            </button>
             <button class="tab-btn" data-tab="results">
                 <i class="fas fa-trophy"></i> Results
             </button>
@@ -607,27 +1023,35 @@
         <section class="content-section active" id="intro">
             <div class="intro">
                 <h2>Welcome to Cybersecurity!</h2>
-                <p>In this interactive workshop, you'll learn how to protect yourself online by understanding two critical security areas:</p>
+                <p>In this interactive workshop, you'll learn how to protect yourself online by understanding three critical security areas:</p>
                 
-                <div style="display: flex; gap: 30px; margin: 30px 0; flex-wrap: wrap; justify-content: center;">
-                    <div style="text-align: center; max-width: 300px;">
-                        <div style="font-size: 3rem; color: var(--primary-blue); margin-bottom: 15px;">
+                <div class="activity-icons">
+                    <div class="activity-icon">
+                        <div class="icon-circle">
                             <i class="fas fa-key"></i>
                         </div>
-                        <h3 style="color: var(--primary-blue); margin-bottom: 10px;">Password Security</h3>
-                        <p>Learn to create strong passwords and protect your accounts from hackers.</p>
+                        <h3>Password Security</h3>
+                        <p>Create strong passwords and protect your accounts</p>
                     </div>
                     
-                    <div style="text-align: center; max-width: 300px;">
-                        <div style="font-size: 3rem; color: var(--primary-blue); margin-bottom: 15px;">
+                    <div class="activity-icon">
+                        <div class="icon-circle">
                             <i class="fas fa-user-secret"></i>
                         </div>
-                        <h3 style="color: var(--primary-blue); margin-bottom: 10px;">Social Engineering</h3>
-                        <p>Learn to recognize and avoid manipulation tactics used by scammers.</p>
+                        <h3>Social Engineering</h3>
+                        <p>Recognize and avoid manipulation tactics</p>
+                    </div>
+                    
+                    <div class="activity-icon deepfake-icon">
+                        <div class="icon-circle">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3>DeepFake Detection</h3>
+                        <p>Spot AI-generated fake videos & audio</p>
                     </div>
                 </div>
                 
-                <p><strong>How it works:</strong> Complete both activities by answering questions and making security choices. Your score will be tracked, and you'll earn a certificate at the end!</p>
+                <p><strong>How it works:</strong> Complete all three activities by answering questions and making security choices. Your score will be tracked, and you'll earn badges and a certificate at the end!</p>
                 
                 <button class="start-btn" id="start-activity">
                     <i class="fas fa-play-circle"></i> Start Activity
@@ -636,9 +1060,9 @@
             
             <div class="teacher-notes">
                 <h3><i class="fas fa-chalkboard-teacher"></i> Teacher Notes</h3>
-                <p><strong>Learning Objectives:</strong> Students will be able to identify weak passwords, create strong passwords, recognize social engineering tactics, and apply security best practices.</p>
-                <p><strong>Time:</strong> 30-45 minutes • <strong>Materials:</strong> Computer with internet access</p>
-                <p><strong>Discussion Points:</strong> After the activity, discuss real-world examples of password breaches and social engineering scams.</p>
+                <p><strong>Learning Objectives:</strong> Students will identify weak passwords, create strong passwords, recognize social engineering tactics, understand deepfake technology, and apply security best practices.</p>
+                <p><strong>Time:</strong> 40-50 minutes • <strong>Materials:</strong> Computer with internet access</p>
+                <p><strong>Discussion Points:</strong> After the activity, discuss real-world examples of deepfake scams and how AI is changing cybersecurity.</p>
             </div>
         </section>
         
@@ -655,26 +1079,6 @@
                 <div class="scenario-box">
                     <h3 class="scenario-title">The Problem: Alex's Password Habits</h3>
                     <p class="scenario-text">Alex is a high school student who uses the same simple password for everything: <strong>"alex2023"</strong>. He uses it for his school account, email, social media, and gaming accounts. Last week, his favorite game was hacked, and now his other accounts are being accessed by someone else!</p>
-                </div>
-                
-                <div class="password-visual">
-                    <div class="password-box password-weak">
-                        <div class="password-text">alex2023</div>
-                        <div class="password-rating">WEAK</div>
-                        <div style="margin-top: 10px; font-size: 0.9rem;">Time to crack: <strong>2 seconds</strong></div>
-                    </div>
-                    
-                    <div class="password-box password-medium">
-                        <div class="password-text">AlexPassword!</div>
-                        <div class="password-rating">MEDIUM</div>
-                        <div style="margin-top: 10px; font-size: 0.9rem;">Time to crack: <strong>2 weeks</strong></div>
-                    </div>
-                    
-                    <div class="password-box password-strong">
-                        <div class="password-text">BlueDragon$EatsPizza2023!</div>
-                        <div class="password-rating">STRONG</div>
-                        <div style="margin-top: 10px; font-size: 0.9rem;">Time to crack: <strong>Centuries</strong></div>
-                    </div>
                 </div>
                 
                 <div class="question-container">
@@ -716,11 +1120,6 @@
                         <li>Consider using a <strong>password manager</strong> like Bitwarden (free) or LastPass</li>
                         <li>Enable <strong>Two-Factor Authentication (2FA)</strong> whenever possible</li>
                     </ul>
-                    
-                    <div class="feedback-tip">
-                        <div class="tip-title"><i class="fas fa-lightbulb"></i> PRO TIP: Create Memorable Passphrases</div>
-                        <p>Instead of "password123", try something like: <strong>"MyCatLoves2EatTunaFish!"</strong> or <strong>"SummerVacation2023@TheBeach"</strong>. These are long, include different character types, and are easy to remember!</p>
-                    </div>
                 </div>
                 
                 <div style="text-align: center; margin-top: 30px;">
@@ -744,44 +1143,6 @@
                 <div class="scenario-box">
                     <h3 class="scenario-title">Scenario: The Urgent Message</h3>
                     <p class="scenario-text">You receive a direct message on Instagram from a friend's account that was recently hacked. The message seems urgent and asks for help. How do you respond?</p>
-                </div>
-                
-                <div class="social-scenario">
-                    <div class="call-visual">
-                        <div class="call-bubble">
-                            <div class="caller">Message from @jessica_smith (your friend)</div>
-                            <div class="message-text">"Hey! I'm in a really bad situation. I lost my phone and I'm locked out of my account. Can you help me by receiving a verification code and sending it to me? I'll send it to your number."</div>
-                        </div>
-                        
-                        <div style="text-align: center; margin-top: 30px;">
-                            <div style="font-size: 2rem; color: var(--primary-blue);">
-                                <i class="fas fa-mobile-alt"></i>
-                            </div>
-                            <p style="margin-top: 10px; font-weight: bold;">What would you do?</p>
-                        </div>
-                    </div>
-                    
-                    <div style="flex: 1; min-width: 300px;">
-                        <h3 style="color: var(--primary-blue); margin-bottom: 20px;">Red Flags to Look For:</h3>
-                        <ul style="margin-left: 20px; font-size: 1.1rem;">
-                            <li style="margin-bottom: 15px; padding-left: 10px;">
-                                <i class="fas fa-exclamation-triangle" style="color: var(--warning-red);"></i>
-                                <strong>Urgency:</strong> Creates panic so you act without thinking
-                            </li>
-                            <li style="margin-bottom: 15px; padding-left: 10px;">
-                                <i class="fas fa-exclamation-triangle" style="color: var(--warning-red);"></i>
-                                <strong>Asking for verification codes:</strong> These are meant for YOU only
-                            </li>
-                            <li style="margin-bottom: 15px; padding-left: 10px;">
-                                <i class="fas fa-exclamation-triangle" style="color: var(--warning-red);"></i>
-                                <strong>Unusual requests:</strong> Friends shouldn't ask for codes/passwords
-                            </li>
-                            <li style="margin-bottom: 15px; padding-left: 10px;">
-                                <i class="fas fa-exclamation-triangle" style="color: var(--warning-red);"></i>
-                                <strong>Emotional manipulation:</strong> Uses friendship to pressure you
-                            </li>
-                        </ul>
-                    </div>
                 </div>
                 
                 <div class="question-container">
@@ -823,16 +1184,187 @@
                         <li><strong>Be suspicious of urgency</strong> - scammers create panic to prevent thinking</li>
                         <li><strong>Protect your friends</strong> - if an account is hacked, let them know</li>
                     </ul>
+                </div>
+                
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="start-btn" id="next-to-deepfake">
+                        Continue to DeepFake Detection <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- DeepFake Activity -->
+        <section class="content-section" id="deepfake">
+            <div class="activity-card deepfake-card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h2 class="card-title">DeepFake Detection Challenge</h2>
+                </div>
+                
+                <div class="scenario-box">
+                    <h3 class="scenario-title">What are DeepFakes?</h3>
+                    <p class="scenario-text">DeepFakes are AI-generated videos, images, or audio that make it look like someone is saying or doing something they never actually did. They're created using artificial intelligence and can be very convincing!</p>
+                    <p><strong>Real Example:</strong> In 2023, a fake video of a celebrity endorsing a scam cryptocurrency made people lose millions of dollars!</p>
+                </div>
+                
+                <!-- Interactive Face Comparison -->
+                <div class="deepfake-visual">
+                    <h3 style="color: var(--deepfake-purple); margin-bottom: 20px;"><i class="fas fa-eye"></i> Can You Spot the DeepFake?</h3>
+                    
+                    <div class="face-comparison">
+                        <div class="face-box">
+                            <div class="face-image">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="face-label">Real Video</div>
+                            <div style="margin-top: 10px; font-size: 0.9rem;">
+                                <i class="fas fa-check-circle" style="color: var(--accent-green);"></i>
+                                Natural blinking<br>
+                                <i class="fas fa-check-circle" style="color: var(--accent-green);"></i>
+                                Syncs with audio<br>
+                                <i class="fas fa-check-circle" style="color: var(--accent-green);"></i>
+                                Consistent lighting
+                            </div>
+                        </div>
+                        
+                        <div class="vs-text">VS</div>
+                        
+                        <div class="face-box">
+                            <div class="face-image">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="face-label">DeepFake</div>
+                            <div style="margin-top: 10px; font-size: 0.9rem;">
+                                <i class="fas fa-exclamation-triangle" style="color: var(--warning-red);"></i>
+                                Strange eye movements<br>
+                                <i class="fas fa-exclamation-triangle" style="color: var(--warning-red);"></i>
+                                Audio mismatch<br>
+                                <i class="fas fa-exclamation-triangle" style="color: var(--warning-red);"></i>
+                                Lighting inconsistencies
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p style="margin-top: 20px; font-style: italic;">DeepFakes are getting better, but they still have subtle flaws that careful observers can spot!</p>
+                </div>
+                
+                <!-- DeepFake Detection Game -->
+                <div class="detection-game">
+                    <h3 style="color: var(--deepfake-purple); margin-bottom: 20px;"><i class="fas fa-gamepad"></i> DeepFake Detection Game</h3>
+                    <p>Below are descriptions of video clips. Which ones are most likely to be DeepFakes?</p>
+                    
+                    <div class="video-clips">
+                        <div class="video-clip" data-fake="true">
+                            <div class="video-icon">
+                                <i class="fas fa-video"></i>
+                            </div>
+                            <div class="clip-title">Celebrity Endorsement</div>
+                            <div class="clip-description">A famous actor promotes a cryptocurrency you've never heard of</div>
+                        </div>
+                        
+                        <div class="video-clip" data-fake="false">
+                            <div class="video-icon">
+                                <i class="fas fa-video"></i>
+                            </div>
+                            <div class="clip-title">News Interview</div>
+                            <div class="clip-description">A politician giving an interview on a major news network</div>
+                        </div>
+                        
+                        <div class="video-clip" data-fake="true">
+                            <div class="video-icon">
+                                <i class="fas fa-video"></i>
+                            </div>
+                            <div class="clip-title">Friend's Strange Request</div>
+                            <div class="clip-description">Your friend in a video asking for money, but their voice sounds odd</div>
+                        </div>
+                        
+                        <div class="video-clip" data-fake="false">
+                            <div class="video-icon">
+                                <i class="fas fa-video"></i>
+                            </div>
+                            <div class="clip-title">School Announcement</div>
+                            <div class="clip-description">Your principal announcing a school event on the official website</div>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 20px;">
+                        <button class="start-btn" id="check-deepfake-selection" style="background-color: var(--deepfake-purple);">
+                            <i class="fas fa-search"></i> Check My Selection
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Audio DeepFake Demo -->
+                <div class="audio-demo">
+                    <h3 style="color: var(--deepfake-purple); margin-bottom: 20px;"><i class="fas fa-volume-up"></i> Audio DeepFakes - The Invisible Threat</h3>
+                    <p>DeepFakes aren't just videos! AI can clone anyone's voice with just a few seconds of audio.</p>
+                    
+                    <div style="margin: 25px 0; background-color: white; padding: 20px; border-radius: 10px; border: 2px solid #e6e6ff;">
+                        <p><strong>Scenario:</strong> You get a phone call that sounds exactly like your mom, asking for money to be sent immediately to a strange account.</p>
+                        <p style="margin-top: 10px; color: var(--warning-red);"><i class="fas fa-exclamation-triangle"></i> This could be an audio DeepFake!</p>
+                    </div>
+                    
+                    <div class="audio-player">
+                        <button class="play-btn" id="play-real-audio">
+                            <i class="fas fa-play"></i> Play Real Voice
+                        </button>
+                        <span class="audio-label">VS</span>
+                        <button class="play-btn" id="play-fake-audio">
+                            <i class="fas fa-play"></i> Play AI Voice Clone
+                        </button>
+                    </div>
+                    
+                    <p style="margin-top: 20px; font-size: 0.9rem; text-align: center;"><em>Note: These are simulated examples. Real AI voice cloning can be almost indistinguishable!</em></p>
+                </div>
+                
+                <!-- DeepFake Questions -->
+                <div class="question-container">
+                    <div class="question">1. What is the MAIN danger of DeepFake technology?</div>
+                    <div class="options">
+                        <div class="option" data-correct="false">It makes movies look more realistic</div>
+                        <div class="option" data-correct="true">It can be used to spread misinformation and scam people</div>
+                        <div class="option" data-correct="false">It uses too much computer power</div>
+                        <div class="option" data-correct="false">It makes social media more entertaining</div>
+                    </div>
+                </div>
+                
+                <div class="question-container">
+                    <div class="question">2. Which of these is a red flag for spotting DeepFake videos?</div>
+                    <div class="options">
+                        <div class="option" data-correct="false">The person is wearing colorful clothing</div>
+                        <div class="option" data-correct="true">The mouth movements don't perfectly match the words</div>
+                        <div class="option" data-correct="false">The video is in high definition</div>
+                        <div class="option" data-correct="false">The person is blinking normally</div>
+                    </div>
+                </div>
+                
+                <div class="question-container">
+                    <div class="question">3. What should you do if you see a suspicious video of a friend or family member asking for money?</div>
+                    <div class="options">
+                        <div class="option" data-correct="false">Send money immediately to help them</div>
+                        <div class="option" data-correct="true">Contact them directly through another method to verify</div>
+                        <div class="option" data-correct="false">Share the video to warn others</div>
+                        <div class="option" data-correct="false">Ignore it - videos can't be faked that well</div>
+                    </div>
+                </div>
+                
+                <div class="feedback" id="deepfake-feedback">
+                    <h3 class="feedback-title"><i class="fas fa-robot"></i> DeepFake Defense Tips</h3>
+                    <p><strong>How to Protect Yourself:</strong></p>
+                    <ul style="margin-left: 20px; margin-top: 10px; margin-bottom: 15px;">
+                        <li><strong>Verify through multiple channels</strong> - call, text, or meet in person</li>
+                        <li><strong>Look for inconsistencies</strong> - strange blinking, lighting, or audio sync</li>
+                        <li><strong>Check the source</strong> - is it from a trusted, official account?</li>
+                        <li><strong>Be skeptical of urgent requests</strong> especially involving money</li>
+                        <li><strong>Use fact-checking websites</strong> for viral videos</li>
+                    </ul>
                     
                     <div class="feedback-tip">
-                        <div class="tip-title"><i class="fas fa-lightbulb"></i> REAL-WORLD EXAMPLE: Instagram "Friend in Need" Scam</div>
-                        <p>This is a real scam happening right now! Hackers take over accounts, then message the person's friends asking for verification codes. If you send the code, the hacker can:</p>
-                        <ol style="margin-left: 20px; margin-top: 10px;">
-                            <li>Take over YOUR account</li>
-                            <li>Access your friend's private information</li>
-                            <li>Message more people from both accounts</li>
-                            <li>Steal personal data or money</li>
-                        </ol>
+                        <div class="tip-title"><i class="fas fa-lightbulb"></i> FUN FACT: DeepFakes in Pop Culture</div>
+                        <p>DeepFakes aren't all bad! They're used in movies to de-age actors (like in "The Irishman") and to bring historical figures to life in documentaries. The key is using this technology ethically and being aware of its potential for harm.</p>
                     </div>
                 </div>
                 
@@ -851,48 +1383,92 @@
                 <p style="font-size: 1.3rem; margin-bottom: 30px;">You've learned essential cybersecurity skills to protect yourself online.</p>
                 
                 <div class="progress-text">Your Cybersecurity Score</div>
-                <div class="score-display" id="final-score">0/6</div>
+                <div class="score-display" id="final-score">0/9</div>
                 
                 <div class="progress-bar">
                     <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                
+                <h3 style="color: var(--primary-blue); margin: 40px 0 20px;">🏆 Badges Earned 🏆</h3>
+                
+                <div class="badges-container">
+                    <div class="badge badge-gold" id="badge-perfect">
+                        <i class="fas fa-trophy"></i>
+                        <div class="badge-text">Perfect Score</div>
+                    </div>
+                    
+                    <div class="badge badge-silver" id="badge-password">
+                        <i class="fas fa-key"></i>
+                        <div class="badge-text">Password Pro</div>
+                    </div>
+                    
+                    <div class="badge badge-bronze" id="badge-social">
+                        <i class="fas fa-user-secret"></i>
+                        <div class="badge-text">Scam Spotter</div>
+                    </div>
+                    
+                    <div class="badge badge-purple" id="badge-deepfake">
+                        <i class="fas fa-robot"></i>
+                        <div class="badge-text">DeepFake Detective</div>
+                    </div>
+                    
+                    <div class="badge badge-blue" id="badge-completion">
+                        <i class="fas fa-shield-alt"></i>
+                        <div class="badge-text">Cybersecurity Master</div>
+                    </div>
                 </div>
                 
                 <div style="margin: 40px 0; font-size: 1.2rem;">
                     <p><strong>You now know how to:</strong></p>
                     <ul style="margin-left: 20px; margin-top: 15px;">
                         <li style="margin-bottom: 10px;"><i class="fas fa-check" style="color: var(--accent-green);"></i> Create strong, secure passwords</li>
-                        <li style="margin-bottom: 10px;"><i class="fas fa-check" style="color: var(--accent-green);"></i> Avoid password reuse across accounts</li>
                         <li style="margin-bottom: 10px;"><i class="fas fa-check" style="color: var(--accent-green);"></i> Recognize social engineering attacks</li>
+                        <li style="margin-bottom: 10px;"><i class="fas fa-check" style="color: var(--accent-green);"></i> Spot AI-generated DeepFake videos & audio</li>
                         <li style="margin-bottom: 10px;"><i class="fas fa-check" style="color: var(--accent-green);"></i> Protect yourself from online scams</li>
                     </ul>
                 </div>
                 
-                <div class="certificate">
-                    <h2 class="certificate-title">Certificate of Completion</h2>
+                <h3 style="color: var(--primary-blue); margin: 40px 0 20px;">🎓 Download Your Certificate 🎓</h3>
+                
+                <div class="certificate" id="certificate">
+                    <h2 class="certificate-title">Certificate of Cybersecurity Achievement</h2>
                     <p class="certificate-text">This certifies that</p>
-                    <h3 style="color: var(--primary-blue); font-size: 2rem; margin: 20px 0;">Cybersecurity Student</h3>
-                    <p class="certificate-text">has successfully completed the Password Security & Social Engineering Activity</p>
-                    <p class="certificate-text">and demonstrated knowledge of essential online safety practices.</p>
+                    <h3 style="color: var(--primary-blue); font-size: 2.5rem; margin: 20px 0; text-align: center;">Cybersecurity Student</h3>
+                    <p class="certificate-text">has successfully completed the Password Security, Social Engineering & DeepFake Detection Activity</p>
+                    <p class="certificate-text">and demonstrated knowledge of essential online safety practices in the age of AI.</p>
+                    
+                    <div class="certificate-achievement" id="cert-achievement">Score: 0/9</div>
+                    
+                    <div class="certificate-badges" id="cert-badges">
+                        <!-- Badges will be added here -->
+                    </div>
                     
                     <div style="display: flex; justify-content: space-around; margin: 40px 0; flex-wrap: wrap;">
                         <div style="text-align: center;">
-                            <div style="font-size: 1.5rem; font-weight: bold; color: var(--primary-blue);" id="cert-score">Score: 0/6</div>
-                            <div>Knowledge Assessment</div>
-                        </div>
-                        <div style="text-align: center;">
-                            <div style="font-size: 1.5rem; font-weight: bold; color: var(--primary-blue;" id="cert-date"></div>
+                            <div style="font-size: 1.2rem; font-weight: bold; color: var(--primary-blue);" id="cert-date"></div>
                             <div>Date Completed</div>
                         </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 1.2rem; font-weight: bold; color: var(--primary-blue);">High School Edition</div>
+                            <div>Grades 10-12</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 1.2rem; font-weight: bold; color: var(--deepfake-purple);">AI Security Certified</div>
+                            <div>DeepFake Aware</div>
+                        </div>
                     </div>
-                    
-                    <button class="download-btn" id="download-cert">
-                        <i class="fas fa-download"></i> Download Certificate
-                    </button>
                 </div>
+                
+                <button class="download-btn" id="download-cert">
+                    <i class="fas fa-download"></i> Download Certificate as Image
+                </button>
                 
                 <div style="margin-top: 40px;">
                     <button class="start-btn" id="restart-activity" style="background-color: var(--primary-blue);">
                         <i class="fas fa-redo"></i> Try Again
+                    </button>
+                    <button class="start-btn" id="share-results" style="background-color: var(--accent-green); margin-left: 20px;">
+                        <i class="fas fa-share-alt"></i> Share Results
                     </button>
                 </div>
             </div>
@@ -907,12 +1483,25 @@
             <div style="text-align: center; font-size: 0.9rem; margin-top: 5px;" id="floating-progress-text">0%</div>
         </div>
         
+        <!-- Confetti Celebration -->
+        <div class="confetti" id="confetti"></div>
+        
+        <!-- Celebration Message -->
+        <div class="celebration-message" id="celebration-message">
+            <h2 style="color: var(--primary-blue); margin-bottom: 15px;">🎉 Congratulations! 🎉</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 20px;">You've completed the cybersecurity activity!</p>
+            <p style="margin-bottom: 20px;">Check your results and download your certificate.</p>
+            <button class="start-btn" id="close-celebration" style="background-color: var(--primary-blue); padding: 10px 30px;">
+                Continue to Results
+            </button>
+        </div>
+        
         <!-- Footer -->
         <footer>
             <p>Cybersecurity Activity for High School Students • Grades 10-12</p>
             <p style="margin-top: 10px; font-size: 0.9rem;">Designed for classroom use • Free to share and modify</p>
             <p style="margin-top: 20px; color: var(--primary-blue); font-weight: bold;">
-                <i class="fas fa-shield-alt"></i> Stay Safe Online!
+                <i class="fas fa-shield-alt"></i> Stay Safe Online in the Age of AI!
             </p>
         </footer>
     </div>
@@ -922,9 +1511,13 @@
         // GLOBAL VARIABLES
         // ====================
         let userScore = 0;
-        let totalQuestions = 6; // 3 password + 3 social questions
+        let totalQuestions = 9; // 3 password + 3 social + 3 deepfake questions
         let passwordCompleted = false;
         let socialCompleted = false;
+        let deepfakeCompleted = false;
+        let startTime = null;
+        let completionTime = null;
+        let deepfakeSelectionCorrect = false;
         
         // ====================
         // INITIALIZATION
@@ -943,6 +1536,12 @@
             }
             
             setupEventListeners();
+            
+            // Initialize confetti
+            createConfetti();
+            
+            // Set up DeepFake game
+            setupDeepfakeGame();
         });
         
         // ====================
@@ -959,6 +1558,7 @@
             
             // Start activity button
             document.getElementById('start-activity').addEventListener('click', function() {
+                startTime = new Date();
                 navigateToTab('password');
             });
             
@@ -967,10 +1567,15 @@
                 navigateToTab('social');
             });
             
+            // Next to deepfake button
+            document.getElementById('next-to-deepfake').addEventListener('click', function() {
+                navigateToTab('deepfake');
+            });
+            
             // Show results button
             document.getElementById('show-results').addEventListener('click', function() {
                 calculateFinalScore();
-                navigateToTab('results');
+                showResults();
             });
             
             // Restart activity button
@@ -984,11 +1589,177 @@
                 downloadCertificate();
             });
             
+            // Share results button
+            document.getElementById('share-results').addEventListener('click', function() {
+                shareResults();
+            });
+            
+            // Close celebration message
+            document.getElementById('close-celebration').addEventListener('click', function() {
+                document.getElementById('celebration-message').style.display = 'none';
+            });
+            
             // Question option clicks
             document.querySelectorAll('.option').forEach(option => {
                 option.addEventListener('click', function() {
                     handleOptionClick(this);
                 });
+            });
+            
+            // Audio demo buttons
+            document.getElementById('play-real-audio').addEventListener('click', function() {
+                playAudioDemo('real');
+            });
+            
+            document.getElementById('play-fake-audio').addEventListener('click', function() {
+                playAudioDemo('fake');
+            });
+        }
+        
+        // ====================
+        // DEEPFAKE GAME SETUP
+        // ====================
+        function setupDeepfakeGame() {
+            const videoClips = document.querySelectorAll('.video-clip');
+            const checkButton = document.getElementById('check-deepfake-selection');
+            
+            // Video clip selection
+            videoClips.forEach(clip => {
+                clip.addEventListener('click', function() {
+                    // Toggle selection
+                    this.classList.toggle('selected');
+                    
+                    // Update button text based on selections
+                    const selectedCount = document.querySelectorAll('.video-clip.selected').length;
+                    if (selectedCount > 0) {
+                        checkButton.innerHTML = `<i class="fas fa-search"></i> Check My Selection (${selectedCount})`;
+                    } else {
+                        checkButton.innerHTML = `<i class="fas fa-search"></i> Check My Selection`;
+                    }
+                });
+            });
+            
+            // Check selection button
+            checkButton.addEventListener('click', function() {
+                checkDeepfakeSelection();
+            });
+        }
+        
+        function checkDeepfakeSelection() {
+            const videoClips = document.querySelectorAll('.video-clip');
+            let correctSelections = 0;
+            let totalSelections = 0;
+            
+            // Check each clip
+            videoClips.forEach(clip => {
+                const isSelected = clip.classList.contains('selected');
+                const isFake = clip.getAttribute('data-fake') === 'true';
+                
+                // Mark correct/incorrect
+                if (isSelected) {
+                    totalSelections++;
+                    if (isFake) {
+                        clip.classList.add('fake');
+                        clip.classList.remove('selected');
+                        correctSelections++;
+                    } else {
+                        clip.classList.add('real');
+                        clip.classList.remove('selected');
+                    }
+                }
+                
+                // Show all as fake/real for educational purposes
+                if (!isSelected) {
+                    if (isFake) {
+                        clip.classList.add('fake');
+                    } else {
+                        clip.classList.add('real');
+                    }
+                }
+            });
+            
+            // Calculate accuracy
+            if (totalSelections > 0) {
+                const accuracy = Math.round((correctSelections / totalSelections) * 100);
+                const message = `You identified ${correctSelections} out of ${totalSelections} DeepFakes correctly (${accuracy}% accuracy)!`;
+                
+                // Show feedback
+                alert(message);
+                
+                // Award bonus points for good accuracy
+                if (accuracy >= 75) {
+                    userScore += 1; // Bonus point
+                    localStorage.setItem('cyberActivityScore', userScore);
+                    updateProgress();
+                    alert("🎯 Great job! You've earned a bonus point for excellent DeepFake detection skills!");
+                }
+                
+                deepfakeSelectionCorrect = true;
+            } else {
+                alert("Please select at least one video clip before checking!");
+            }
+            
+            // Disable further selections
+            document.querySelectorAll('.video-clip').forEach(clip => {
+                clip.style.pointerEvents = 'none';
+            });
+            
+            document.getElementById('check-deepfake-selection').disabled = true;
+        }
+        
+        function playAudioDemo(type) {
+            // In a real implementation, this would play actual audio clips
+            // For this demo, we'll simulate with messages
+            
+            const messages = {
+                real: "Hi honey, it's mom. Just calling to see how you're doing. Call me back when you get a chance!",
+                fake: "Hi sweetie, it's mom. I'm in an emergency situation and need you to send $500 immediately to this account: 1234-5678. Don't tell anyone, just send it now!"
+            };
+            
+            const voices = {
+                real: "Normal, calm voice with natural pauses",
+                fake: "Slightly robotic, urgent tone, unnatural pacing"
+            };
+            
+            // Create a simple audio simulation
+            const demoDiv = document.createElement('div');
+            demoDiv.style.position = 'fixed';
+            demoDiv.style.top = '50%';
+            demoDiv.style.left = '50%';
+            demoDiv.style.transform = 'translate(-50%, -50%)';
+            demoDiv.style.backgroundColor = 'white';
+            demoDiv.style.padding = '30px';
+            demoDiv.style.borderRadius = '15px';
+            demoDiv.style.boxShadow = '0 10px 30px rgba(0,0,0,0.3)';
+            demoDiv.style.zIndex = '2000';
+            demoDiv.style.maxWidth = '500px';
+            demoDiv.style.textAlign = 'center';
+            
+            demoDiv.innerHTML = `
+                <h3 style="color: ${type === 'real' ? 'var(--accent-green)' : 'var(--warning-red)'}; margin-bottom: 20px;">
+                    <i class="fas fa-volume-up"></i> ${type === 'real' ? 'Real Voice' : 'AI-Generated Voice'}
+                </h3>
+                <div style="margin: 20px 0; padding: 20px; background-color: #f9f9f9; border-radius: 10px; font-style: italic;">
+                    "${messages[type]}"
+                </div>
+                <p><strong>Characteristics:</strong> ${voices[type]}</p>
+                <button id="close-audio-demo" style="margin-top: 20px; padding: 10px 30px; background-color: var(--primary-blue); color: white; border: none; border-radius: 25px; cursor: pointer;">
+                    Close
+                </button>
+            `;
+            
+            document.body.appendChild(demoDiv);
+            
+            // Add closing functionality
+            document.getElementById('close-audio-demo').addEventListener('click', function() {
+                document.body.removeChild(demoDiv);
+            });
+            
+            // Close on background click
+            demoDiv.addEventListener('click', function(e) {
+                if (e.target === demoDiv) {
+                    document.body.removeChild(demoDiv);
+                }
             });
         }
         
@@ -1012,7 +1783,7 @@
             
             // Show/hide floating progress bar
             const floatingProgress = document.getElementById('floating-progress');
-            if (tabId === 'password' || tabId === 'social') {
+            if (tabId === 'password' || tabId === 'social' || tabId === 'deepfake') {
                 floatingProgress.style.display = 'block';
             } else {
                 floatingProgress.style.display = 'none';
@@ -1091,11 +1862,12 @@
             
             // Update final score display
             document.getElementById('final-score').textContent = `${userScore}/${totalQuestions}`;
-            document.getElementById('cert-score').textContent = `Score: ${userScore}/${totalQuestions}`;
+            document.getElementById('cert-achievement').textContent = `Score: ${userScore}/${totalQuestions}`;
             
             // Show feedback when questions are answered
             const passwordQuestions = document.querySelectorAll('#password .option.selected');
             const socialQuestions = document.querySelectorAll('#social .option.selected');
+            const deepfakeQuestions = document.querySelectorAll('#deepfake .question-container .option.selected');
             
             if (passwordQuestions.length === 3 && !passwordCompleted) {
                 document.getElementById('password-feedback').classList.add('show');
@@ -1109,62 +1881,250 @@
                 document.getElementById('social-feedback').classList.add('show');
                 socialCompleted = true;
                 
+                // Enable the "Continue" button
+                document.getElementById('next-to-deepfake').disabled = false;
+            }
+            
+            if (deepfakeQuestions.length === 3 && !deepfakeCompleted) {
+                document.getElementById('deepfake-feedback').classList.add('show');
+                deepfakeCompleted = true;
+                
                 // Enable the "See Results" button
                 document.getElementById('show-results').disabled = false;
             }
         }
         
         // ====================
-        // ACTIVITY COMPLETION
+        // SHOW RESULTS
         // ====================
-        function checkActivityCompletion() {
-            const passwordQuestions = document.querySelectorAll('#password .option.selected');
-            const socialQuestions = document.querySelectorAll('#social .option.selected');
+        function showResults() {
+            // Calculate completion time
+            completionTime = new Date();
+            const timeDiff = completionTime - startTime;
+            const minutes = Math.floor(timeDiff / 60000);
             
-            if (passwordQuestions.length === 3 && socialQuestions.length === 3) {
-                // All questions answered
-                calculateFinalScore();
-            }
-        }
-        
-        function calculateFinalScore() {
-            // Score is already calculated in handleOptionClick
-            // Add celebration for perfect score
-            if (userScore === totalQuestions) {
+            // Update score display
+            document.getElementById('final-score').textContent = `${userScore}/${totalQuestions}`;
+            
+            // Show results section
+            document.querySelector('.results-container').classList.add('show');
+            
+            // Navigate to results tab
+            navigateToTab('results');
+            
+            // Award badges
+            awardBadges(minutes);
+            
+            // Update certificate with earned badges
+            updateCertificateBadges();
+            
+            // Show celebration for good scores
+            if (userScore >= 7) {
                 showCelebration();
             }
+            
+            // Save completion to localStorage
+            localStorage.setItem('cyberActivityCompleted', 'true');
+            localStorage.setItem('cyberActivityScore', userScore);
         }
         
+        // ====================
+        // AWARD BADGES
+        // ====================
+        function awardBadges(minutes) {
+            // All participants get completion badge
+            document.getElementById('badge-completion').classList.add('unlocked');
+            
+            // Password Pro badge (3/3 on password questions)
+            const passwordCorrect = document.querySelectorAll('#password .option.selected.correct').length;
+            if (passwordCorrect === 3) {
+                document.getElementById('badge-password').classList.add('unlocked');
+            }
+            
+            // Scam Spotter badge (3/3 on social questions)
+            const socialCorrect = document.querySelectorAll('#social .option.selected.correct').length;
+            if (socialCorrect === 3) {
+                document.getElementById('badge-social').classList.add('unlocked');
+            }
+            
+            // DeepFake Detective badge (3/3 on deepfake questions AND good detection game)
+            const deepfakeCorrect = document.querySelectorAll('#deepfake .question-container .option.selected.correct').length;
+            if (deepfakeCorrect === 3 && deepfakeSelectionCorrect) {
+                document.getElementById('badge-deepfake').classList.add('unlocked');
+            }
+            
+            // Perfect Score badge (9/9 overall)
+            if (userScore >= 9) {
+                document.getElementById('badge-perfect').classList.add('unlocked');
+            }
+            
+            // Quick Learner badge (completed in under 8 minutes)
+            if (minutes < 8) {
+                document.getElementById('badge-completion').innerHTML = `<i class="fas fa-shield-alt"></i><div class="badge-text">Quick Cybersecurity Master</div>`;
+            }
+        }
+        
+        // ====================
+        // UPDATE CERTIFICATE BADGES
+        // ====================
+        function updateCertificateBadges() {
+            const certBadgesContainer = document.getElementById('cert-badges');
+            certBadgesContainer.innerHTML = '';
+            
+            // Add unlocked badges to certificate
+            const badges = document.querySelectorAll('.badge.unlocked');
+            badges.forEach(badge => {
+                const badgeClone = badge.cloneNode(true);
+                badgeClone.classList.remove('badge');
+                badgeClone.classList.add('certificate-badge');
+                badgeClone.style.width = '60px';
+                badgeClone.style.height = '60px';
+                badgeClone.style.fontSize = '1.5rem';
+                certBadgesContainer.appendChild(badgeClone);
+            });
+        }
+        
+        // ====================
+        // CELEBRATION ANIMATION
+        // ====================
         function showCelebration() {
-            // Create celebration elements
-            const resultsSection = document.getElementById('results');
+            // Show confetti
+            document.getElementById('confetti').style.display = 'block';
+            triggerConfetti();
             
-            // Add confetti effect (simple version)
-            const confetti = document.createElement('div');
-            confetti.innerHTML = `
-                <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1000; display: flex; justify-content: center; align-items: center;">
-                    <div style="font-size: 5rem; color: gold; animation: bounce 1s infinite;">
-                        <i class="fas fa-trophy"></i>
-                    </div>
-                </div>
-            `;
-            
-            // Add CSS for bounce animation
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes bounce {
-                    0%, 100% { transform: translateY(0); }
-                    50% { transform: translateY(-20px); }
-                }
-            `;
-            
-            document.head.appendChild(style);
-            document.body.appendChild(confetti);
-            
-            // Remove after 3 seconds
+            // Show celebration message
             setTimeout(() => {
-                document.body.removeChild(confetti);
-            }, 3000);
+                document.getElementById('celebration-message').style.display = 'block';
+            }, 500);
+            
+            // Hide confetti after 5 seconds
+            setTimeout(() => {
+                document.getElementById('confetti').style.display = 'none';
+            }, 5000);
+        }
+        
+        function createConfetti() {
+            const confettiContainer = document.getElementById('confetti');
+            const colors = ['#0066cc', '#3399ff', '#00cc66', '#ffcc00', '#ff3366', '#9b51e0'];
+            
+            for (let i = 0; i < 100; i++) {
+                const piece = document.createElement('div');
+                piece.classList.add('confetti-piece');
+                piece.style.left = `${Math.random() * 100}%`;
+                piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                piece.style.width = `${Math.random() * 10 + 5}px`;
+                piece.style.height = `${Math.random() * 10 + 5}px`;
+                piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                confettiContainer.appendChild(piece);
+            }
+        }
+        
+        function triggerConfetti() {
+            const pieces = document.querySelectorAll('.confetti-piece');
+            pieces.forEach(piece => {
+                // Reset animation
+                piece.style.animation = '';
+                piece.style.opacity = '0';
+                piece.style.top = '-20px';
+                
+                // Set random properties
+                const duration = Math.random() * 3 + 2;
+                const delay = Math.random() * 2;
+                const rotation = Math.random() * 360;
+                
+                // Apply animation
+                setTimeout(() => {
+                    piece.style.opacity = '1';
+                    piece.style.animation = `fall ${duration}s linear forwards`;
+                    piece.style.top = `100vh`;
+                    piece.style.transform = `rotate(${rotation}deg)`;
+                }, delay * 1000);
+            });
+        }
+        
+        // ====================
+        // DOWNLOAD CERTIFICATE
+        // ====================
+        function downloadCertificate() {
+            // Get certificate element
+            const certificate = document.getElementById('certificate');
+            
+            // Use html2canvas to capture certificate as image
+            const html2canvasScript = document.createElement('script');
+            html2canvasScript.src = 'https://html2canvas.hertzen.com/dist/html2canvas.min.js';
+            html2canvasScript.onload = function() {
+                html2canvas(certificate, {
+                    scale: 2,
+                    backgroundColor: '#ffffff',
+                    useCORS: true
+                }).then(canvas => {
+                    // Convert canvas to image
+                    const image = canvas.toDataURL('image/png');
+                    
+                    // Create download link
+                    const link = document.createElement('a');
+                    link.href = image;
+                    link.download = `cybersecurity-certificate-${userScore}-${Date.now()}.png`;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    // Show success message
+                    alert('✅ Certificate downloaded! Share it with your teacher or on social media.');
+                }).catch(error => {
+                    console.error('Error generating certificate:', error);
+                    alert('Could not generate certificate. Please try again.');
+                });
+            };
+            
+            // Load html2canvas if not already loaded
+            if (typeof html2canvas === 'undefined') {
+                document.head.appendChild(html2canvasScript);
+            } else {
+                // html2canvas already loaded
+                html2canvas(certificate, {
+                    scale: 2,
+                    backgroundColor: '#ffffff',
+                    useCORS: true
+                }).then(canvas => {
+                    const image = canvas.toDataURL('image/png');
+                    const link = document.createElement('a');
+                    link.href = image;
+                    link.download = `cybersecurity-certificate-${userScore}-${Date.now()}.png`;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    alert('✅ Certificate downloaded! Share it with your teacher or on social media.');
+                }).catch(error => {
+                    console.error('Error generating certificate:', error);
+                    alert('Could not generate certificate. Please try again.');
+                });
+            }
+        }
+        
+        // ====================
+        // SHARE RESULTS
+        // ====================
+        function shareResults() {
+            // Create share text
+            const shareText = `I scored ${userScore}/9 on the Cybersecurity Activity with DeepFake detection! 🛡️🤖💻 Check it out: ${window.location.href}`;
+            
+            // Check if Web Share API is available
+            if (navigator.share) {
+                navigator.share({
+                    title: 'My Cybersecurity Results',
+                    text: shareText,
+                    url: window.location.href
+                }).catch(console.error);
+            } else {
+                // Fallback: copy to clipboard
+                navigator.clipboard.writeText(shareText).then(() => {
+                    alert('Results copied to clipboard! You can paste and share it.');
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                    alert('Share this link: ' + window.location.href);
+                });
+            }
         }
         
         // ====================
@@ -1174,6 +2134,7 @@
             // Reset score
             userScore = 0;
             localStorage.removeItem('cyberActivityScore');
+            localStorage.removeItem('cyberActivityCompleted');
             
             // Reset question states
             document.querySelectorAll('.option').forEach(option => {
@@ -1184,61 +2145,69 @@
             // Hide feedback
             document.getElementById('password-feedback').classList.remove('show');
             document.getElementById('social-feedback').classList.remove('show');
+            document.getElementById('deepfake-feedback').classList.remove('show');
+            
+            // Reset badges
+            document.querySelectorAll('.badge').forEach(badge => {
+                badge.classList.remove('unlocked');
+            });
+            
+            // Reset DeepFake game
+            document.querySelectorAll('.video-clip').forEach(clip => {
+                clip.classList.remove('selected', 'fake', 'real');
+                clip.style.pointerEvents = 'auto';
+            });
+            document.getElementById('check-deepfake-selection').disabled = false;
+            document.getElementById('check-deepfake-selection').innerHTML = `<i class="fas fa-search"></i> Check My Selection`;
+            deepfakeSelectionCorrect = false;
             
             // Reset completion flags
             passwordCompleted = false;
             socialCompleted = false;
+            deepfakeCompleted = false;
+            
+            // Reset buttons
+            document.getElementById('next-to-social').disabled = true;
+            document.getElementById('next-to-deepfake').disabled = true;
+            document.getElementById('show-results').disabled = true;
+            
+            // Hide results section
+            document.querySelector('.results-container').classList.remove('show');
             
             // Update progress
             updateProgress();
+            
+            // Reset timer
+            startTime = null;
+            completionTime = null;
         }
         
         // ====================
-        // CERTIFICATE DOWNLOAD
+        // CALCULATE FINAL SCORE
         // ====================
-        function downloadCertificate() {
-            // Get certificate element
-            const certificate = document.querySelector('.certificate');
+        function calculateFinalScore() {
+            // Score is already calculated in handleOptionClick
+            // This function is kept for compatibility
+        }
+        
+        // ====================
+        // ACTIVITY COMPLETION CHECK
+        // ====================
+        function checkActivityCompletion() {
+            const passwordQuestions = document.querySelectorAll('#password .option.selected');
+            const socialQuestions = document.querySelectorAll('#social .option.selected');
+            const deepfakeQuestions = document.querySelectorAll('#deepfake .question-container .option.selected');
             
-            // Create a temporary canvas to generate image
-            const html2canvasScript = document.createElement('script');
-            html2canvasScript.src = 'https://html2canvas.hertzen.com/dist/html2canvas.min.js';
-            html2canvasScript.onload = function() {
-                html2canvas(certificate).then(canvas => {
-                    // Convert canvas to image
-                    const image = canvas.toDataURL('image/png');
-                    
-                    // Create download link
-                    const link = document.createElement('a');
-                    link.href = image;
-                    link.download = 'cybersecurity-certificate.png';
-                    link.click();
-                    
-                    // Show success message
-                    alert('Certificate downloaded! Share it with your teacher or friends.');
-                });
-            };
-            
-            // Load html2canvas if not already loaded
-            if (typeof html2canvas === 'undefined') {
-                document.head.appendChild(html2canvasScript);
-            } else {
-                // html2canvas already loaded
-                html2canvas(certificate).then(canvas => {
-                    const image = canvas.toDataURL('image/png');
-                    const link = document.createElement('a');
-                    link.href = image;
-                    link.download = 'cybersecurity-certificate.png';
-                    link.click();
-                    alert('Certificate downloaded! Share it with your teacher or friends.');
-                });
+            if (passwordQuestions.length === 3 && socialQuestions.length === 3 && deepfakeQuestions.length === 3) {
+                // All questions answered
+                document.getElementById('show-results').disabled = false;
             }
         }
         
         // ====================
-        // SIMPLE ANIMATIONS
+        // CSS ANIMATIONS
         // ====================
-        // Add CSS for pulse animation
+        // Add CSS for animations
         const style = document.createElement('style');
         style.textContent = `
             @keyframes pulse {
@@ -1250,6 +2219,16 @@
             @keyframes bounce {
                 0%, 100% { transform: translateY(0); }
                 50% { transform: translateY(-10px); }
+            }
+            
+            @keyframes fall {
+                0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+                100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+            }
+            
+            @keyframes glow {
+                0%, 100% { box-shadow: 0 0 5px var(--deepfake-purple); }
+                50% { box-shadow: 0 0 20px var(--deepfake-purple); }
             }
         `;
         document.head.appendChild(style);
@@ -1264,6 +2243,12 @@
                 this.style.animation = '';
             });
         });
+        
+        // Add glow effect to DeepFake icon
+        const deepfakeIcon = document.querySelector('.deepfake-icon .icon-circle');
+        if (deepfakeIcon) {
+            deepfakeIcon.style.animation = 'glow 2s infinite';
+        }
     </script>
 </body>
 </html>
