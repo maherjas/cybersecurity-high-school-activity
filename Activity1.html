@@ -1,0 +1,1883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mobile Cybersecurity Activity</title>
+    <style>
+        /* Mobile-First CSS */
+        :root {
+            --primary-blue: #0066cc;
+            --secondary-blue: #3399ff;
+            --accent-green: #00cc66;
+            --warning-red: #ff3366;
+            --warning-yellow: #ffcc00;
+            --deepfake-purple: #9b51e0;
+            --bg-light: #f8fbff;
+            --card-bg: #ffffff;
+            --text-dark: #222222;
+            --text-light: #ffffff;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --radius: 16px;
+            --tap-size: 44px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #f5f9ff 0%, #e6f0ff 100%);
+            color: var(--text-dark);
+            line-height: 1.5;
+            font-size: 16px;
+            padding: 0;
+            margin: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Container for mobile */
+        .mobile-container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 16px;
+            position: relative;
+        }
+        
+        /* Header optimized for mobile */
+        .mobile-header {
+            text-align: center;
+            padding: 20px 16px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: white;
+            border-radius: var(--radius);
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .mobile-header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+        
+        .mobile-subtitle {
+            font-size: 1rem;
+            opacity: 0.95;
+            margin-bottom: 12px;
+        }
+        
+        .grade-badge {
+            display: inline-block;
+            background-color: var(--warning-yellow);
+            color: #222;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        /* Mobile navigation - bottom tab bar */
+        .mobile-nav {
+            display: flex;
+            justify-content: space-around;
+            background: white;
+            border-radius: var(--radius);
+            padding: 12px 8px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
+            position: sticky;
+            bottom: 16px;
+            z-index: 100;
+        }
+        
+        .mobile-nav-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            background: none;
+            color: #666;
+            font-size: 0.75rem;
+            padding: 8px 12px;
+            border-radius: 12px;
+            min-width: 60px;
+            transition: all 0.2s;
+        }
+        
+        .mobile-nav-btn i {
+            font-size: 1.2rem;
+            margin-bottom: 4px;
+        }
+        
+        .mobile-nav-btn.active {
+            color: var(--primary-blue);
+            background-color: rgba(0, 102, 204, 0.1);
+            transform: translateY(-4px);
+        }
+        
+        /* Sections - optimized for mobile */
+        .mobile-section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .mobile-section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Intro section */
+        .intro-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
+        }
+        
+        .intro-title {
+            color: var(--primary-blue);
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        
+        .intro-text {
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+        
+        /* Activity icons for mobile */
+        .mobile-icons {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin: 24px 0;
+        }
+        
+        .mobile-icon-item {
+            display: flex;
+            align-items: center;
+            background: white;
+            padding: 16px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        
+        .mobile-icon-circle {
+            width: 50px;
+            height: 50px;
+            background: #e6f2ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 16px;
+            font-size: 1.5rem;
+            color: var(--primary-blue);
+            flex-shrink: 0;
+        }
+        
+        .mobile-icon-item.deepfake .mobile-icon-circle {
+            background: #f0e6ff;
+            color: var(--deepfake-purple);
+        }
+        
+        .mobile-icon-text h3 {
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+        
+        .mobile-icon-text p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        /* Mobile buttons - optimized for touch */
+        .mobile-btn {
+            display: block;
+            width: 100%;
+            padding: 18px 24px;
+            background: var(--accent-green);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 204, 102, 0.2);
+            min-height: var(--tap-size);
+        }
+        
+        .mobile-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .mobile-btn i {
+            margin-right: 8px;
+        }
+        
+        /* Activity cards */
+        .activity-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            background: #e6f2ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 16px;
+            font-size: 1.5rem;
+            color: var(--primary-blue);
+        }
+        
+        .deepfake-card .card-icon {
+            background: #f0e6ff;
+            color: var(--deepfake-purple);
+        }
+        
+        .card-title {
+            font-size: 1.4rem;
+            color: var(--primary-blue);
+            font-weight: 600;
+        }
+        
+        .deepfake-card .card-title {
+            color: var(--deepfake-purple);
+        }
+        
+        /* Scenario box */
+        .scenario-box {
+            background: #f8faff;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            border-left: 4px solid var(--primary-blue);
+        }
+        
+        .scenario-title {
+            color: var(--primary-blue);
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+        }
+        
+        .scenario-text {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        
+        /* Questions for mobile */
+        .question-container {
+            margin-bottom: 28px;
+        }
+        
+        .question {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin-bottom: 16px;
+            line-height: 1.4;
+        }
+        
+        .deepfake-card .question {
+            color: var(--deepfake-purple);
+        }
+        
+        /* Mobile options - optimized for touch */
+        .mobile-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .mobile-option {
+            padding: 18px;
+            background: #f8faff;
+            border: 2px solid #e6f0ff;
+            border-radius: 12px;
+            text-align: left;
+            font-size: 1rem;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: all 0.2s;
+            min-height: var(--tap-size);
+            line-height: 1.4;
+        }
+        
+        .mobile-option:active {
+            transform: translateY(2px);
+        }
+        
+        .mobile-option.correct {
+            background: rgba(0, 204, 102, 0.1);
+            border-color: var(--accent-green);
+            color: #006633;
+        }
+        
+        .mobile-option.incorrect {
+            background: rgba(255, 51, 102, 0.1);
+            border-color: var(--warning-red);
+            color: #990033;
+        }
+        
+        .mobile-option.selected {
+            border-width: 3px;
+            font-weight: 600;
+        }
+        
+        /* DeepFake visual for mobile */
+        .mobile-deepfake-visual {
+            background: #f8f7ff;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 24px 0;
+            text-align: center;
+        }
+        
+        .face-comparison-mobile {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .face-box-mobile {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        
+        .face-image-mobile {
+            width: 100px;
+            height: 100px;
+            background: #e6e6ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 2.5rem;
+            color: var(--deepfake-purple);
+        }
+        
+        .face-label-mobile {
+            font-weight: 600;
+            color: var(--deepfake-purple);
+            margin-bottom: 12px;
+        }
+        
+        /* DeepFake detection game for mobile */
+        .detection-game-mobile {
+            background: #f0f8ff;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 24px 0;
+            border: 2px dashed var(--deepfake-purple);
+        }
+        
+        .video-clips-mobile {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin: 20px 0;
+        }
+        
+        .video-clip-mobile {
+            background: white;
+            padding: 18px;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid #e6e6ff;
+            min-height: var(--tap-size);
+        }
+        
+        .video-clip-mobile:active {
+            transform: translateY(2px);
+        }
+        
+        .video-clip-mobile.selected {
+            border-color: var(--accent-green);
+            background: rgba(0, 204, 102, 0.1);
+        }
+        
+        .video-clip-mobile.fake {
+            border-color: var(--warning-red);
+        }
+        
+        .video-clip-mobile.real {
+            border-color: var(--accent-green);
+        }
+        
+        .clip-title-mobile {
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        /* Feedback for mobile */
+        .mobile-feedback {
+            background: #f8faff;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 24px;
+            border-left: 4px solid var(--accent-green);
+            display: none;
+        }
+        
+        .deepfake-card .mobile-feedback {
+            border-left-color: var(--deepfake-purple);
+        }
+        
+        .mobile-feedback.show {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .feedback-title {
+            color: var(--accent-green);
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .deepfake-card .feedback-title {
+            color: var(--deepfake-purple);
+        }
+        
+        /* Progress bar for mobile */
+        .mobile-progress-container {
+            position: fixed;
+            bottom: 80px;
+            left: 16px;
+            right: 16px;
+            background: white;
+            padding: 12px 16px;
+            border-radius: 12px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            display: none;
+            z-index: 90;
+        }
+        
+        .mobile-progress-container.show {
+            display: block;
+        }
+        
+        .progress-text-mobile {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        
+        .progress-bar-mobile {
+            height: 8px;
+            background: #e6f2ff;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill-mobile {
+            height: 100%;
+            background: var(--accent-green);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        /* Results section for mobile */
+        .results-container {
+            display: none;
+            padding-bottom: 100px; /* Space for bottom nav */
+        }
+        
+        .results-container.show {
+            display: block;
+        }
+        
+        .score-display-mobile {
+            font-size: 2.5rem;
+            color: var(--primary-blue);
+            font-weight: 700;
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        /* Badges for mobile */
+        .badges-container-mobile {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+            margin: 30px 0;
+        }
+        
+        .badge-mobile {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #f0f0f0;
+            opacity: 0.3;
+            transition: all 0.3s;
+        }
+        
+        .badge-mobile.unlocked {
+            opacity: 1;
+            transform: scale(1.1);
+            animation: badgePop 0.5s ease;
+        }
+        
+        @keyframes badgePop {
+            0% { transform: scale(0.5); opacity: 0; }
+            70% { transform: scale(1.2); }
+            100% { transform: scale(1.1); opacity: 1; }
+        }
+        
+        .badge-mobile i {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+        
+        .badge-text-mobile {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-align: center;
+            line-height: 1.2;
+        }
+        
+        .badge-gold { border: 4px solid gold; background: #fff9e6; }
+        .badge-silver { border: 4px solid silver; background: #f8f8f8; }
+        .badge-bronze { border: 4px solid #cd7f32; background: #fff0e6; }
+        .badge-blue { border: 4px solid var(--primary-blue); background: #e6f2ff; }
+        .badge-purple { border: 4px solid var(--deepfake-purple); background: #f0e6ff; }
+        
+        /* Certificate for mobile */
+        .certificate-mobile {
+            background: white;
+            padding: 24px;
+            border: 10px solid var(--primary-blue);
+            border-radius: 16px;
+            margin: 30px 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .certificate-title-mobile {
+            color: var(--primary-blue);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .certificate-text-mobile {
+            font-size: 1rem;
+            margin: 12px 0;
+            line-height: 1.4;
+        }
+        
+        .certificate-badges-mobile {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .cert-badge-mobile {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        /* Teacher notes for mobile */
+        .teacher-notes-mobile {
+            background: #f8faff;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+        
+        .teacher-notes-mobile h3 {
+            color: var(--primary-blue);
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+        }
+        
+        /* Swipe indicator */
+        .swipe-indicator {
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 20px;
+            padding: 10px;
+        }
+        
+        .swipe-indicator i {
+            animation: bounce 2s infinite;
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1.5rem;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(10px); }
+        }
+        
+        /* Celebration for mobile */
+        .confetti-mobile {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .celebration-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+            padding: 20px;
+            display: none;
+        }
+        
+        .celebration-content {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 300px;
+            animation: popIn 0.3s ease;
+        }
+        
+        /* Mobile-first adjustments */
+        @media (min-width: 768px) {
+            .mobile-container {
+                max-width: 500px;
+                margin: 0 auto;
+            }
+            
+            .mobile-nav {
+                max-width: 500px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .mobile-progress-container {
+                max-width: 500px;
+                margin-left: auto;
+                margin-right: auto;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+        
+        /* Prevent text selection for better mobile UX */
+        .no-select {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="no-select">
+    <div class="mobile-container">
+        <!-- Mobile Header -->
+        <header class="mobile-header">
+            <h1>Cybersecurity Activity</h1>
+            <p class="mobile-subtitle">Password, Social Engineering & DeepFake Security</p>
+            <div class="grade-badge">Grades 10-12</div>
+        </header>
+        
+        <!-- Mobile Navigation (Bottom Bar) -->
+        <nav class="mobile-nav">
+            <button class="mobile-nav-btn active" data-section="intro">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </button>
+            <button class="mobile-nav-btn" data-section="password">
+                <i class="fas fa-key"></i>
+                <span>Password</span>
+            </button>
+            <button class="mobile-nav-btn" data-section="social">
+                <i class="fas fa-user-secret"></i>
+                <span>Social</span>
+            </button>
+            <button class="mobile-nav-btn" data-section="deepfake">
+                <i class="fas fa-robot"></i>
+                <span>DeepFake</span>
+            </button>
+            <button class="mobile-nav-btn" data-section="results">
+                <i class="fas fa-trophy"></i>
+                <span>Results</span>
+            </button>
+        </nav>
+        
+        <!-- Progress Bar (Shows during activities) -->
+        <div class="mobile-progress-container" id="mobile-progress">
+            <div class="progress-text-mobile">Progress: <span id="progress-percent">0%</span></div>
+            <div class="progress-bar-mobile">
+                <div class="progress-fill-mobile" id="progress-fill"></div>
+            </div>
+        </div>
+        
+        <!-- Introduction Section -->
+        <section class="mobile-section active" id="intro">
+            <div class="intro-card">
+                <h2 class="intro-title">Welcome! 👋</h2>
+                <p class="intro-text">Learn to protect yourself online with these 3 interactive cybersecurity activities:</p>
+                
+                <div class="mobile-icons">
+                    <div class="mobile-icon-item">
+                        <div class="mobile-icon-circle">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <div class="mobile-icon-text">
+                            <h3>Password Security</h3>
+                            <p>Create strong passwords & protect accounts</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mobile-icon-item">
+                        <div class="mobile-icon-circle">
+                            <i class="fas fa-user-secret"></i>
+                        </div>
+                        <div class="mobile-icon-text">
+                            <h3>Social Engineering</h3>
+                            <p>Spot & avoid online manipulation</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mobile-icon-item deepfake">
+                        <div class="mobile-icon-circle">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="mobile-icon-text">
+                            <h3>DeepFake Detection</h3>
+                            <p>Identify AI-generated fake media</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <p class="intro-text" style="margin-top: 20px;"><strong>Complete all activities to earn badges and a certificate!</strong></p>
+                
+                <button class="mobile-btn" id="start-activity">
+                    <i class="fas fa-play-circle"></i> Start Activity
+                </button>
+            </div>
+            
+            <div class="swipe-indicator">
+                <i class="fas fa-hand-point-up"></i>
+                <p>Tap buttons and options to interact</p>
+            </div>
+            
+            <div class="teacher-notes-mobile">
+                <h3><i class="fas fa-chalkboard-teacher"></i> Teacher Notes</h3>
+                <p><strong>Time:</strong> 30-40 minutes</p>
+                <p><strong>Skills:</strong> Critical thinking, digital literacy, security awareness</p>
+                <p><strong>Mobile-Optimized:</strong> Designed for smartphone use in classroom</p>
+            </div>
+        </section>
+        
+        <!-- Password Security Section -->
+        <section class="mobile-section" id="password">
+            <div class="activity-card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <h2 class="card-title">Password Security</h2>
+                </div>
+                
+                <div class="scenario-box">
+                    <h3 class="scenario-title">The Problem</h3>
+                    <p class="scenario-text">Alex uses "alex2023" for EVERY account: school, email, games. His game account was hacked, now hackers have ALL his accounts!</p>
+                </div>
+                
+                <div class="question-container">
+                    <h3 class="question">1. Why is reusing passwords dangerous?</h3>
+                    <div class="mobile-options">
+                        <div class="mobile-option" data-correct="true">One hack = ALL accounts compromised</div>
+                        <div class="mobile-option" data-correct="false">It's hard to remember them all</div>
+                        <div class="mobile-option" data-correct="false">Websites don't allow it</div>
+                        <div class="mobile-option" data-correct="false">Uses too much phone storage</div>
+                    </div>
+                </div>
+                
+                <div class="question-container">
+                    <h3 class="question">2. What's the BEST password strategy?</h3>
+                    <div class="mobile-options">
+                        <div class="mobile-option" data-correct="false">Pet's name + birth year</div>
+                        <div class="mobile-option" data-correct="true">"PurpleTiger$EatsPizza2023!"</div>
+                        <div class="mobile-option" data-correct="false">"password123"</div>
+                        <div class="mobile-option" data-correct="false">Write in notebook</div>
+                    </div>
+                </div>
+                
+                <div class="question-container">
+                    <h3 class="question">3. What if a site you use gets hacked?</h3>
+                    <div class="mobile-options">
+                        <div class="mobile-option" data-correct="false">Nothing - their problem</div>
+                        <div class="mobile-option" data-correct="true">Change password & check other accounts</div>
+                        <div class="mobile-option" data-correct="false">Create new account with same password</div>
+                        <div class="mobile-option" data-correct="false">Stop using internet</div>
+                    </div>
+                </div>
+                
+                <div class="mobile-feedback" id="password-feedback">
+                    <h3 class="feedback-title"><i class="fas fa-check-circle"></i> Password Tips</h3>
+                    <p><strong>Remember:</strong></p>
+                    <ul style="margin: 10px 0 10px 20px;">
+                        <li>Never reuse passwords</li>
+                        <li>Use long passphrases (12+ characters)</li>
+                        <li>Enable Two-Factor Authentication (2FA)</li>
+                        <li>Consider a password manager</li>
+                    </ul>
+                </div>
+                
+                <button class="mobile-btn" id="next-to-social">
+                    <i class="fas fa-arrow-right"></i> Continue to Social Engineering
+                </button>
+            </div>
+        </section>
+        
+        <!-- Social Engineering Section -->
+        <section class="mobile-section" id="social">
+            <div class="activity-card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-user-secret"></i>
+                    </div>
+                    <h2 class="card-title">Social Engineering</h2>
+                </div>
+                
+                <div class="scenario-box">
+                    <h3 class="scenario-title">Scenario: Urgent DM</h3>
+                    <p class="scenario-text">A friend's Instagram account messages you: "Lost my phone! Send me the verification code you just received."</p>
+                </div>
+                
+                <div class="question-container">
+                    <h3 class="question">1. What type of attack is this?</h3>
+                    <div class="mobile-options">
+                        <div class="mobile-option" data-correct="false">Password hacking</div>
+                        <div class="mobile-option" data-correct="true">Social engineering / account takeover</div>
+                        <div class="mobile-option" data-correct="false">Virus</div>
+                        <div class="mobile-option" data-correct="false">Identity theft</div>
+                    </div>
+                </div>
+                
+                <div class="question-container">
+                    <h3 class="question">2. What happens if you send the code?</h3>
+                    <div class="mobile-options">
+                        <div class="mobile-option" data-correct="false">You help your friend</div>
+                        <div class="mobile-option" data-correct="true">Hacker gets account access</div>
+                        <div class="mobile-option" data-correct="false">Nothing - codes are safe</div>
+                        <div class="mobile-option" data-correct="false">You get rewarded</div>
+                    </div>
+                </div>
+                
+                <div class="question-container">
+                    <h3 class="question">3. What should you do?</h3>
+                    <div class="mobile-options">
+                        <div class="mobile-option" data-correct="false">Send code immediately</div>
+                        <div class="mobile-option" data-correct="false">Ignore it</div>
+                        <div class="mobile-option" data-correct="true">Contact friend another way</div>
+                        <div class="mobile-option" data-correct="false">Ask for more info</div>
+                    </div>
+                </div>
+                
+                <div class="mobile-feedback" id="social-feedback">
+                    <h3 class="feedback-title"><i class="fas fa-shield-alt"></i> Defense Tips</h3>
+                    <p><strong>Protect Yourself:</strong></p>
+                    <ul style="margin: 10px 0 10px 20px;">
+                        <li>Never share verification codes</li>
+                        <li>Verify through call/text/in-person</li>
+                        <li>Be suspicious of urgency</li>
+                        <li>Tell friends if accounts are hacked</li>
+                    </ul>
+                </div>
+                
+                <button class="mobile-btn" id="next-to-deepfake">
+                    <i class="fas fa-arrow-right"></i> Continue to DeepFake Detection
+                </button>
+            </div>
+        </section>
+        
+        <!-- DeepFake Detection Section -->
+        <section class="mobile-section" id="deepfake">
+            <div class="activity-card deepfake-card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h2 class="card-title">DeepFake Detection</h2>
+                </div>
+                
+                <div class="scenario-box">
+                    <h3 class="scenario-title">What are DeepFakes?</h3>
+                    <p class="scenario-text">AI-generated fake videos/audio that make people appear to say/do things they never did. Used in scams and misinformation.</p>
+                </div>
+                
+                <!-- Mobile DeepFake Visual -->
+                <div class="mobile-deepfake-visual">
+                    <h3 style="color: var(--deepfake-purple); margin-bottom: 16px;">
+                        <i class="fas fa-eye"></i> Can You Spot It?
+                    </h3>
+                    
+                    <div class="face-comparison-mobile">
+                        <div class="face-box-mobile">
+                            <div class="face-image-mobile">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="face-label-mobile">Real Video</div>
+                            <div style="font-size: 0.9rem;">
+                                <i class="fas fa-check" style="color: var(--accent-green);"></i> Natural blinking<br>
+                                <i class="fas fa-check" style="color: var(--accent-green);"></i> Audio matches mouth
+                            </div>
+                        </div>
+                        
+                        <div class="face-box-mobile">
+                            <div class="face-image-mobile">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="face-label-mobile">DeepFake</div>
+                            <div style="font-size: 0.9rem;">
+                                <i class="fas fa-exclamation-triangle" style="color: var(--warning-red);"></i> Strange eyes<br>
+                                <i class="fas fa-exclamation-triangle" style="color: var(--warning-red);"></i> Audio mismatch
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Mobile Detection Game -->
+                <div class="detection-game-mobile">
+                    <h3 style="color: var(--deepfake-purple); margin-bottom: 16px;">
+                        <i class="fas fa-gamepad"></i> Detection Game
+                    </h3>
+                    <p>Which videos are likely DeepFakes? Tap to select:</p>
+                    
+                    <div class="video-clips-mobile">
+                        <div class="video-clip-mobile" data-fake="true">
+                            <div class="clip-title-mobile">Celebrity Crypto Ad</div>
+                            <div style="font-size: 0.9rem; color: #666;">Famous actor promoting unknown cryptocurrency</div>
+                        </div>
+                        
+                        <div class="video-clip-mobile" data-fake="false">
+                            <div class="clip-title-mobile">News Interview</div>
+                            <div style="font-size: 0.9rem; color: #666;">Politician on major news network</div>
+                        </div>
+                        
+                        <div class="video-clip-mobile" data-fake="true">
+                            <div class="clip-title-mobile">Friend Asking for Money</div>
+                            <div style="font-size: 0.9rem; color: #666;">Video of friend requesting emergency money transfer</div>
+                        </div>
+                    </div>
+                    
+                    <button class="mobile-btn" id="check-deepfake" style="background-color: var(--deepfake-purple); margin: 16px 0 8px;">
+                        <i class="fas fa-search"></i> Check Selection
+                    </button>
+                </div>
+                
+                <!-- DeepFake Questions -->
+                <div class="question-container">
+                    <h3 class="question">1. Main danger of DeepFakes?</h3>
+                    <div class="mobile-options">
+                        <div class="mobile-option" data-correct="false">Makes movies better</div>
+                        <div class="mobile-option" data-correct="true">Spreads misinformation & scams</div>
+                        <div class="mobile-option" data-correct="false">Uses phone battery</div>
+                        <div class="mobile-option" data-correct="false">Makes social media fun</div>
+                    </div>
+                </div>
+                
+                <div class="question-container">
+                    <h3 class="question">2. Red flag for DeepFake videos?</h3>
+                    <div class="mobile-options">
+                        <div class="mobile-option" data-correct="false">Colorful clothing</div>
+                        <div class="mobile-option" data-correct="true">Mouth doesn't match words</div>
+                        <div class="mobile-option" data-correct="false">High quality video</div>
+                        <div class="mobile-option" data-correct="false">Normal blinking</div>
+                    </div>
+                </div>
+                
+                <div class="question-container">
+                    <h3 class="question">3. Suspicious video of family asking for money?</h3>
+                    <div class="mobile-options">
+                        <div class="mobile-option" data-correct="false">Send money fast</div>
+                        <div class="mobile-option" data-correct="true">Contact them another way</div>
+                        <div class="mobile-option" data-correct="false">Share to warn others</div>
+                        <div class="mobile-option" data-correct="false">Ignore - can't be fake</div>
+                    </div>
+                </div>
+                
+                <div class="mobile-feedback" id="deepfake-feedback">
+                    <h3 class="feedback-title"><i class="fas fa-robot"></i> DeepFake Tips</h3>
+                    <p><strong>Stay Safe:</strong></p>
+                    <ul style="margin: 10px 0 10px 20px;">
+                        <li>Verify through multiple channels</li>
+                        <li>Check for strange eye/mouth movements</li>
+                        <li>Be skeptical of urgent money requests</li>
+                        <li>Use fact-checking websites</li>
+                    </ul>
+                </div>
+                
+                <button class="mobile-btn" id="show-results-btn">
+                    <i class="fas fa-trophy"></i> See Your Results
+                </button>
+            </div>
+        </section>
+        
+        <!-- Results Section -->
+        <section class="mobile-section" id="results">
+            <div class="results-container">
+                <div class="intro-card" style="text-align: center;">
+                    <h2 class="intro-title">Activity Complete! 🎉</h2>
+                    <p style="margin-bottom: 20px;">You've learned essential cybersecurity skills!</p>
+                    
+                    <div class="score-display-mobile" id="final-score">0/9</div>
+                    
+                    <h3 style="color: var(--primary-blue); margin: 20px 0 16px;">
+                        <i class="fas fa-trophy"></i> Badges Earned
+                    </h3>
+                    
+                    <div class="badges-container-mobile">
+                        <div class="badge-mobile badge-gold" id="badge-perfect">
+                            <i class="fas fa-trophy"></i>
+                            <div class="badge-text-mobile">Perfect Score</div>
+                        </div>
+                        
+                        <div class="badge-mobile badge-silver" id="badge-password">
+                            <i class="fas fa-key"></i>
+                            <div class="badge-text-mobile">Password Pro</div>
+                        </div>
+                        
+                        <div class="badge-mobile badge-bronze" id="badge-social">
+                            <i class="fas fa-user-secret"></i>
+                            <div class="badge-text-mobile">Scam Spotter</div>
+                        </div>
+                        
+                        <div class="badge-mobile badge-purple" id="badge-deepfake">
+                            <i class="fas fa-robot"></i>
+                            <div class="badge-text-mobile">DeepFake Detective</div>
+                        </div>
+                        
+                        <div class="badge-mobile badge-blue" id="badge-completion">
+                            <i class="fas fa-shield-alt"></i>
+                            <div class="badge-text-mobile">Cybersecurity Master</div>
+                        </div>
+                    </div>
+                    
+                    <h3 style="color: var(--primary-blue); margin: 30px 0 16px;">
+                        <i class="fas fa-award"></i> Your Certificate
+                    </h3>
+                    
+                    <div class="certificate-mobile" id="certificate">
+                        <h2 class="certificate-title-mobile">Certificate of Achievement</h2>
+                        <p class="certificate-text-mobile">This certifies that</p>
+                        <h3 style="color: var(--primary-blue); margin: 12px 0; font-size: 1.4rem;">Cybersecurity Student</h3>
+                        <p class="certificate-text-mobile">has successfully completed the Mobile Cybersecurity Activity</p>
+                        
+                        <div style="margin: 20px 0; font-weight: 700; color: var(--primary-blue); font-size: 1.2rem;" id="cert-score">
+                            Score: 0/9
+                        </div>
+                        
+                        <div class="certificate-badges-mobile" id="cert-badges">
+                            <!-- Badges will appear here -->
+                        </div>
+                        
+                        <div style="margin-top: 20px; font-size: 0.9rem; color: #666;">
+                            <div id="cert-date"></div>
+                            <div style="margin-top: 8px;">Mobile Edition • Grades 10-12</div>
+                        </div>
+                    </div>
+                    
+                    <button class="mobile-btn" id="download-cert">
+                        <i class="fas fa-download"></i> Download Certificate
+                    </button>
+                    
+                    <div style="display: flex; gap: 12px; margin-top: 20px;">
+                        <button class="mobile-btn" id="restart-btn" style="background-color: var(--primary-blue); flex: 1;">
+                            <i class="fas fa-redo"></i> Try Again
+                        </button>
+                        <button class="mobile-btn" id="share-btn" style="background-color: var(--accent-green); flex: 1;">
+                            <i class="fas fa-share-alt"></i> Share
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Celebration Modal -->
+        <div class="celebration-modal" id="celebration-modal">
+            <div class="celebration-content">
+                <div style="font-size: 3rem; margin-bottom: 20px;">🎉</div>
+                <h2 style="color: var(--primary-blue); margin-bottom: 12px;">Congratulations!</h2>
+                <p style="margin-bottom: 20px;">You've completed the cybersecurity activity!</p>
+                <button class="mobile-btn" id="close-celebration" style="background-color: var(--primary-blue); margin: 0;">
+                    View Results
+                </button>
+            </div>
+        </div>
+        
+        <!-- Confetti Container -->
+        <div class="confetti-mobile" id="confetti"></div>
+    </div>
+
+    <script>
+        // ====================
+        // MOBILE-SPECIFIC JAVASCRIPT
+        // ====================
+        
+        // Touch-friendly variables
+        let userScore = 0;
+        let totalQuestions = 9;
+        let passwordCompleted = false;
+        let socialCompleted = false;
+        let deepfakeCompleted = false;
+        let deepfakeGameCompleted = false;
+        let startTime = null;
+        
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set certificate date
+            const now = new Date();
+            document.getElementById('cert-date').textContent = now.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric' 
+            });
+            
+            // Load saved progress
+            const savedScore = localStorage.getItem('mobileCyberScore');
+            if (savedScore) {
+                userScore = parseInt(savedScore);
+                updateProgress();
+            }
+            
+            // Setup mobile event listeners
+            setupMobileEvents();
+            
+            // Create confetti
+            createMobileConfetti();
+            
+            // Disable text selection for better mobile UX
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+            });
+        });
+        
+        // ====================
+        // MOBILE EVENT HANDLERS
+        // ====================
+        function setupMobileEvents() {
+            // Mobile navigation
+            document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const section = this.getAttribute('data-section');
+                    navigateToSection(section);
+                });
+            });
+            
+            // Start activity button
+            document.getElementById('start-activity').addEventListener('click', function(e) {
+                e.preventDefault();
+                startTime = new Date();
+                navigateToSection('password');
+            });
+            
+            // Navigation buttons
+            document.getElementById('next-to-social').addEventListener('click', function(e) {
+                e.preventDefault();
+                navigateToSection('social');
+            });
+            
+            document.getElementById('next-to-deepfake').addEventListener('click', function(e) {
+                e.preventDefault();
+                navigateToSection('deepfake');
+            });
+            
+            document.getElementById('show-results-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                showResults();
+            });
+            
+            // Restart button
+            document.getElementById('restart-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                resetActivity();
+            });
+            
+            // Download certificate
+            document.getElementById('download-cert').addEventListener('click', function(e) {
+                e.preventDefault();
+                downloadMobileCertificate();
+            });
+            
+            // Share results
+            document.getElementById('share-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                shareMobileResults();
+            });
+            
+            // Celebration close
+            document.getElementById('close-celebration').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('celebration-modal').style.display = 'none';
+            });
+            
+            // Question option clicks (touch optimized)
+            document.querySelectorAll('.mobile-option').forEach(option => {
+                option.addEventListener('touchstart', function(e) {
+                    this.style.transform = 'scale(0.98)';
+                });
+                
+                option.addEventListener('touchend', function(e) {
+                    this.style.transform = '';
+                    handleMobileOptionClick(this);
+                });
+                
+                option.addEventListener('touchcancel', function(e) {
+                    this.style.transform = '';
+                });
+            });
+            
+            // DeepFake game clicks
+            document.querySelectorAll('.video-clip-mobile').forEach(clip => {
+                clip.addEventListener('touchend', function(e) {
+                    e.preventDefault();
+                    this.classList.toggle('selected');
+                    
+                    // Update button text
+                    const selectedCount = document.querySelectorAll('.video-clip-mobile.selected').length;
+                    if (selectedCount > 0) {
+                        document.getElementById('check-deepfake').innerHTML = 
+                            `<i class="fas fa-search"></i> Check (${selectedCount})`;
+                    }
+                });
+            });
+            
+            // Check DeepFake selection
+            document.getElementById('check-deepfake').addEventListener('touchend', function(e) {
+                e.preventDefault();
+                checkDeepfakeGame();
+            });
+            
+            // Prevent accidental zoom on double tap
+            let lastTouchEnd = 0;
+            document.addEventListener('touchend', function(event) {
+                const now = Date.now();
+                if (now - lastTouchEnd <= 300) {
+                    event.preventDefault();
+                }
+                lastTouchEnd = now;
+            }, false);
+        }
+        
+        // ====================
+        // MOBILE NAVIGATION
+        // ====================
+        function navigateToSection(sectionId) {
+            // Update navigation buttons
+            document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-section') === sectionId) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Show selected section
+            document.querySelectorAll('.mobile-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Show/hide progress bar
+            const progressContainer = document.getElementById('mobile-progress');
+            if (sectionId === 'password' || sectionId === 'social' || sectionId === 'deepfake') {
+                progressContainer.classList.add('show');
+            } else {
+                progressContainer.classList.remove('show');
+            }
+            
+            // Update progress
+            updateProgress();
+            
+            // Scroll to top for mobile
+            window.scrollTo(0, 0);
+        }
+        
+        // ====================
+        // MOBILE OPTION HANDLING
+        // ====================
+        function handleMobileOptionClick(optionElement) {
+            // Check if already answered
+            const questionContainer = optionElement.closest('.question-container');
+            const alreadyAnswered = questionContainer.querySelector('.mobile-option.selected');
+            
+            if (alreadyAnswered) return;
+            
+            // Mark as selected
+            optionElement.classList.add('selected');
+            
+            // Check if correct
+            const isCorrect = optionElement.getAttribute('data-correct') === 'true';
+            
+            // Visual feedback with mobile-friendly animations
+            if (isCorrect) {
+                optionElement.classList.add('correct');
+                userScore++;
+                localStorage.setItem('mobileCyberScore', userScore);
+                
+                // Mobile vibration if supported
+                if (navigator.vibrate) {
+                    navigator.vibrate(50);
+                }
+                
+                // Visual pulse effect
+                optionElement.style.animation = 'none';
+                setTimeout(() => {
+                    optionElement.style.animation = 'fadeIn 0.5s';
+                }, 10);
+            } else {
+                optionElement.classList.add('incorrect');
+                
+                // Show correct answer
+                const correctOption = questionContainer.querySelector('.mobile-option[data-correct="true"]');
+                correctOption.classList.add('correct');
+            }
+            
+            // Disable all options in this question
+            const allOptions = questionContainer.querySelectorAll('.mobile-option');
+            allOptions.forEach(opt => {
+                opt.style.pointerEvents = 'none';
+            });
+            
+            // Update progress
+            updateProgress();
+            
+            // Check activity completion
+            checkMobileCompletion();
+        }
+        
+        // ====================
+        // DEEPFAKE GAME FOR MOBILE
+        // ====================
+        function checkDeepfakeGame() {
+            const videoClips = document.querySelectorAll('.video-clip-mobile');
+            let correctSelections = 0;
+            let totalSelections = 0;
+            
+            // Check each clip
+            videoClips.forEach(clip => {
+                const isSelected = clip.classList.contains('selected');
+                const isFake = clip.getAttribute('data-fake') === 'true';
+                
+                // Mark correct/incorrect
+                if (isSelected) {
+                    totalSelections++;
+                    if (isFake) {
+                        clip.classList.add('fake');
+                        clip.classList.remove('selected');
+                        correctSelections++;
+                    } else {
+                        clip.classList.add('real');
+                        clip.classList.remove('selected');
+                    }
+                }
+                
+                // Show all as fake/real for learning
+                if (!isSelected) {
+                    if (isFake) {
+                        clip.classList.add('fake');
+                    } else {
+                        clip.classList.add('real');
+                    }
+                }
+            });
+            
+            // Calculate accuracy
+            if (totalSelections > 0) {
+                const accuracy = Math.round((correctSelections / totalSelections) * 100);
+                let message = `You identified ${correctSelections} out of ${totalSelections} DeepFakes correctly!`;
+                
+                // Bonus points for good accuracy
+                if (accuracy >= 75) {
+                    userScore += 1;
+                    localStorage.setItem('mobileCyberScore', userScore);
+                    message += "\n\n🎯 Bonus point for excellent detection!";
+                    updateProgress();
+                }
+                
+                // Mobile-friendly alert
+                showMobileAlert(message);
+                deepfakeGameCompleted = true;
+            } else {
+                showMobileAlert("Please select at least one video first!");
+            }
+            
+            // Disable further selections
+            document.querySelectorAll('.video-clip-mobile').forEach(clip => {
+                clip.style.pointerEvents = 'none';
+            });
+            
+            document.getElementById('check-deepfake').disabled = true;
+        }
+        
+        // ====================
+        // MOBILE PROGRESS UPDATES
+        // ====================
+        function updateProgress() {
+            // Calculate percentage
+            const percentage = Math.round((userScore / totalQuestions) * 100);
+            
+            // Update progress bar
+            document.getElementById('progress-fill').style.width = `${percentage}%`;
+            document.getElementById('progress-percent').textContent = `${percentage}%`;
+            
+            // Update score display
+            document.getElementById('final-score').textContent = `${userScore}/${totalQuestions}`;
+            document.getElementById('cert-score').textContent = `Score: ${userScore}/${totalQuestions}`;
+            
+            // Check for feedback display
+            const passwordQuestions = document.querySelectorAll('#password .mobile-option.selected');
+            const socialQuestions = document.querySelectorAll('#social .mobile-option.selected');
+            const deepfakeQuestions = document.querySelectorAll('#deepfake .question-container .mobile-option.selected');
+            
+            if (passwordQuestions.length === 3 && !passwordCompleted) {
+                document.getElementById('password-feedback').classList.add('show');
+                passwordCompleted = true;
+                document.getElementById('next-to-social').disabled = false;
+            }
+            
+            if (socialQuestions.length === 3 && !socialCompleted) {
+                document.getElementById('social-feedback').classList.add('show');
+                socialCompleted = true;
+                document.getElementById('next-to-deepfake').disabled = false;
+            }
+            
+            if (deepfakeQuestions.length === 3 && !deepfakeCompleted) {
+                document.getElementById('deepfake-feedback').classList.add('show');
+                deepfakeCompleted = true;
+                document.getElementById('show-results-btn').disabled = false;
+            }
+        }
+        
+        // ====================
+        // CHECK COMPLETION
+        // ====================
+        function checkMobileCompletion() {
+            const passwordQuestions = document.querySelectorAll('#password .mobile-option.selected');
+            const socialQuestions = document.querySelectorAll('#social .mobile-option.selected');
+            const deepfakeQuestions = document.querySelectorAll('#deepfake .question-container .mobile-option.selected');
+            
+            if (passwordQuestions.length === 3 && socialQuestions.length === 3 && deepfakeQuestions.length === 3) {
+                document.getElementById('show-results-btn').disabled = false;
+            }
+        }
+        
+        // ====================
+        // SHOW RESULTS
+        // ====================
+        function showResults() {
+            // Calculate completion time
+            const completionTime = new Date();
+            const timeDiff = completionTime - startTime;
+            const minutes = Math.floor(timeDiff / 60000);
+            
+            // Update score
+            document.getElementById('final-score').textContent = `${userScore}/${totalQuestions}`;
+            
+            // Navigate to results
+            navigateToSection('results');
+            
+            // Award badges
+            awardMobileBadges(minutes);
+            
+            // Update certificate badges
+            updateCertificateBadgesMobile();
+            
+            // Show celebration for good scores
+            if (userScore >= 7) {
+                showMobileCelebration();
+            }
+            
+            // Save completion
+            localStorage.setItem('mobileCyberCompleted', 'true');
+        }
+        
+        // ====================
+        // AWARD MOBILE BADGES
+        // ====================
+        function awardMobileBadges(minutes) {
+            // Completion badge for everyone
+            document.getElementById('badge-completion').classList.add('unlocked');
+            
+            // Password Pro (3/3 correct)
+            const passwordCorrect = document.querySelectorAll('#password .mobile-option.selected.correct').length;
+            if (passwordCorrect === 3) {
+                document.getElementById('badge-password').classList.add('unlocked');
+            }
+            
+            // Scam Spotter (3/3 correct)
+            const socialCorrect = document.querySelectorAll('#social .mobile-option.selected.correct').length;
+            if (socialCorrect === 3) {
+                document.getElementById('badge-social').classList.add('unlocked');
+            }
+            
+            // DeepFake Detective (3/3 correct + game)
+            const deepfakeCorrect = document.querySelectorAll('#deepfake .question-container .mobile-option.selected.correct').length;
+            if (deepfakeCorrect === 3 && deepfakeGameCompleted) {
+                document.getElementById('badge-deepfake').classList.add('unlocked');
+            }
+            
+            // Perfect Score (9/9)
+            if (userScore >= 9) {
+                document.getElementById('badge-perfect').classList.add('unlocked');
+            }
+            
+            // Quick Learner (under 8 minutes)
+            if (minutes < 8) {
+                const completionBadge = document.getElementById('badge-completion');
+                completionBadge.querySelector('.badge-text-mobile').textContent = 'Quick Learner';
+            }
+        }
+        
+        // ====================
+        // UPDATE CERTIFICATE BADGES
+        // ====================
+        function updateCertificateBadgesMobile() {
+            const certBadgesContainer = document.getElementById('cert-badges');
+            certBadgesContainer.innerHTML = '';
+            
+            // Add unlocked badges
+            const badges = document.querySelectorAll('.badge-mobile.unlocked');
+            badges.forEach(badge => {
+                const badgeClone = badge.cloneNode(true);
+                badgeClone.classList.remove('badge-mobile');
+                badgeClone.classList.add('cert-badge-mobile');
+                badgeClone.style.width = '45px';
+                badgeClone.style.height = '45px';
+                badgeClone.style.fontSize = '1.2rem';
+                certBadgesContainer.appendChild(badgeClone);
+            });
+        }
+        
+        // ====================
+        // MOBILE CELEBRATION
+        // ====================
+        function showMobileCelebration() {
+            // Show confetti
+            document.getElementById('confetti').style.display = 'block';
+            triggerMobileConfetti();
+            
+            // Show modal after delay
+            setTimeout(() => {
+                document.getElementById('celebration-modal').style.display = 'flex';
+            }, 800);
+            
+            // Hide confetti after 5 seconds
+            setTimeout(() => {
+                document.getElementById('confetti').style.display = 'none';
+            }, 5000);
+        }
+        
+        function createMobileConfetti() {
+            const confettiContainer = document.getElementById('confetti');
+            const colors = ['#0066cc', '#3399ff', '#00cc66', '#ffcc00', '#ff3366', '#9b51e0'];
+            
+            for (let i = 0; i < 50; i++) { // Less confetti for mobile performance
+                const piece = document.createElement('div');
+                piece.style.position = 'absolute';
+                piece.style.width = `${Math.random() * 10 + 5}px`;
+                piece.style.height = `${Math.random() * 10 + 5}px`;
+                piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                piece.style.left = `${Math.random() * 100}%`;
+                piece.style.top = '-20px';
+                piece.style.opacity = '0';
+                confettiContainer.appendChild(piece);
+            }
+        }
+        
+        function triggerMobileConfetti() {
+            const pieces = document.querySelectorAll('#confetti > div');
+            pieces.forEach(piece => {
+                // Reset
+                piece.style.animation = '';
+                piece.style.opacity = '0';
+                piece.style.top = '-20px';
+                
+                // Random properties
+                const duration = Math.random() * 3 + 2;
+                const delay = Math.random() * 1.5;
+                
+                // Apply animation
+                setTimeout(() => {
+                    piece.style.opacity = '1';
+                    piece.style.animation = `fall ${duration}s linear forwards`;
+                    piece.style.top = `100vh`;
+                    piece.style.transform = `rotate(${Math.random() * 360}deg)`;
+                }, delay * 1000);
+            });
+        }
+        
+        // ====================
+        // DOWNLOAD CERTIFICATE (MOBILE)
+        // ====================
+        function downloadMobileCertificate() {
+            const certificate = document.getElementById('certificate');
+            
+            // Use html2canvas for mobile
+            const html2canvasScript = document.createElement('script');
+            html2canvasScript.src = 'https://html2canvas.hertzen.com/dist/html2canvas.min.js';
+            
+            html2canvasScript.onload = function() {
+                if (typeof html2canvas !== 'undefined') {
+                    html2canvas(certificate, {
+                        scale: 2,
+                        backgroundColor: '#ffffff',
+                        useCORS: true,
+                        logging: false // Disable logging for mobile performance
+                    }).then(canvas => {
+                        const image = canvas.toDataURL('image/png');
+                        const link = document.createElement('a');
+                        link.href = image;
+                        link.download = `cybersecurity-certificate-${userScore}.png`;
+                        
+                        // For iOS, we need to open in new window
+                        if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
+                            const newWindow = window.open();
+                            newWindow.document.write(`<img src="${image}" />`);
+                        } else {
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                        }
+                        
+                        showMobileAlert('✅ Certificate saved to your device!');
+                    }).catch(error => {
+                        console.error('Certificate error:', error);
+                        showMobileAlert('Could not generate certificate. Please try again.');
+                    });
+                }
+            };
+            
+            // Load script if not already loaded
+            if (typeof html2canvas === 'undefined') {
+                document.head.appendChild(html2canvasScript);
+            } else {
+                html2canvasScript.onload();
+            }
+        }
+        
+        // ====================
+        // SHARE MOBILE RESULTS
+        // ====================
+        function shareMobileResults() {
+            const shareText = `I scored ${userScore}/9 on the Mobile Cybersecurity Activity! 🛡️📱 Try it: ${window.location.href}`;
+            
+            // Use Web Share API if available (mobile browsers)
+            if (navigator.share) {
+                navigator.share({
+                    title: 'My Cybersecurity Score',
+                    text: shareText,
+                    url: window.location.href
+                }).catch(err => console.log('Share cancelled:', err));
+            } 
+            // Fallback for non-share API browsers
+            else if (navigator.clipboard) {
+                navigator.clipboard.writeText(shareText).then(() => {
+                    showMobileAlert('📋 Results copied! Paste to share.');
+                }).catch(err => {
+                    showMobileAlert(`Share this: ${window.location.href}`);
+                });
+            } else {
+                showMobileAlert(`Share this link: ${window.location.href}`);
+            }
+        }
+        
+        // ====================
+        // RESET ACTIVITY
+        // ====================
+        function resetActivity() {
+            // Reset score
+            userScore = 0;
+            localStorage.removeItem('mobileCyberScore');
+            localStorage.removeItem('mobileCyberCompleted');
+            
+            // Reset question states
+            document.querySelectorAll('.mobile-option').forEach(option => {
+                option.classList.remove('selected', 'correct', 'incorrect');
+                option.style.pointerEvents = 'auto';
+            });
+            
+            // Hide feedback
+            document.querySelectorAll('.mobile-feedback').forEach(feedback => {
+                feedback.classList.remove('show');
+            });
+            
+            // Reset badges
+            document.querySelectorAll('.badge-mobile').forEach(badge => {
+                badge.classList.remove('unlocked');
+            });
+            
+            // Reset DeepFake game
+            document.querySelectorAll('.video-clip-mobile').forEach(clip => {
+                clip.classList.remove('selected', 'fake', 'real');
+                clip.style.pointerEvents = 'auto';
+            });
+            document.getElementById('check-deepfake').disabled = false;
+            document.getElementById('check-deepfake').innerHTML = `<i class="fas fa-search"></i> Check Selection`;
+            deepfakeGameCompleted = false;
+            
+            // Reset completion flags
+            passwordCompleted = false;
+            socialCompleted = false;
+            deepfakeCompleted = false;
+            
+            // Enable navigation buttons
+            document.getElementById('next-to-social').disabled = true;
+            document.getElementById('next-to-deepfake').disabled = true;
+            document.getElementById('show-results-btn').disabled = true;
+            
+            // Hide results
+            document.querySelector('.results-container').classList.remove('show');
+            
+            // Update progress
+            updateProgress();
+            
+            // Reset timer
+            startTime = null;
+            
+            // Navigate to intro
+            navigateToSection('intro');
+            
+            // Show confirmation
+            showMobileAlert('Activity reset! Start again from the beginning.');
+        }
+        
+        // ====================
+        // MOBILE HELPER FUNCTIONS
+        // ====================
+        function showMobileAlert(message) {
+            // Create mobile-friendly alert
+            const alertDiv = document.createElement('div');
+            alertDiv.style.position = 'fixed';
+            alertDiv.style.top = '20px';
+            alertDiv.style.left = '20px';
+            alertDiv.style.right = '20px';
+            alertDiv.style.backgroundColor = 'white';
+            alertDiv.style.padding = '20px';
+            alertDiv.style.borderRadius = '12px';
+            alertDiv.style.boxShadow = '0 10px 30px rgba(0,0,0,0.2)';
+            alertDiv.style.zIndex = '2000';
+            alertDiv.style.textAlign = 'center';
+            alertDiv.style.animation = 'fadeIn 0.3s ease';
+            
+            alertDiv.innerHTML = `
+                <p style="margin-bottom: 20px;">${message}</p>
+                <button id="close-alert" style="padding: 12px 30px; background-color: var(--primary-blue); color: white; border: none; border-radius: 8px; font-weight: 600;">
+                    OK
+                </button>
+            `;
+            
+            document.body.appendChild(alertDiv);
+            
+            // Close on button click
+            document.getElementById('close-alert').addEventListener('click', function() {
+                document.body.removeChild(alertDiv);
+            });
+            
+            // Auto-close after 5 seconds
+            setTimeout(() => {
+                if (document.body.contains(alertDiv)) {
+                    document.body.removeChild(alertDiv);
+                }
+            }, 5000);
+        }
+        
+        // Add CSS for animations
+        const mobileStyle = document.createElement('style');
+        mobileStyle.textContent = `
+            @keyframes fall {
+                0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+                100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+            }
+            
+            /* Prevent blue highlight on tap for mobile */
+            * {
+                -webkit-tap-highlight-color: transparent;
+            }
+            
+            /* Better scrolling for mobile */
+            body {
+                -webkit-overflow-scrolling: touch;
+            }
+        `;
+        document.head.appendChild(mobileStyle);
+    </script>
+</body>
+</html>
