@@ -58,9 +58,6 @@
             border-radius: var(--radius);
             margin-bottom: 24px;
             box-shadow: var(--shadow);
-            position: sticky;
-            top: 0;
-            z-index: 100;
         }
         
         .mobile-header h1 {
@@ -130,6 +127,7 @@
         .mobile-section {
             display: none;
             animation: fadeIn 0.3s ease;
+            padding-bottom: 80px; /* Space for bottom nav */
         }
         
         .mobile-section.active {
@@ -235,6 +233,13 @@
             margin-right: 8px;
         }
         
+        .mobile-btn:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
         /* Activity cards */
         .activity-card {
             background: white;
@@ -289,10 +294,18 @@
             border-left: 4px solid var(--primary-blue);
         }
         
+        .deepfake-card .scenario-box {
+            border-left-color: var(--deepfake-purple);
+        }
+        
         .scenario-title {
             color: var(--primary-blue);
             font-size: 1.2rem;
             margin-bottom: 12px;
+        }
+        
+        .deepfake-card .scenario-title {
+            color: var(--deepfake-purple);
         }
         
         .scenario-text {
@@ -440,10 +453,12 @@
         
         .video-clip-mobile.fake {
             border-color: var(--warning-red);
+            background: rgba(255, 51, 102, 0.1);
         }
         
         .video-clip-mobile.real {
             border-color: var(--accent-green);
+            background: rgba(0, 204, 102, 0.1);
         }
         
         .clip-title-mobile {
@@ -488,7 +503,7 @@
             color: var(--deepfake-purple);
         }
         
-        /* Progress bar for mobile */
+        /* Progress bar for mobile - FIXED AND VISIBLE */
         .mobile-progress-container {
             position: fixed;
             bottom: 80px;
@@ -498,12 +513,18 @@
             padding: 12px 16px;
             border-radius: 12px;
             box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-            display: none;
             z-index: 90;
+            display: none;
         }
         
         .mobile-progress-container.show {
             display: block;
+            animation: slideUp 0.3s ease;
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
         
         .progress-text-mobile {
@@ -519,23 +540,42 @@
             background: #e6f2ff;
             border-radius: 4px;
             overflow: hidden;
+            position: relative;
         }
         
         .progress-fill-mobile {
             height: 100%;
-            background: var(--accent-green);
+            background: linear-gradient(90deg, var(--accent-green), #00ccaa);
             width: 0%;
             transition: width 0.3s ease;
+            position: relative;
+        }
+        
+        .progress-fill-mobile::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
         
         /* Results section for mobile */
         .results-container {
             display: none;
-            padding-bottom: 100px; /* Space for bottom nav */
+            padding-bottom: 100px;
         }
         
         .results-container.show {
             display: block;
+            animation: fadeIn 0.5s ease;
         }
         
         .score-display-mobile {
@@ -566,12 +606,30 @@
             background: #f0f0f0;
             opacity: 0.3;
             transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .badge-mobile::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
         }
         
         .badge-mobile.unlocked {
             opacity: 1;
             transform: scale(1.1);
             animation: badgePop 0.5s ease;
+        }
+        
+        .badge-mobile.unlocked::before {
+            opacity: 1;
         }
         
         @keyframes badgePop {
@@ -583,6 +641,7 @@
         .badge-mobile i {
             font-size: 2rem;
             margin-bottom: 8px;
+            z-index: 2;
         }
         
         .badge-text-mobile {
@@ -590,13 +649,14 @@
             font-weight: 600;
             text-align: center;
             line-height: 1.2;
+            z-index: 2;
         }
         
-        .badge-gold { border: 4px solid gold; background: #fff9e6; }
-        .badge-silver { border: 4px solid silver; background: #f8f8f8; }
-        .badge-bronze { border: 4px solid #cd7f32; background: #fff0e6; }
-        .badge-blue { border: 4px solid var(--primary-blue); background: #e6f2ff; }
-        .badge-purple { border: 4px solid var(--deepfake-purple); background: #f0e6ff; }
+        .badge-gold { border: 4px solid gold; background: linear-gradient(145deg, #fff9c4, #ffeb3b); }
+        .badge-silver { border: 4px solid silver; background: linear-gradient(145deg, #f5f5f5, #bdbdbd); }
+        .badge-bronze { border: 4px solid #cd7f32; background: linear-gradient(145deg, #ffcc80, #ff9800); }
+        .badge-blue { border: 4px solid var(--primary-blue); background: linear-gradient(145deg, #bbdefb, #2196f3); }
+        .badge-purple { border: 4px solid var(--deepfake-purple); background: linear-gradient(145deg, #e1bee7, #9c27b0); }
         
         /* Certificate for mobile */
         .certificate-mobile {
@@ -607,6 +667,7 @@
             margin: 30px 0;
             text-align: center;
             position: relative;
+            box-shadow: var(--shadow);
         }
         
         .certificate-title-mobile {
@@ -711,6 +772,11 @@
             animation: popIn 0.3s ease;
         }
         
+        @keyframes popIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
         /* Mobile-first adjustments */
         @media (min-width: 768px) {
             .mobile-container {
@@ -739,6 +805,34 @@
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
+        }
+        
+        /* Toast notifications for mobile */
+        .mobile-toast {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            background: white;
+            padding: 16px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            z-index: 2000;
+            text-align: center;
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+        
+        @keyframes slideDown {
+            from { transform: translateY(-100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .toast-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -778,9 +872,17 @@
         
         <!-- Progress Bar (Shows during activities) -->
         <div class="mobile-progress-container" id="mobile-progress">
-            <div class="progress-text-mobile">Progress: <span id="progress-percent">0%</span></div>
+            <div class="progress-text-mobile">Progress: <span id="progress-percent">0%</span> • Score: <span id="progress-score">0/9</span></div>
             <div class="progress-bar-mobile">
                 <div class="progress-fill-mobile" id="progress-fill"></div>
+            </div>
+        </div>
+        
+        <!-- Toast Notification -->
+        <div class="mobile-toast" id="mobile-toast">
+            <div class="toast-content">
+                <i class="fas fa-check-circle" style="color: var(--accent-green); font-size: 1.2rem;"></i>
+                <span id="toast-message">Notification</span>
             </div>
         </div>
         
@@ -898,7 +1000,7 @@
                     </ul>
                 </div>
                 
-                <button class="mobile-btn" id="next-to-social">
+                <button class="mobile-btn" id="next-to-social" disabled>
                     <i class="fas fa-arrow-right"></i> Continue to Social Engineering
                 </button>
             </div>
@@ -960,7 +1062,7 @@
                     </ul>
                 </div>
                 
-                <button class="mobile-btn" id="next-to-deepfake">
+                <button class="mobile-btn" id="next-to-deepfake" disabled>
                     <i class="fas fa-arrow-right"></i> Continue to DeepFake Detection
                 </button>
             </div>
@@ -1041,34 +1143,34 @@
                     </button>
                 </div>
                 
-                <!-- DeepFake Questions -->
+                <!-- DeepFake Questions - CORRECTED ANSWERS -->
                 <div class="question-container">
-                    <h3 class="question">1. Main danger of DeepFakes?</h3>
+                    <h3 class="question">1. What's the MAIN danger of DeepFakes?</h3>
                     <div class="mobile-options">
-                        <div class="mobile-option" data-correct="false">Makes movies better</div>
-                        <div class="mobile-option" data-correct="true">Spreads misinformation & scams</div>
-                        <div class="mobile-option" data-correct="false">Uses phone battery</div>
-                        <div class="mobile-option" data-correct="false">Makes social media fun</div>
+                        <div class="mobile-option" data-correct="false">They make movies more realistic</div>
+                        <div class="mobile-option" data-correct="true">They spread misinformation and enable scams</div>
+                        <div class="mobile-option" data-correct="false">They use too much computer power</div>
+                        <div class="mobile-option" data-correct="false">They make social media more fun</div>
                     </div>
                 </div>
                 
                 <div class="question-container">
-                    <h3 class="question">2. Red flag for DeepFake videos?</h3>
+                    <h3 class="question">2. What's a red flag for spotting DeepFakes?</h3>
                     <div class="mobile-options">
-                        <div class="mobile-option" data-correct="false">Colorful clothing</div>
-                        <div class="mobile-option" data-correct="true">Mouth doesn't match words</div>
-                        <div class="mobile-option" data-correct="false">High quality video</div>
-                        <div class="mobile-option" data-correct="false">Normal blinking</div>
+                        <div class="mobile-option" data-correct="false">The person is wearing colorful clothes</div>
+                        <div class="mobile-option" data-correct="true">Mouth movements don't match the words</div>
+                        <div class="mobile-option" data-correct="false">The video is high quality</div>
+                        <div class="mobile-option" data-correct="false">The person blinks normally</div>
                     </div>
                 </div>
                 
                 <div class="question-container">
-                    <h3 class="question">3. Suspicious video of family asking for money?</h3>
+                    <h3 class="question">3. What if you see a suspicious video of family asking for money?</h3>
                     <div class="mobile-options">
-                        <div class="mobile-option" data-correct="false">Send money fast</div>
-                        <div class="mobile-option" data-correct="true">Contact them another way</div>
-                        <div class="mobile-option" data-correct="false">Share to warn others</div>
-                        <div class="mobile-option" data-correct="false">Ignore - can't be fake</div>
+                        <div class="mobile-option" data-correct="false">Send money immediately</div>
+                        <div class="mobile-option" data-correct="true">Contact them through another method</div>
+                        <div class="mobile-option" data-correct="false">Share it to warn others</div>
+                        <div class="mobile-option" data-correct="false">Ignore it - videos can't be faked</div>
                     </div>
                 </div>
                 
@@ -1083,7 +1185,7 @@
                     </ul>
                 </div>
                 
-                <button class="mobile-btn" id="show-results-btn">
+                <button class="mobile-btn" id="show-results-btn" disabled>
                     <i class="fas fa-trophy"></i> See Your Results
                 </button>
             </div>
@@ -1187,12 +1289,12 @@
 
     <script>
         // ====================
-        // MOBILE-SPECIFIC JAVASCRIPT
+        // FIXED MOBILE JAVASCRIPT
         // ====================
         
-        // Touch-friendly variables
+        // Game state
         let userScore = 0;
-        let totalQuestions = 9;
+        let totalQuestions = 9; // 3 password + 3 social + 3 deepfake
         let passwordCompleted = false;
         let socialCompleted = false;
         let deepfakeCompleted = false;
@@ -1221,15 +1323,10 @@
             
             // Create confetti
             createMobileConfetti();
-            
-            // Disable text selection for better mobile UX
-            document.addEventListener('contextmenu', function(e) {
-                e.preventDefault();
-            });
         });
         
         // ====================
-        // MOBILE EVENT HANDLERS
+        // SETUP EVENT LISTENERS
         // ====================
         function setupMobileEvents() {
             // Mobile navigation
@@ -1246,19 +1343,23 @@
                 e.preventDefault();
                 startTime = new Date();
                 navigateToSection('password');
+                showToast('Good luck! Start with Password Security.');
             });
             
             // Navigation buttons
             document.getElementById('next-to-social').addEventListener('click', function(e) {
                 e.preventDefault();
                 navigateToSection('social');
+                showToast('Great job! Now try Social Engineering.');
             });
             
             document.getElementById('next-to-deepfake').addEventListener('click', function(e) {
                 e.preventDefault();
                 navigateToSection('deepfake');
+                showToast('Awesome! Now for DeepFake Detection.');
             });
             
+            // Show results button
             document.getElementById('show-results-btn').addEventListener('click', function(e) {
                 e.preventDefault();
                 showResults();
@@ -1288,25 +1389,17 @@
                 document.getElementById('celebration-modal').style.display = 'none';
             });
             
-            // Question option clicks (touch optimized)
+            // Question option clicks
             document.querySelectorAll('.mobile-option').forEach(option => {
-                option.addEventListener('touchstart', function(e) {
-                    this.style.transform = 'scale(0.98)';
-                });
-                
-                option.addEventListener('touchend', function(e) {
-                    this.style.transform = '';
+                option.addEventListener('click', function(e) {
+                    e.preventDefault();
                     handleMobileOptionClick(this);
-                });
-                
-                option.addEventListener('touchcancel', function(e) {
-                    this.style.transform = '';
                 });
             });
             
             // DeepFake game clicks
             document.querySelectorAll('.video-clip-mobile').forEach(clip => {
-                clip.addEventListener('touchend', function(e) {
+                clip.addEventListener('click', function(e) {
                     e.preventDefault();
                     this.classList.toggle('selected');
                     
@@ -1315,29 +1408,22 @@
                     if (selectedCount > 0) {
                         document.getElementById('check-deepfake').innerHTML = 
                             `<i class="fas fa-search"></i> Check (${selectedCount})`;
+                    } else {
+                        document.getElementById('check-deepfake').innerHTML = 
+                            `<i class="fas fa-search"></i> Check Selection`;
                     }
                 });
             });
             
             // Check DeepFake selection
-            document.getElementById('check-deepfake').addEventListener('touchend', function(e) {
+            document.getElementById('check-deepfake').addEventListener('click', function(e) {
                 e.preventDefault();
                 checkDeepfakeGame();
             });
-            
-            // Prevent accidental zoom on double tap
-            let lastTouchEnd = 0;
-            document.addEventListener('touchend', function(event) {
-                const now = Date.now();
-                if (now - lastTouchEnd <= 300) {
-                    event.preventDefault();
-                }
-                lastTouchEnd = now;
-            }, false);
         }
         
         // ====================
-        // MOBILE NAVIGATION
+        // NAVIGATION
         // ====================
         function navigateToSection(sectionId) {
             // Update navigation buttons
@@ -1362,7 +1448,7 @@
                 progressContainer.classList.remove('show');
             }
             
-            // Update progress
+            // Update progress display
             updateProgress();
             
             // Scroll to top for mobile
@@ -1370,14 +1456,17 @@
         }
         
         // ====================
-        // MOBILE OPTION HANDLING
+        // HANDLE OPTION CLICKS
         // ====================
         function handleMobileOptionClick(optionElement) {
             // Check if already answered
             const questionContainer = optionElement.closest('.question-container');
             const alreadyAnswered = questionContainer.querySelector('.mobile-option.selected');
             
-            if (alreadyAnswered) return;
+            if (alreadyAnswered) {
+                showToast('Question already answered!');
+                return;
+            }
             
             // Mark as selected
             optionElement.classList.add('selected');
@@ -1385,24 +1474,18 @@
             // Check if correct
             const isCorrect = optionElement.getAttribute('data-correct') === 'true';
             
-            // Visual feedback with mobile-friendly animations
+            // Visual feedback
             if (isCorrect) {
                 optionElement.classList.add('correct');
                 userScore++;
                 localStorage.setItem('mobileCyberScore', userScore);
+                showToast('Correct! +1 point');
                 
-                // Mobile vibration if supported
-                if (navigator.vibrate) {
-                    navigator.vibrate(50);
-                }
-                
-                // Visual pulse effect
-                optionElement.style.animation = 'none';
-                setTimeout(() => {
-                    optionElement.style.animation = 'fadeIn 0.5s';
-                }, 10);
+                // Vibrate if supported
+                if (navigator.vibrate) navigator.vibrate(50);
             } else {
                 optionElement.classList.add('incorrect');
+                showToast('Incorrect. Learn from the correct answer!');
                 
                 // Show correct answer
                 const correctOption = questionContainer.querySelector('.mobile-option[data-correct="true"]');
@@ -1418,65 +1501,72 @@
             // Update progress
             updateProgress();
             
-            // Check activity completion
-            checkMobileCompletion();
+            // Check if section is complete
+            checkSectionCompletion();
         }
         
         // ====================
-        // DEEPFAKE GAME FOR MOBILE
+        // DEEPFAKE GAME
         // ====================
         function checkDeepfakeGame() {
             const videoClips = document.querySelectorAll('.video-clip-mobile');
             let correctSelections = 0;
-            let totalSelections = 0;
+            let incorrectSelections = 0;
             
             // Check each clip
             videoClips.forEach(clip => {
                 const isSelected = clip.classList.contains('selected');
                 const isFake = clip.getAttribute('data-fake') === 'true';
                 
-                // Mark correct/incorrect
                 if (isSelected) {
-                    totalSelections++;
                     if (isFake) {
-                        clip.classList.add('fake');
-                        clip.classList.remove('selected');
                         correctSelections++;
                     } else {
-                        clip.classList.add('real');
-                        clip.classList.remove('selected');
+                        incorrectSelections++;
                     }
                 }
                 
-                // Show all as fake/real for learning
-                if (!isSelected) {
-                    if (isFake) {
-                        clip.classList.add('fake');
-                    } else {
-                        clip.classList.add('real');
-                    }
+                // Mark all clips for educational purposes
+                if (isFake) {
+                    clip.classList.add('fake');
+                } else {
+                    clip.classList.add('real');
                 }
+                clip.classList.remove('selected');
             });
             
-            // Calculate accuracy
-            if (totalSelections > 0) {
-                const accuracy = Math.round((correctSelections / totalSelections) * 100);
-                let message = `You identified ${correctSelections} out of ${totalSelections} DeepFakes correctly!`;
-                
-                // Bonus points for good accuracy
-                if (accuracy >= 75) {
-                    userScore += 1;
-                    localStorage.setItem('mobileCyberScore', userScore);
-                    message += "\n\n🎯 Bonus point for excellent detection!";
-                    updateProgress();
+            // Calculate score and provide feedback
+            let message = '';
+            if (correctSelections === 2 && incorrectSelections === 0) {
+                // Perfect score
+                userScore += 2; // Bonus points for perfect game
+                localStorage.setItem('mobileCyberScore', userScore);
+                message = "Perfect! You identified both DeepFakes correctly! +2 bonus points!";
+                deepfakeGameCompleted = true;
+            } else if (correctSelections === 1 && incorrectSelections === 0) {
+                // One correct, none incorrect
+                userScore += 1; // Bonus point
+                localStorage.setItem('mobileCyberScore', userScore);
+                message = "Good job! You identified 1 DeepFake correctly. +1 bonus point!";
+                deepfakeGameCompleted = true;
+            } else if (correctSelections > 0) {
+                // Some correct but also errors
+                message = `You identified ${correctSelections} out of 2 DeepFakes.`;
+                if (incorrectSelections > 0) {
+                    message += ` You also selected ${incorrectSelections} real video(s) as fake.`;
                 }
-                
-                // Mobile-friendly alert
-                showMobileAlert(message);
                 deepfakeGameCompleted = true;
             } else {
-                showMobileAlert("Please select at least one video first!");
+                message = "Please select at least one video first!";
+                // Reset markings if no selection
+                videoClips.forEach(clip => {
+                    clip.classList.remove('fake', 'real');
+                });
+                return;
             }
+            
+            // Show feedback
+            showToast(message);
             
             // Disable further selections
             document.querySelectorAll('.video-clip-mobile').forEach(clip => {
@@ -1484,10 +1574,14 @@
             });
             
             document.getElementById('check-deepfake').disabled = true;
+            
+            // Update progress
+            updateProgress();
+            checkSectionCompletion();
         }
         
         // ====================
-        // MOBILE PROGRESS UPDATES
+        // UPDATE PROGRESS
         // ====================
         function updateProgress() {
             // Calculate percentage
@@ -1496,8 +1590,9 @@
             // Update progress bar
             document.getElementById('progress-fill').style.width = `${percentage}%`;
             document.getElementById('progress-percent').textContent = `${percentage}%`;
+            document.getElementById('progress-score').textContent = `${userScore}/${totalQuestions}`;
             
-            // Update score display
+            // Update score displays
             document.getElementById('final-score').textContent = `${userScore}/${totalQuestions}`;
             document.getElementById('cert-score').textContent = `Score: ${userScore}/${totalQuestions}`;
             
@@ -1506,36 +1601,37 @@
             const socialQuestions = document.querySelectorAll('#social .mobile-option.selected');
             const deepfakeQuestions = document.querySelectorAll('#deepfake .question-container .mobile-option.selected');
             
+            // Password section completion
             if (passwordQuestions.length === 3 && !passwordCompleted) {
                 document.getElementById('password-feedback').classList.add('show');
                 passwordCompleted = true;
                 document.getElementById('next-to-social').disabled = false;
+                showToast('Password section complete! Move to next section.');
             }
             
+            // Social section completion
             if (socialQuestions.length === 3 && !socialCompleted) {
                 document.getElementById('social-feedback').classList.add('show');
                 socialCompleted = true;
                 document.getElementById('next-to-deepfake').disabled = false;
+                showToast('Social Engineering section complete!');
             }
             
+            // DeepFake section completion
             if (deepfakeQuestions.length === 3 && !deepfakeCompleted) {
                 document.getElementById('deepfake-feedback').classList.add('show');
                 deepfakeCompleted = true;
                 document.getElementById('show-results-btn').disabled = false;
+                showToast('All questions answered! Check your results.');
             }
         }
         
         // ====================
-        // CHECK COMPLETION
+        // CHECK SECTION COMPLETION
         // ====================
-        function checkMobileCompletion() {
-            const passwordQuestions = document.querySelectorAll('#password .mobile-option.selected');
-            const socialQuestions = document.querySelectorAll('#social .mobile-option.selected');
-            const deepfakeQuestions = document.querySelectorAll('#deepfake .question-container .mobile-option.selected');
-            
-            if (passwordQuestions.length === 3 && socialQuestions.length === 3 && deepfakeQuestions.length === 3) {
-                document.getElementById('show-results-btn').disabled = false;
-            }
+        function checkSectionCompletion() {
+            // This function is called after each answer to update navigation buttons
+            updateProgress();
         }
         
         // ====================
@@ -1547,8 +1643,11 @@
             const timeDiff = completionTime - startTime;
             const minutes = Math.floor(timeDiff / 60000);
             
-            // Update score
+            // Update score display
             document.getElementById('final-score').textContent = `${userScore}/${totalQuestions}`;
+            
+            // Show results section
+            document.querySelector('.results-container').classList.add('show');
             
             // Navigate to results
             navigateToSection('results');
@@ -1560,40 +1659,43 @@
             updateCertificateBadgesMobile();
             
             // Show celebration for good scores
-            if (userScore >= 7) {
+            if (userScore >= 6) {
                 showMobileCelebration();
             }
             
             // Save completion
             localStorage.setItem('mobileCyberCompleted', 'true');
+            localStorage.setItem('mobileCyberScore', userScore);
+            
+            showToast('Results calculated! Check your badges and certificate.');
         }
         
         // ====================
-        // AWARD MOBILE BADGES
+        // AWARD BADGES
         // ====================
         function awardMobileBadges(minutes) {
-            // Completion badge for everyone
+            // Always award completion badge
             document.getElementById('badge-completion').classList.add('unlocked');
             
-            // Password Pro (3/3 correct)
+            // Password Pro badge (3/3 on password questions)
             const passwordCorrect = document.querySelectorAll('#password .mobile-option.selected.correct').length;
             if (passwordCorrect === 3) {
                 document.getElementById('badge-password').classList.add('unlocked');
             }
             
-            // Scam Spotter (3/3 correct)
+            // Scam Spotter badge (3/3 on social questions)
             const socialCorrect = document.querySelectorAll('#social .mobile-option.selected.correct').length;
             if (socialCorrect === 3) {
                 document.getElementById('badge-social').classList.add('unlocked');
             }
             
-            // DeepFake Detective (3/3 correct + game)
+            // DeepFake Detective badge (3/3 on deepfake questions OR good game performance)
             const deepfakeCorrect = document.querySelectorAll('#deepfake .question-container .mobile-option.selected.correct').length;
-            if (deepfakeCorrect === 3 && deepfakeGameCompleted) {
+            if ((deepfakeCorrect === 3) || (deepfakeGameCompleted && userScore >= 6)) {
                 document.getElementById('badge-deepfake').classList.add('unlocked');
             }
             
-            // Perfect Score (9/9)
+            // Perfect Score badge (9/9 overall)
             if (userScore >= 9) {
                 document.getElementById('badge-perfect').classList.add('unlocked');
             }
@@ -1612,7 +1714,7 @@
             const certBadgesContainer = document.getElementById('cert-badges');
             certBadgesContainer.innerHTML = '';
             
-            // Add unlocked badges
+            // Add unlocked badges to certificate
             const badges = document.querySelectorAll('.badge-mobile.unlocked');
             badges.forEach(badge => {
                 const badgeClone = badge.cloneNode(true);
@@ -1626,7 +1728,7 @@
         }
         
         // ====================
-        // MOBILE CELEBRATION
+        // CELEBRATION
         // ====================
         function showMobileCelebration() {
             // Show confetti
@@ -1648,7 +1750,7 @@
             const confettiContainer = document.getElementById('confetti');
             const colors = ['#0066cc', '#3399ff', '#00cc66', '#ffcc00', '#ff3366', '#9b51e0'];
             
-            for (let i = 0; i < 50; i++) { // Less confetti for mobile performance
+            for (let i = 0; i < 50; i++) {
                 const piece = document.createElement('div');
                 piece.style.position = 'absolute';
                 piece.style.width = `${Math.random() * 10 + 5}px`;
@@ -1685,12 +1787,12 @@
         }
         
         // ====================
-        // DOWNLOAD CERTIFICATE (MOBILE)
+        // DOWNLOAD CERTIFICATE
         // ====================
         function downloadMobileCertificate() {
             const certificate = document.getElementById('certificate');
             
-            // Use html2canvas for mobile
+            // Use html2canvas for screenshot
             const html2canvasScript = document.createElement('script');
             html2canvasScript.src = 'https://html2canvas.hertzen.com/dist/html2canvas.min.js';
             
@@ -1700,14 +1802,14 @@
                         scale: 2,
                         backgroundColor: '#ffffff',
                         useCORS: true,
-                        logging: false // Disable logging for mobile performance
+                        logging: false
                     }).then(canvas => {
                         const image = canvas.toDataURL('image/png');
                         const link = document.createElement('a');
                         link.href = image;
                         link.download = `cybersecurity-certificate-${userScore}.png`;
                         
-                        // For iOS, we need to open in new window
+                        // For mobile browsers
                         if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
                             const newWindow = window.open();
                             newWindow.document.write(`<img src="${image}" />`);
@@ -1717,10 +1819,10 @@
                             document.body.removeChild(link);
                         }
                         
-                        showMobileAlert('✅ Certificate saved to your device!');
+                        showToast('✅ Certificate downloaded!');
                     }).catch(error => {
                         console.error('Certificate error:', error);
-                        showMobileAlert('Could not generate certificate. Please try again.');
+                        showToast('Could not generate certificate. Try again.');
                     });
                 }
             };
@@ -1734,12 +1836,12 @@
         }
         
         // ====================
-        // SHARE MOBILE RESULTS
+        // SHARE RESULTS
         // ====================
         function shareMobileResults() {
             const shareText = `I scored ${userScore}/9 on the Mobile Cybersecurity Activity! 🛡️📱 Try it: ${window.location.href}`;
             
-            // Use Web Share API if available (mobile browsers)
+            // Use Web Share API if available
             if (navigator.share) {
                 navigator.share({
                     title: 'My Cybersecurity Score',
@@ -1750,12 +1852,12 @@
             // Fallback for non-share API browsers
             else if (navigator.clipboard) {
                 navigator.clipboard.writeText(shareText).then(() => {
-                    showMobileAlert('📋 Results copied! Paste to share.');
+                    showToast('📋 Results copied! Paste to share.');
                 }).catch(err => {
-                    showMobileAlert(`Share this: ${window.location.href}`);
+                    showToast(`Share this: ${window.location.href}`);
                 });
             } else {
-                showMobileAlert(`Share this link: ${window.location.href}`);
+                showToast(`Share this link: ${window.location.href}`);
             }
         }
         
@@ -1816,50 +1918,26 @@
             navigateToSection('intro');
             
             // Show confirmation
-            showMobileAlert('Activity reset! Start again from the beginning.');
+            showToast('Activity reset! Start again.');
         }
         
         // ====================
-        // MOBILE HELPER FUNCTIONS
+        // TOAST NOTIFICATIONS
         // ====================
-        function showMobileAlert(message) {
-            // Create mobile-friendly alert
-            const alertDiv = document.createElement('div');
-            alertDiv.style.position = 'fixed';
-            alertDiv.style.top = '20px';
-            alertDiv.style.left = '20px';
-            alertDiv.style.right = '20px';
-            alertDiv.style.backgroundColor = 'white';
-            alertDiv.style.padding = '20px';
-            alertDiv.style.borderRadius = '12px';
-            alertDiv.style.boxShadow = '0 10px 30px rgba(0,0,0,0.2)';
-            alertDiv.style.zIndex = '2000';
-            alertDiv.style.textAlign = 'center';
-            alertDiv.style.animation = 'fadeIn 0.3s ease';
+        function showToast(message) {
+            const toast = document.getElementById('mobile-toast');
+            document.getElementById('toast-message').textContent = message;
+            toast.style.display = 'block';
             
-            alertDiv.innerHTML = `
-                <p style="margin-bottom: 20px;">${message}</p>
-                <button id="close-alert" style="padding: 12px 30px; background-color: var(--primary-blue); color: white; border: none; border-radius: 8px; font-weight: 600;">
-                    OK
-                </button>
-            `;
-            
-            document.body.appendChild(alertDiv);
-            
-            // Close on button click
-            document.getElementById('close-alert').addEventListener('click', function() {
-                document.body.removeChild(alertDiv);
-            });
-            
-            // Auto-close after 5 seconds
+            // Auto-hide after 3 seconds
             setTimeout(() => {
-                if (document.body.contains(alertDiv)) {
-                    document.body.removeChild(alertDiv);
-                }
-            }, 5000);
+                toast.style.display = 'none';
+            }, 3000);
         }
         
-        // Add CSS for animations
+        // ====================
+        // ADDITIONAL ANIMATIONS
+        // ====================
         const mobileStyle = document.createElement('style');
         mobileStyle.textContent = `
             @keyframes fall {
@@ -1867,17 +1945,21 @@
                 100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
             }
             
-            /* Prevent blue highlight on tap for mobile */
-            * {
-                -webkit-tap-highlight-color: transparent;
+            /* Progress bar animation */
+            @keyframes progressPulse {
+                0% { box-shadow: 0 0 0 0 rgba(0, 204, 102, 0.4); }
+                70% { box-shadow: 0 0 0 10px rgba(0, 204, 102, 0); }
+                100% { box-shadow: 0 0 0 0 rgba(0, 204, 102, 0); }
             }
             
-            /* Better scrolling for mobile */
-            body {
-                -webkit-overflow-scrolling: touch;
+            .progress-bar-mobile {
+                animation: progressPulse 2s infinite;
             }
         `;
         document.head.appendChild(mobileStyle);
+        
+        // Initialize progress bar visibility
+        updateProgress();
     </script>
 </body>
 </html>
