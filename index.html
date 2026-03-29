@@ -1,0 +1,1043 @@
+<!-- Activity designed by Maher Salem | Enhanced version -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<title>CyberGuard Academy 🛡️</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+<style>
+:root {
+  --dark:#0a0e1a; --panel:#111827; --card:#1a2235; --border:#1e3a5f;
+  --blue:#00d4ff; --green:#00ff88; --red:#ff4466; --yellow:#ffd700;
+  --purple:#b04fff; --orange:#ff8c00;
+  --td:#e8f4ff; --tm:#8899bb;
+  --gb:0 0 20px rgba(0,212,255,.4); --gg:0 0 20px rgba(0,255,136,.4);
+  --gr:0 0 20px rgba(255,68,102,.4);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--dark);color:var(--td);min-height:100vh;overflow-x:hidden;font-size:16px;line-height:1.6}
+body::before{content:'';position:fixed;inset:0;z-index:0;background-image:linear-gradient(rgba(0,212,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,.035) 1px,transparent 1px);background-size:40px 40px;pointer-events:none}
+.wrap{position:relative;z-index:1;max-width:560px;margin:0 auto;padding:0 14px 110px}
+
+/* HEADER */
+.hdr{text-align:center;padding:26px 18px 20px}
+.hdr-logo{font-size:2.6rem;margin-bottom:6px;animation:pulse 2.5s infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+.hdr h1{font-size:1.75rem;font-weight:800;background:linear-gradient(135deg,var(--blue),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px}
+.hdr-sub{font-size:.86rem;color:var(--tm);margin-bottom:10px}
+.xp-track{background:rgba(255,255,255,.07);border-radius:20px;height:10px;overflow:hidden;margin:10px 0 5px;border:1px solid rgba(0,212,255,.18)}
+.xp-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--blue),var(--green));border-radius:20px;transition:width .7s cubic-bezier(.34,1.56,.64,1);box-shadow:var(--gb)}
+.xp-row{display:flex;justify-content:space-between;font-size:.74rem;color:var(--blue)}
+
+/* BOTTOM NAV */
+.bnav{position:fixed;bottom:0;left:0;right:0;z-index:500;background:rgba(10,14,26,.96);border-top:1px solid var(--border);backdrop-filter:blur(16px);display:flex;justify-content:space-around;padding:8px 4px 14px}
+.nb{display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;color:var(--tm);font-size:.63rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:6px 10px;border-radius:10px;transition:all .2s;cursor:pointer;min-width:52px}
+.nb i{font-size:1.1rem}
+.nb.on{color:var(--blue);background:rgba(0,212,255,.1);box-shadow:inset 0 0 12px rgba(0,212,255,.12)}
+.nb .nd{width:4px;height:4px;border-radius:50%;background:var(--blue);display:none;margin-top:-2px}
+.nb.on .nd{display:block}
+
+/* SECTIONS */
+.gsec{display:none;animation:fadeUp .3s ease}
+.gsec.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px;margin-bottom:18px}
+.card-blue{box-shadow:0 0 24px rgba(0,212,255,.1)}
+.card-red{box-shadow:0 0 24px rgba(255,68,102,.1)}
+.card-purple{box-shadow:0 0 24px rgba(176,79,255,.1)}
+.card-green{box-shadow:0 0 24px rgba(0,255,136,.1)}
+
+/* CARD HEAD */
+.ch{display:flex;align-items:center;gap:14px;padding-bottom:16px;margin-bottom:18px;border-bottom:1px solid rgba(255,255,255,.06)}
+.ci{width:48px;height:48px;border-radius:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.35rem}
+.ci-b{background:rgba(0,212,255,.14);color:var(--blue)}
+.ci-r{background:rgba(255,68,102,.14);color:var(--red)}
+.ci-p{background:rgba(176,79,255,.14);color:var(--purple)}
+.ch-text h2{font-size:1.18rem;font-weight:700}
+.ch-text p{font-size:.78rem;color:var(--tm);margin-top:2px}
+
+/* SCENARIO */
+.scene{background:rgba(0,0,0,.35);border-radius:14px;padding:18px;margin-bottom:20px;border-left:3px solid var(--blue)}
+.scene.danger{border-left-color:var(--red)}
+.scene.warn{border-left-color:var(--yellow)}
+.scene.purp{border-left-color:var(--purple)}
+.schar{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.av{width:42px;height:42px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.35rem;border:2px solid}
+.av-h{border-color:var(--red);background:rgba(255,68,102,.14)}
+.av-a{border-color:var(--blue);background:rgba(0,212,255,.14)}
+.av-s{border-color:var(--yellow);background:rgba(255,215,0,.14)}
+.av-ai{border-color:var(--purple);background:rgba(176,79,255,.14)}
+.cname{font-size:.76rem;font-weight:700;color:var(--tm);text-transform:uppercase;letter-spacing:.06em}
+.cname.r{color:var(--red)}.cname.b{color:var(--blue)}.cname.y{color:var(--yellow)}.cname.p{color:var(--purple)}
+.smsg{font-size:.9rem;line-height:1.6;background:rgba(255,255,255,.04);border-radius:10px;padding:12px 14px}
+.smsg strong{color:var(--yellow)}
+.hl{display:inline-block;background:rgba(255,68,102,.14);border:1px solid var(--red);border-radius:6px;padding:1px 7px;font-size:.83rem;color:var(--red);margin:2px;font-family:'Courier New',monospace;font-weight:700}
+.hg{display:inline-block;background:rgba(0,255,136,.1);border:1px solid var(--green);border-radius:6px;padding:1px 7px;font-size:.83rem;color:var(--green);margin:2px}
+
+/* Q BLOCKS */
+.qb{margin-bottom:26px}
+.qlbl{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:7px;display:flex;align-items:center;gap:5px}
+.qt{font-size:.97rem;font-weight:600;color:var(--td);margin-bottom:13px;line-height:1.44}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.1);border-radius:10px;padding:13px 15px;font-size:.9rem;color:var(--td);cursor:pointer;transition:all .2s;text-align:left;display:flex;align-items:center;gap:10px;min-height:48px}
+.ol{width:26px;height:26px;border-radius:50%;flex-shrink:0;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;font-size:.76rem;font-weight:700}
+.opt:hover{border-color:var(--blue);background:rgba(0,212,255,.07)}
+.opt:active{transform:translateY(1px)}
+.opt.oc{border-color:var(--green);background:rgba(0,255,136,.1);box-shadow:var(--gg)}
+.opt.oc .ol{background:var(--green);color:#000}
+.opt.ow{border-color:var(--red);background:rgba(255,68,102,.1);box-shadow:var(--gr)}
+.opt.ow .ol{background:var(--red);color:#fff}
+.opt.sc{border-color:var(--green);background:rgba(0,255,136,.06)}
+.opt.sc .ol{background:var(--green);color:#000}
+.opt.lk{pointer-events:none;opacity:.55}
+.opt.oc.lk,.opt.sc.lk{opacity:1}
+
+/* EXPLANATION */
+.exp{display:none;margin-top:9px;background:rgba(0,0,0,.3);border-radius:10px;padding:12px 14px;font-size:.85rem;line-height:1.55;border-left:3px solid var(--green)}
+.exp.ew{border-left-color:var(--red)}
+.exp.show{display:block;animation:fadeUp .3s ease}
+.expi{font-size:.95rem;margin-right:5px}
+
+/* PROGRESS DOTS */
+.sprow{display:flex;align-items:center;gap:9px;margin-bottom:17px}
+.pdots{display:flex;gap:6px}
+.pd{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.14);border:1.5px solid rgba(255,255,255,.18);transition:all .3s}
+.pd.ans{background:var(--blue);border-color:var(--blue);box-shadow:var(--gb)}
+.pd.cor{background:var(--green);border-color:var(--green)}
+.pd.wrg{background:var(--red);border-color:var(--red)}
+.ptxt{font-size:.76rem;color:var(--tm);margin-left:auto}
+
+/* FEEDBACK BANNER */
+.fbanner{display:none;border-radius:12px;padding:17px 19px;margin:18px 0;animation:fadeUp .35s ease}
+.fbanner.show{display:block}
+.fbanner.suc{background:rgba(0,255,136,.07);border:1px solid rgba(0,255,136,.28)}
+.fbt{font-size:.97rem;font-weight:700;display:flex;align-items:center;gap:7px;margin-bottom:10px;color:var(--green)}
+.fbl{list-style:none;display:flex;flex-direction:column;gap:6px}
+.fbl li{font-size:.86rem;display:flex;align-items:flex-start;gap:7px;line-height:1.44}
+.fbl li::before{content:'→';color:var(--blue);flex-shrink:0;font-weight:700}
+
+/* DEEPFAKE GAME */
+.dfg{background:rgba(176,79,255,.05);border:2px dashed rgba(176,79,255,.28);border-radius:14px;padding:19px;margin:19px 0}
+.dfg h3{color:var(--purple);font-size:.97rem;margin-bottom:5px;display:flex;align-items:center;gap:7px}
+.dfg>p{font-size:.86rem;color:var(--tm);margin-bottom:14px}
+.cgrid{display:flex;flex-direction:column;gap:11px}
+.cc{background:rgba(255,255,255,.04);border:2px solid rgba(255,255,255,.1);border-radius:12px;padding:15px;cursor:pointer;transition:all .22s;display:flex;align-items:flex-start;gap:11px}
+.cc:active{transform:translateY(1px)}
+.cc.sel{border-color:var(--purple);background:rgba(176,79,255,.09);box-shadow:0 0 18px rgba(176,79,255,.18)}
+.cc.rfk{border-color:var(--red);background:rgba(255,68,102,.09);pointer-events:none}
+.cc.rrl{border-color:var(--green);background:rgba(0,255,136,.05);pointer-events:none}
+.cth{width:52px;height:52px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.55rem;background:rgba(255,255,255,.07)}
+.ci4 h4{font-size:.9rem;font-weight:700;margin-bottom:3px}
+.ci4 p{font-size:.8rem;color:var(--tm);line-height:1.38}
+.ci4 .clue{font-size:.76rem;color:var(--yellow);margin-top:4px;font-style:italic}
+.cverd{display:none;margin-top:7px;font-size:.8rem;font-weight:700;padding:3px 9px;border-radius:20px}
+.vf{background:rgba(255,68,102,.18);color:var(--red)}
+.vr{background:rgba(0,255,136,.13);color:var(--green)}
+.cc.rfk .cverd,.cc.rrl .cverd{display:inline-block}
+
+/* PASSWORD DEMO */
+.pwdemo{background:rgba(0,0,0,.3);border-radius:12px;padding:17px;margin:15px 0}
+.pwdemo label{font-size:.76rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--tm);display:block;margin-bottom:7px}
+.pwwrap{position:relative}
+.pwinp{width:100%;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.14);border-radius:10px;padding:12px 44px 12px 13px;font-size:.93rem;color:var(--td);outline:none;font-family:'Courier New',monospace;transition:border-color .2s}
+.pwinp:focus{border-color:var(--blue)}
+.pweye{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--tm);cursor:pointer;font-size:.95rem}
+.stbar{margin-top:9px;height:6px;border-radius:3px;background:rgba(255,255,255,.09);overflow:hidden}
+.stfill{height:100%;width:0%;border-radius:3px;transition:width .4s,background .4s}
+.stlbl{font-size:.76rem;margin-top:4px;font-weight:600}
+.sttips{margin-top:11px;display:flex;flex-wrap:wrap;gap:5px}
+.stt{font-size:.71rem;padding:3px 8px;border-radius:20px;display:flex;align-items:center;gap:3px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);transition:all .2s;color:var(--tm)}
+.stt.met{background:rgba(0,255,136,.1);border-color:rgba(0,255,136,.28);color:var(--green)}
+
+/* BUTTONS */
+.btn{display:block;width:100%;padding:15px 20px;border:none;border-radius:12px;font-size:.97rem;font-weight:700;cursor:pointer;transition:all .22s;text-align:center;margin:13px 0;font-family:inherit}
+.btn:active{transform:scale(.98)}
+.btn-b{background:linear-gradient(135deg,#0099dd,var(--blue));color:#000;box-shadow:0 6px 20px rgba(0,212,255,.28)}
+.btn-b:hover{box-shadow:0 8px 28px rgba(0,212,255,.48);transform:translateY(-2px)}
+.btn-g{background:linear-gradient(135deg,#00cc66,var(--green));color:#000;box-shadow:0 6px 20px rgba(0,255,136,.28)}
+.btn-g:hover{box-shadow:0 8px 28px rgba(0,255,136,.48);transform:translateY(-2px)}
+.btn-p{background:linear-gradient(135deg,#8822cc,var(--purple));color:#fff;box-shadow:0 6px 20px rgba(176,79,255,.28)}
+.btn-p:hover{box-shadow:0 8px 28px rgba(176,79,255,.48);transform:translateY(-2px)}
+.btn-r{background:linear-gradient(135deg,#cc2244,var(--red));color:#fff;box-shadow:0 6px 20px rgba(255,68,102,.28)}
+.btn-o{background:transparent;border:2px solid var(--blue);color:var(--blue)}
+.btn:disabled{background:rgba(255,255,255,.07);color:rgba(255,255,255,.28);box-shadow:none;cursor:not-allowed;transform:none}
+
+/* RESULTS */
+.rring-wrap{display:flex;justify-content:center;margin:22px 0}
+.rring{width:148px;height:148px;position:relative;display:flex;align-items:center;justify-content:center}
+.rring svg{position:absolute;inset:0;transform:rotate(-90deg)}
+.rb{fill:none;stroke:rgba(255,255,255,.07);stroke-width:8}
+.rf{fill:none;stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset 1.2s cubic-bezier(.34,1.56,.64,1)}
+.rs{text-align:center;z-index:1}
+.rsn{font-size:2.1rem;font-weight:900;line-height:1}
+.rsd{font-size:.83rem;color:var(--tm)}
+.glbl{text-align:center;font-size:1.45rem;font-weight:800;margin-bottom:5px}
+.gmsg{text-align:center;font-size:.88rem;color:var(--tm);margin-bottom:22px}
+
+/* BADGES */
+.brow{display:flex;gap:11px;justify-content:center;flex-wrap:wrap;margin:19px 0}
+.bi{width:76px;text-align:center;opacity:.3;transition:all .4s}
+.bi.earned{opacity:1;animation:bpop .5s cubic-bezier(.34,1.56,.64,1) forwards}
+@keyframes bpop{0%{transform:scale(.4) rotate(-10deg);opacity:0}70%{transform:scale(1.15) rotate(3deg)}100%{transform:scale(1) rotate(0deg);opacity:1}}
+.bico{width:60px;height:60px;border-radius:50%;margin:0 auto 5px;display:flex;align-items:center;justify-content:center;font-size:1.55rem;border:3px solid}
+.bg{border-color:var(--yellow);background:linear-gradient(145deg,#3a2a00,#5a4400);color:var(--yellow)}
+.bsi{border-color:#aaa;background:linear-gradient(145deg,#1a1a1a,#333);color:#ccc}
+.bgr{border-color:var(--green);background:linear-gradient(145deg,#003320,#005a38);color:var(--green)}
+.bp{border-color:var(--purple);background:linear-gradient(145deg,#1a0033,#330066);color:var(--purple)}
+.bb{border-color:var(--blue);background:linear-gradient(145deg,#001a33,#003366);color:var(--blue)}
+.blbl{font-size:.62rem;font-weight:700;color:var(--tm);line-height:1.2}
+.bi.earned .blbl{color:var(--td)}
+
+/* CAREER */
+.career{background:linear-gradient(135deg,rgba(0,212,255,.05),rgba(176,79,255,.05));border:1px solid rgba(0,212,255,.18);border-radius:16px;padding:23px;margin:22px 0;text-align:center;position:relative;overflow:hidden}
+.career::before{content:'';position:absolute;top:-40px;right:-40px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(0,212,255,.13),transparent)}
+.career h3{font-size:1.25rem;font-weight:800;margin-bottom:11px;background:linear-gradient(135deg,var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.career>p{font-size:.87rem;color:var(--tm);line-height:1.65;margin-bottom:14px}
+.cstats{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin:14px 0}
+.csc{background:rgba(0,0,0,.3);border-radius:10px;padding:11px 7px;text-align:center}
+.csn{font-size:1.35rem;font-weight:900;color:var(--blue)}
+.csl{font-size:.66rem;color:var(--tm);margin-top:2px;letter-spacing:.05em}
+.croles{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:13px 0}
+.rpill{font-size:.72rem;padding:4px 11px;border-radius:20px;font-weight:600;background:rgba(0,212,255,.09);border:1px solid rgba(0,212,255,.22);color:var(--blue)}
+.cquote{background:rgba(0,0,0,.3);border-radius:11px;padding:13px 15px;text-align:left;margin:13px 0;font-size:.84rem}
+
+/* CERTIFICATE */
+.certcard{background:linear-gradient(135deg,#0d1a2e,#1a0d2e);border:3px solid var(--blue);border-radius:17px;padding:26px 22px;text-align:center;margin:22px 0;box-shadow:0 0 40px rgba(0,212,255,.18),inset 0 0 60px rgba(0,0,0,.3);position:relative;overflow:hidden}
+.certcard::before{content:'';position:absolute;inset:0;border-radius:17px;background:repeating-linear-gradient(45deg,transparent,transparent 20px,rgba(0,212,255,.013) 20px,rgba(0,212,255,.013) 21px)}
+.certshield{font-size:2.8rem;margin-bottom:9px}
+.certtitle{font-size:1.42rem;font-weight:900;letter-spacing:.05em;background:linear-gradient(135deg,var(--blue),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:14px}
+.certbody{font-size:.87rem;color:var(--tm);line-height:1.7}
+.certname{font-size:1.35rem;font-weight:900;color:var(--yellow);margin:9px 0;font-style:italic}
+.certscore{font-size:1.9rem;font-weight:900;color:var(--green);margin:13px 0 5px;text-shadow:var(--gg)}
+.certdate{font-size:.78rem;color:var(--tm);margin-top:9px}
+.actrow{display:flex;gap:9px;margin-top:4px}
+.actrow .btn{margin:0}
+
+/* INTRO */
+.ihero{text-align:center;padding:14px 0 22px}
+.iemoji{font-size:3.8rem;margin-bottom:11px;animation:float 3s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.ihero h2{font-size:1.55rem;font-weight:800;margin-bottom:7px}
+.ihero p{font-size:.9rem;color:var(--tm);line-height:1.65}
+.mcards{display:flex;flex-direction:column;gap:11px;margin:18px 0}
+.mitem{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:15px 17px;display:flex;align-items:center;gap:13px;transition:border-color .2s}
+.mitem:hover{border-color:var(--blue)}
+.mnum{width:33px;height:33px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.83rem;font-weight:900;border:2px solid var(--blue);color:var(--blue)}
+.mtext h4{font-size:.92rem;font-weight:700;margin-bottom:2px}
+.mtext p{font-size:.8rem;color:var(--tm)}
+.tbox{background:rgba(255,215,0,.04);border:1px solid rgba(255,215,0,.18);border-radius:12px;padding:15px 17px;margin-top:17px}
+.tbox h4{color:var(--yellow);font-size:.86rem;margin-bottom:7px;display:flex;align-items:center;gap:6px}
+.tbox p{font-size:.81rem;color:var(--tm);line-height:1.6}
+
+/* TOAST */
+.twrap{position:fixed;top:14px;left:12px;right:12px;z-index:9999;display:flex;flex-direction:column;gap:7px;pointer-events:none}
+.toast{background:rgba(10,14,26,.96);border-radius:12px;padding:13px 15px;box-shadow:0 8px 32px rgba(0,0,0,.5);backdrop-filter:blur(16px);display:flex;align-items:center;gap:9px;border:1px solid rgba(255,255,255,.09);animation:tIn .3s ease;font-size:.88rem;pointer-events:auto}
+.toast.tc{border-color:rgba(0,255,136,.38)}
+.toast.tw{border-color:rgba(255,68,102,.38)}
+.toast.ti{border-color:rgba(0,212,255,.38)}
+@keyframes tIn{from{opacity:0;transform:translateY(-22px) scale(.95)}to{opacity:1;transform:none}}
+@keyframes tOut{to{opacity:0;transform:translateY(-14px) scale(.95)}}
+
+/* CONFETTI */
+#confetti{position:fixed;inset:0;z-index:8000;pointer-events:none;display:none}
+.cp{position:absolute;border-radius:2px;animation:cfall linear forwards}
+@keyframes cfall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+
+/* MODAL */
+.movlay{position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:20px}
+.movlay.show{display:flex}
+.mbox{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:30px 26px;text-align:center;max-width:340px;width:100%;animation:mIn .4s cubic-bezier(.34,1.56,.64,1);box-shadow:0 0 60px rgba(0,212,255,.18)}
+@keyframes mIn{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+.memo{font-size:3.3rem;margin-bottom:13px}
+.mbox h2{font-size:1.55rem;font-weight:900;margin-bottom:7px}
+.mbox p{font-size:.88rem;color:var(--tm);margin-bottom:18px;line-height:1.6}
+
+/* REAL/FAKE COMPARE */
+.rfcompare{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin:17px 0}
+.rfbox{border-radius:12px;padding:13px;text-align:center}
+.rfbox-r{background:rgba(0,255,136,.05);border:1px solid rgba(0,255,136,.18)}
+.rfbox-f{background:rgba(255,68,102,.05);border:1px solid rgba(255,68,102,.18)}
+.rfbox .rflbl{font-size:.8rem;font-weight:700;margin-bottom:7px}
+.rfbox-r .rflbl{color:var(--green)}
+.rfbox-f .rflbl{color:var(--red)}
+.rfbox ul{list-style:none;font-size:.76rem;color:var(--tm);text-align:left;line-height:1.65}
+
+@media(max-width:400px){.cstats{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<div id="confetti"></div>
+<div class="twrap" id="twrap"></div>
+
+<div class="movlay" id="celmod">
+  <div class="mbox">
+    <div class="memo" id="memi">🎉</div>
+    <h2 id="mtit">Congratulations!</h2>
+    <p id="mmsg">You've unlocked a badge!</p>
+    <button class="btn btn-b" onclick="closeMod()" style="margin:0">Awesome! 🚀</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ══ HEADER ══ -->
+<div class="hdr">
+  <div class="hdr-logo">🛡️</div>
+  <h1>CyberGuard Academy</h1>
+  <p class="hdr-sub">Master cybersecurity. Outsmart the hackers.</p>
+  <div class="xp-track"><div class="xp-fill" id="xpFill"></div></div>
+  <div class="xp-row"><span id="xpLbl">0 XP</span><span id="scLbl">Score: 0 / 9</span></div>
+</div>
+
+<!-- ══════════════════════════════════
+     INTRO
+══════════════════════════════════ -->
+<section class="gsec active" id="sec-intro">
+<div class="card card-blue">
+  <div class="ihero">
+    <div class="iemoji">🧠💻🔐</div>
+    <h2>Your Mission, Agent!</h2>
+    <p>The internet is full of hackers, scammers, and AI fakes trying to steal your data, money, and identity. Your job? Learn to outsmart them ALL — before they outsmart you.</p>
+  </div>
+
+  <div class="scene danger">
+    <div class="schar">
+      <div class="av av-h">😈</div>
+      <div><div class="cname r">H4ck3r Steve</div><div style="font-size:.73rem;color:var(--tm)">Professional Scammer · 0 Real Friends</div></div>
+    </div>
+    <div class="smsg">
+      "Mwahahaha! I hacked 3 students this week using the most BASIC tricks!<br><br>
+      One used <span class="hl">password123</span> on everything 😂. Another clicked a fake 'You won a FREE iPhone!' link. And the third sent me money because I made a fake video of their mum asking for help!<br><br>
+      Nobody knows about cybersecurity. This is SO easy! 🤑"
+    </div>
+  </div>
+
+  <div class="scene" style="margin-bottom:18px">
+    <div class="schar">
+      <div class="av av-s">🤖</div>
+      <div><div class="cname y">CYBER SYSTEM</div><div style="font-size:.73rem;color:var(--tm)">Your Digital Guardian</div></div>
+    </div>
+    <div class="smsg">
+      <strong>ALERT:</strong> Student detected with ZERO cybersecurity awareness! 🚨<br><br>
+      Initiating emergency training protocol... Complete <span class="hg">3 missions</span> to stop Steve before he strikes again!
+    </div>
+  </div>
+
+  <div class="mcards">
+    <div class="mitem"><div class="mnum">1</div><div class="mtext"><h4>🔑 Password Fortress</h4><p>Learn why "fluffy123" won't protect you</p></div></div>
+    <div class="mitem"><div class="mnum">2</div><div class="mtext"><h4>🎭 Social Engineering</h4><p>Spot the tricks hackers use on your friends</p></div></div>
+    <div class="mitem"><div class="mnum">3</div><div class="mtext"><h4>🤖 DeepFake Lab</h4><p>Detect AI-generated fakes before they fool you</p></div></div>
+  </div>
+
+  <button class="btn btn-g" id="btnStart">⚡ Start Mission — Let's Go!</button>
+
+  <div class="tbox">
+    <h4><i class="fas fa-chalkboard-teacher"></i> Teacher Notes</h4>
+    <p><strong>Duration:</strong> 30–40 min &nbsp;|&nbsp; <strong>Level:</strong> Grades 10–12<br/>
+    <strong>Skills:</strong> Critical thinking, digital literacy, security awareness<br/>
+    <strong>Device:</strong> Mobile &amp; desktop optimised</p>
+  </div>
+</div>
+</section>
+
+<!-- ══════════════════════════════════
+     PASSWORD
+══════════════════════════════════ -->
+<section class="gsec" id="sec-password">
+<div class="card card-blue">
+  <div class="ch">
+    <div class="ci ci-b"><i class="fas fa-key"></i></div>
+    <div class="ch-text"><h2>Mission 1: Password Fortress</h2><p>3 questions · Up to 30 XP</p></div>
+  </div>
+
+  <div class="scene danger">
+    <div class="schar">
+      <div class="av av-a">😰</div>
+      <div><div class="cname b">Alex, 16</div><div style="font-size:.73rem;color:var(--tm)">Gamer &amp; TikToker</div></div>
+    </div>
+    <div class="smsg">
+      "I woke up today and couldn't log into ANYTHING. My TikTok, school email, gaming account, even Netflix — all GONE. A hacker posted embarrassing stuff everywhere!<br><br>
+      My password was <span class="hl">alex2023</span> on every single account because it was easy to remember... 😭"
+    </div>
+  </div>
+
+  <div class="scene warn" style="margin-top:10px;margin-bottom:20px">
+    <div class="schar">
+      <div class="av av-h">😈</div>
+      <div><div class="cname r">H4ck3r Steve</div></div>
+    </div>
+    <div class="smsg">
+      "LMAO it took me 4 seconds! I just tried 'alex2023' on every site. Same password everywhere = one win = ALL wins. Thanks bro 😂"
+    </div>
+  </div>
+
+  <!-- Password strength demo -->
+  <div style="margin-bottom:8px"><strong style="font-size:.9rem;color:var(--blue)">🔬 Password Lab — Test It Yourself</strong></div>
+  <div class="pwdemo">
+    <label>Type a password and watch the strength meter:</label>
+    <div class="pwwrap">
+      <input type="password" class="pwinp" id="pwdInput" placeholder="Type a password to test…" autocomplete="off"/>
+      <button class="pweye" id="pwdEye" onclick="togglePwd()"><i class="fas fa-eye"></i></button>
+    </div>
+    <div class="stbar"><div class="stfill" id="stFill"></div></div>
+    <div class="stlbl" id="stLbl" style="color:var(--tm)">Start typing…</div>
+    <div class="sttips">
+      <div class="stt" id="t-len"><i class="fas fa-check-circle"></i>&nbsp;12+ chars</div>
+      <div class="stt" id="t-up"><i class="fas fa-check-circle"></i>&nbsp;Uppercase</div>
+      <div class="stt" id="t-lo"><i class="fas fa-check-circle"></i>&nbsp;Lowercase</div>
+      <div class="stt" id="t-nu"><i class="fas fa-check-circle"></i>&nbsp;Number</div>
+      <div class="stt" id="t-sy"><i class="fas fa-check-circle"></i>&nbsp;Symbol</div>
+    </div>
+  </div>
+
+  <div class="sprow"><div class="pdots"><div class="pd" id="pd-p1"></div><div class="pd" id="pd-p2"></div><div class="pd" id="pd-p3"></div></div><div class="ptxt" id="pt-pwd">0 of 3 answered</div></div>
+
+  <div class="qb" id="pw-q1">
+    <div class="qlbl"><i class="fas fa-circle-question"></i> Question 1 of 3</div>
+    <div class="qt">Why was it SO easy for Steve to hack ALL of Alex's accounts at once?</div>
+    <div class="opts">
+      <div class="opt" data-q="pw-q1" data-c="false"><span class="ol">A</span> Alex's computer had a virus</div>
+      <div class="opt" data-q="pw-q1" data-c="true"><span class="ol">B</span> He reused the same weak password on every single account</div>
+      <div class="opt" data-q="pw-q1" data-c="false"><span class="ol">C</span> The websites were all hacked at the same time</div>
+      <div class="opt" data-q="pw-q1" data-c="false"><span class="ol">D</span> Alex shared his password with a friend</div>
+    </div>
+    <div class="exp" id="ex-pw-q1"><span class="expi">💡</span><strong>Credential stuffing!</strong> When you reuse passwords, hackers try your leaked password on every website automatically. One password = a master key to your whole digital life.</div>
+  </div>
+
+  <div class="qb" id="pw-q2">
+    <div class="qlbl"><i class="fas fa-circle-question"></i> Question 2 of 3</div>
+    <div class="qt">Which of these passwords would actually survive a hacker attack?</div>
+    <div class="opts">
+      <div class="opt" data-q="pw-q2" data-c="false"><span class="ol">A</span> fluffy2010 (my cat's name + birth year)</div>
+      <div class="opt" data-q="pw-q2" data-c="false"><span class="ol">B</span> P@ssw0rd! (classic substitution)</div>
+      <div class="opt" data-q="pw-q2" data-c="true"><span class="ol">C</span> Purple$Elephant!RunsFast42 (random passphrase)</div>
+      <div class="opt" data-q="pw-q2" data-c="false"><span class="ol">D</span> qwerty123 (keyboard pattern)</div>
+    </div>
+    <div class="exp" id="ex-pw-q2"><span class="expi">🔐</span><strong>Passphrases are king!</strong> Random word combinations are nearly impossible to guess yet easy to remember. Hackers crack "P@ssw0rd!" in seconds — it's on every cracking dictionary. Length beats complexity every time!</div>
+  </div>
+
+  <div class="qb" id="pw-q3">
+    <div class="qlbl"><i class="fas fa-circle-question"></i> Question 3 of 3</div>
+    <div class="qt">A website emails you: <em>"Your account may have been in a data breach."</em> What do you do FIRST?</div>
+    <div class="opts">
+      <div class="opt" data-q="pw-q3" data-c="false"><span class="ol">A</span> Do nothing — the website will fix it</div>
+      <div class="opt" data-q="pw-q3" data-c="false"><span class="ol">B</span> Create a new account with the same password</div>
+      <div class="opt" data-q="pw-q3" data-c="true"><span class="ol">C</span> Immediately change that password AND all accounts using it, enable 2FA</div>
+      <div class="opt" data-q="pw-q3" data-c="false"><span class="ol">D</span> Delete the email — probably spam</div>
+    </div>
+    <div class="exp" id="ex-pw-q3"><span class="expi">🚨</span><strong>Act fast!</strong> Hackers sell breached credentials within minutes. Change passwords immediately, enable 2FA everywhere, and check haveibeenpwned.com to see if your email was leaked.</div>
+  </div>
+
+  <div class="fbanner suc" id="fb-pwd">
+    <div class="fbt"><i class="fas fa-shield-alt"></i> Password Mission Complete! Your cheat sheet:</div>
+    <ul class="fbl">
+      <li>Use a different password for EVERY account — a password manager remembers them all</li>
+      <li>Make passwords 16+ characters: mix uppercase, lowercase, numbers, and symbols</li>
+      <li>Passphrases like "Purple$Elephant!RunsFast" are strong AND memorable</li>
+      <li>Enable Two-Factor Authentication (2FA) everywhere you can</li>
+      <li>Check haveibeenpwned.com — your email may already be in a breach!</li>
+    </ul>
+  </div>
+
+  <button class="btn btn-b" id="btnToSoc" disabled>➡️ Mission 2: Social Engineering</button>
+</div>
+</section>
+
+<!-- ══════════════════════════════════
+     SOCIAL ENGINEERING
+══════════════════════════════════ -->
+<section class="gsec" id="sec-social">
+<div class="card card-red">
+  <div class="ch">
+    <div class="ci ci-r"><i class="fas fa-user-secret"></i></div>
+    <div class="ch-text"><h2>Mission 2: Social Engineering</h2><p>3 questions · Up to 30 XP</p></div>
+  </div>
+
+  <div class="scene danger">
+    <div class="schar">
+      <div class="av av-h">😈</div>
+      <div><div class="cname r">H4ck3r Steve</div><div style="font-size:.73rem;color:var(--tm)">Master Manipulator</div></div>
+    </div>
+    <div class="smsg">
+      "Hacking computers is hard. Hacking <strong>PEOPLE</strong> is EASY! 😏<br><br>
+      I just took over your friend Layla's Instagram. Now I'm messaging all her contacts pretending to be her! People trust messages from friends — they'll send me anything I ask for.<br><br>
+      BOOM — I now own their accounts too. It spreads like a virus! 🦠"
+    </div>
+  </div>
+
+  <div class="scene warn" style="margin-top:10px;margin-bottom:20px">
+    <div class="schar">
+      <div class="av av-a">📱</div>
+      <div><div class="cname b">Layla's Instagram (actually Steve!)</div></div>
+    </div>
+    <div class="smsg">
+      <em>"Hey!! 😭 OMG I'm in such trouble! Lost my phone and someone is trying to break into my account RIGHT NOW! Instagram sent a 6-digit code to your number by mistake — can you send it to me ASAP?? I'll explain later PLEASE its urgent 🙏"</em>
+    </div>
+  </div>
+
+  <div class="sprow"><div class="pdots"><div class="pd" id="pd-s1"></div><div class="pd" id="pd-s2"></div><div class="pd" id="pd-s3"></div></div><div class="ptxt" id="pt-soc">0 of 3 answered</div></div>
+
+  <div class="qb" id="so-q1">
+    <div class="qlbl"><i class="fas fa-circle-question"></i> Question 1 of 3</div>
+    <div class="qt">What manipulation technique is Steve using to make the DM so convincing?</div>
+    <div class="opts">
+      <div class="opt" data-q="so-q1" data-c="false"><span class="ol">A</span> He installed a virus on your phone</div>
+      <div class="opt" data-q="so-q1" data-c="true"><span class="ol">B</span> Trusted identity + artificial urgency + emotional pressure</div>
+      <div class="opt" data-q="so-q1" data-c="false"><span class="ol">C</span> He hacked Instagram's servers directly</div>
+      <div class="opt" data-q="so-q1" data-c="false"><span class="ol">D</span> He sent a virus link hidden in the message</div>
+    </div>
+    <div class="exp" id="ex-so-q1"><span class="expi">🎭</span><strong>The social engineering trifecta!</strong> (1) <em>Trusted identity</em> — looks like your real friend, (2) <em>Urgency</em> — "RIGHT NOW!", (3) <em>Emotional pressure</em> — "I'm in trouble 🙏". This combo bypasses your logical thinking. No hacking needed — just human psychology!</div>
+  </div>
+
+  <div class="qb" id="so-q2">
+    <div class="qlbl"><i class="fas fa-circle-question"></i> Question 2 of 3</div>
+    <div class="qt">If you send that 6-digit code, exactly what happens to YOUR account?</div>
+    <div class="opts">
+      <div class="opt" data-q="so-q2" data-c="false"><span class="ol">A</span> Nothing — codes are just harmless numbers</div>
+      <div class="opt" data-q="so-q2" data-c="false"><span class="ol">B</span> You successfully help Layla log back in</div>
+      <div class="opt" data-q="so-q2" data-c="true"><span class="ol">C</span> Steve uses the code to take over YOUR account immediately</div>
+      <div class="opt" data-q="so-q2" data-c="false"><span class="ol">D</span> Instagram detects the fraud and blocks Steve automatically</div>
+    </div>
+    <div class="exp" id="ex-so-q2"><span class="expi">🔓</span><strong>That code IS your account!</strong> It's Instagram's login code sent to YOUR number to log into YOUR account. Steve types it in and locks you out in under 60 seconds — then changes your email and password. Remember: <em>no legitimate service will ever ask for an authentication code.</em></div>
+  </div>
+
+  <div class="qb" id="so-q3">
+    <div class="qlbl"><i class="fas fa-circle-question"></i> Question 3 of 3</div>
+    <div class="qt">You receive this urgent DM. What is the SMARTEST response?</div>
+    <div class="opts">
+      <div class="opt" data-q="so-q3" data-c="false"><span class="ol">A</span> Send the code quickly — she's your best friend!</div>
+      <div class="opt" data-q="so-q3" data-c="false"><span class="ol">B</span> Ask more questions in the DM to verify</div>
+      <div class="opt" data-q="so-q3" data-c="true"><span class="ol">C</span> Close the DM and call/WhatsApp Layla directly to confirm it's really her</div>
+      <div class="opt" data-q="so-q3" data-c="false"><span class="ol">D</span> Report the account to Instagram and do nothing else</div>
+    </div>
+    <div class="exp" id="ex-so-q3"><span class="expi">📞</span><strong>Verify through a DIFFERENT channel!</strong> The entire scam depends on you staying in that compromised DM. One real phone call breaks the illusion instantly. Layla will say "What? I didn't send anything!" — Steve is caught red-handed.</div>
+  </div>
+
+  <div class="fbanner suc" id="fb-soc">
+    <div class="fbt"><i class="fas fa-user-shield"></i> Social Engineering Mission Complete! Key defences:</div>
+    <ul class="fbl">
+      <li>NEVER share verification codes, OTPs, or passwords — not even with "friends"</li>
+      <li>Urgency and panic are manipulation tactics — slow down, think, then verify</li>
+      <li>Always confirm urgent requests through a completely different channel</li>
+      <li>If an account sends suspicious messages, warn the real person immediately</li>
+      <li>Enable login notifications so you know when someone tries to access your accounts</li>
+    </ul>
+  </div>
+
+  <button class="btn btn-r" id="btnToDF" disabled>➡️ Mission 3: DeepFake Lab</button>
+</div>
+</section>
+
+<!-- ══════════════════════════════════
+     DEEPFAKE
+══════════════════════════════════ -->
+<section class="gsec" id="sec-deepfake">
+<div class="card card-purple">
+  <div class="ch">
+    <div class="ci ci-p"><i class="fas fa-brain"></i></div>
+    <div class="ch-text"><h2>Mission 3: DeepFake Lab</h2><p>3 questions + detection game · Up to 30 XP</p></div>
+  </div>
+
+  <div class="scene purp">
+    <div class="schar">
+      <div class="av av-ai">🤖</div>
+      <div><div class="cname p">AI-Steve</div><div style="font-size:.73rem;color:var(--tm)">Not even real anymore</div></div>
+    </div>
+    <div class="smsg">
+      "Steve has levelled up! I'm now using AI to create fake videos. I made a fake video of a celebrity saying 'Invest in MyCryptoCoin — 1000% guaranteed returns!' It got 2 million views before anyone caught on.<br><br>
+      I also made a fake video of someone's dad saying <strong>'I'm in hospital, send €500 right now!'</strong> 😱 Three people sent money."
+    </div>
+  </div>
+
+  <!-- Real vs Fake visual guide -->
+  <div class="rfcompare">
+    <div class="rfbox rfbox-r">
+      <div style="font-size:1.5rem;margin-bottom:5px">✅</div>
+      <div class="rflbl">REAL Video</div>
+      <ul>
+        <li>Natural blinking</li>
+        <li>Perfect lip-sync</li>
+        <li>Consistent lighting</li>
+        <li>Hair moves naturally</li>
+        <li>No blurry edges</li>
+      </ul>
+    </div>
+    <div class="rfbox rfbox-f">
+      <div style="font-size:1.5rem;margin-bottom:5px">❌</div>
+      <div class="rflbl">DeepFake</div>
+      <ul>
+        <li>Unnatural blinking</li>
+        <li>Lips don't match audio</li>
+        <li>Odd skin texture</li>
+        <li>Blurry face edges</li>
+        <li>Background glitches</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Detection game -->
+  <div class="dfg">
+    <h3><i class="fas fa-gamepad"></i> Detective Challenge</h3>
+    <p>Select ALL videos you think are DeepFakes, then tap Analyse:</p>
+    <div class="cgrid">
+      <div class="cc" id="cl-1" data-fake="true" onclick="toggleClip('cl-1')">
+        <div class="cth">📱</div>
+        <div class="ci4">
+          <h4>Celebrity Crypto Ad</h4>
+          <p>Famous billionaire promotes unknown "GuaranteedCoin" — 1000% returns!</p>
+          <div class="clue">🔍 Real billionaires don't DM randoms about crypto</div>
+          <div class="cverd vf">🚨 DEEPFAKE CONFIRMED</div>
+        </div>
+      </div>
+      <div class="cc" id="cl-2" data-fake="false" onclick="toggleClip('cl-2')">
+        <div class="cth">📺</div>
+        <div class="ci4">
+          <h4>BBC Breaking News Report</h4>
+          <p>Journalist on BBC World News covering recent elections with studio background</p>
+          <div class="clue">🔍 Major networks have verification editors on site</div>
+          <div class="cverd vr">✅ REAL VIDEO</div>
+        </div>
+      </div>
+      <div class="cc" id="cl-3" data-fake="true" onclick="toggleClip('cl-3')">
+        <div class="cth">🆘</div>
+        <div class="ci4">
+          <h4>"Mum" Asking for Emergency Money</h4>
+          <p>WhatsApp video from Mum's number: "I'm at hospital, send £200 NOW!"</p>
+          <div class="clue">🔍 Urgency + money request via video = giant red flag</div>
+          <div class="cverd vf">🚨 DEEPFAKE CONFIRMED</div>
+        </div>
+      </div>
+      <div class="cc" id="cl-4" data-fake="false" onclick="toggleClip('cl-4')">
+        <div class="cth">🎤</div>
+        <div class="ci4">
+          <h4>Official Government Press Conference</h4>
+          <p>Streamed live on the official verified government YouTube channel with press corps</p>
+          <div class="clue">🔍 Multiple journalists present, official verified channel</div>
+          <div class="cverd vr">✅ REAL VIDEO</div>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-p" id="btnAnalyse" style="margin-top:13px">🔍 Analyse My Choices</button>
+    <div id="dfFeedback" style="display:none;margin-top:13px;padding:13px;background:rgba(0,0,0,.3);border-radius:10px;font-size:.86rem;line-height:1.6"></div>
+  </div>
+
+  <div class="sprow"><div class="pdots"><div class="pd" id="pd-d1"></div><div class="pd" id="pd-d2"></div><div class="pd" id="pd-d3"></div></div><div class="ptxt" id="pt-df">0 of 3 answered</div></div>
+
+  <div class="qb" id="df-q1">
+    <div class="qlbl"><i class="fas fa-circle-question"></i> Question 1 of 3</div>
+    <div class="qt">Why are DeepFake videos MORE dangerous than a simple photoshopped image?</div>
+    <div class="opts">
+      <div class="opt" data-q="df-q1" data-c="false"><span class="ol">A</span> They are bigger files that crash phones</div>
+      <div class="opt" data-q="df-q1" data-c="true"><span class="ol">B</span> Video + audio together are far more convincing — our brains are hardwired to trust moving faces and familiar voices</div>
+      <div class="opt" data-q="df-q1" data-c="false"><span class="ol">C</span> They contain hidden malware</div>
+      <div class="opt" data-q="df-q1" data-c="false"><span class="ol">D</span> They can only be made by governments</div>
+    </div>
+    <div class="exp" id="ex-df-q1"><span class="expi">🧠</span><strong>Seeing AND hearing = believing!</strong> Humans evolved to trust faces and voices above all else. This is why deepfakes are used for financial scams and fake news — they exploit our hardwired biology, triggering instant trust before our critical thinking kicks in.</div>
+  </div>
+
+  <div class="qb" id="df-q2">
+    <div class="qlbl"><i class="fas fa-circle-question"></i> Question 2 of 3</div>
+    <div class="qt">You're watching a suspicious video. Which is the STRONGEST sign it could be a DeepFake?</div>
+    <div class="opts">
+      <div class="opt" data-q="df-q2" data-c="false"><span class="ol">A</span> The person is wearing a hat</div>
+      <div class="opt" data-q="df-q2" data-c="true"><span class="ol">B</span> Lips don't perfectly sync with the words; the face edges look slightly blurry</div>
+      <div class="opt" data-q="df-q2" data-c="false"><span class="ol">C</span> The video is filmed vertically on a phone</div>
+      <div class="opt" data-q="df-q2" data-c="false"><span class="ol">D</span> The background is a plain solid colour</div>
+    </div>
+    <div class="exp" id="ex-df-q2"><span class="expi">👁️</span><strong>Key visual glitches to spot:</strong> AI struggles with (1) perfect lip sync, (2) face edges — look for blur where face meets hair/background, (3) blinking — too regular or too rare, (4) lighting — shadows that don't match the scene. Pause and look carefully!</div>
+  </div>
+
+  <div class="qb" id="df-q3">
+    <div class="qlbl"><i class="fas fa-circle-question"></i> Question 3 of 3</div>
+    <div class="qt">Your "cousin" sends you a WhatsApp video saying they're abroad in trouble and need £300 transferred urgently. Your BEST response is:</div>
+    <div class="opts">
+      <div class="opt" data-q="df-q3" data-c="false"><span class="ol">A</span> Transfer the money immediately — it's family!</div>
+      <div class="opt" data-q="df-q3" data-c="false"><span class="ol">B</span> Reply in WhatsApp asking for more proof</div>
+      <div class="opt" data-q="df-q3" data-c="true"><span class="ol">C</span> Hang up and call their REAL known number, or ask a secret family code word via voice call</div>
+      <div class="opt" data-q="df-q3" data-c="false"><span class="ol">D</span> Send half the money first as a test</div>
+    </div>
+    <div class="exp" id="ex-df-q3"><span class="expi">🔐</span><strong>Set a family code word!</strong> Agree on a secret word only your family knows. If anyone claims to be family in an emergency, ask for the code word. Can't say it? It's a scam. Also always call back on their KNOWN saved number — not the number that called you.</div>
+  </div>
+
+  <div class="fbanner suc" id="fb-df">
+    <div class="fbt"><i class="fas fa-brain"></i> DeepFake Mission Complete! Stay AI-proof:</div>
+    <ul class="fbl">
+      <li>Pause &amp; check: lip-sync issues, blurry face edges, unnatural blinking</li>
+      <li>Verify any urgent video request through a completely different channel</li>
+      <li>Create a family "code word" for emergencies — scammers won't know it</li>
+      <li>Use InVID or FotoForensics to analyse suspicious videos online</li>
+      <li>Always check if the video appears on the person's official verified account</li>
+    </ul>
+  </div>
+
+  <button class="btn btn-p" id="btnToResults" disabled>🏆 See My Results &amp; Certificate!</button>
+</div>
+</section>
+
+<!-- ══════════════════════════════════
+     RESULTS
+══════════════════════════════════ -->
+<section class="gsec" id="sec-results">
+<div class="card" style="text-align:center">
+  <h2 style="font-size:1.38rem;margin-bottom:4px" id="resTitle">Mission Complete!</h2>
+  <p style="color:var(--tm);font-size:.86rem;margin-bottom:17px">You've completed all 3 cybersecurity missions</p>
+
+  <div class="rring-wrap">
+    <div class="rring">
+      <svg viewBox="0 0 100 100" width="148" height="148">
+        <circle class="rb" cx="50" cy="50" r="42"/>
+        <circle class="rf" id="rFill" cx="50" cy="50" r="42" stroke-dasharray="264" stroke-dashoffset="264"/>
+      </svg>
+      <div class="rs"><div class="rsn" id="rNum" style="color:var(--green)">0</div><div class="rsd">/ 9</div></div>
+    </div>
+  </div>
+
+  <div class="glbl" id="gLbl">—</div>
+  <div class="gmsg" id="gMsg">—</div>
+
+  <h3 style="font-size:.85rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--tm);margin-bottom:13px">🏅 Badges Earned</h3>
+  <div class="brow">
+    <div class="bi" id="b-perfect"><div class="bico bg"><i class="fas fa-crown"></i></div><div class="blbl">Perfect Score</div></div>
+    <div class="bi" id="b-pwd"><div class="bico bb"><i class="fas fa-key"></i></div><div class="blbl">Password Pro</div></div>
+    <div class="bi" id="b-soc"><div class="bico bsi"><i class="fas fa-user-shield"></i></div><div class="blbl">Scam Spotter</div></div>
+    <div class="bi" id="b-df"><div class="bico bp"><i class="fas fa-brain"></i></div><div class="blbl">Fake Detective</div></div>
+    <div class="bi" id="b-done"><div class="bico bgr"><i class="fas fa-shield-alt"></i></div><div class="blbl">CyberGuard</div></div>
+  </div>
+</div>
+
+<!-- Career pitch -->
+<div class="career">
+  <h3>🚀 Want to Do This For a Living?</h3>
+  <p>You just did what real cybersecurity professionals do every day — only they get <strong style="color:var(--green)">paid very well</strong> to do it! The world desperately needs more cyber experts. Could that be you?</p>
+  <div class="cstats">
+    <div class="csc"><div class="csn">£85k</div><div class="csl">Avg entry salary</div></div>
+    <div class="csc"><div class="csn">3.5M</div><div class="csl">Global jobs unfilled</div></div>
+    <div class="csc"><div class="csn">0%</div><div class="csl">Unemployment rate</div></div>
+  </div>
+  <div style="font-size:.86rem;color:var(--yellow);font-weight:700;margin-bottom:11px;text-align:left">What cyber professionals actually do:</div>
+  <div class="croles">
+    <span class="rpill">Ethical Hacker 🎯</span>
+    <span class="rpill">Security Analyst 🔍</span>
+    <span class="rpill">Incident Responder 🚨</span>
+    <span class="rpill">AI Security Expert 🤖</span>
+    <span class="rpill">Digital Forensics 🔬</span>
+    <span class="rpill">Penetration Tester 💻</span>
+    <span class="rpill">CISO 👔</span>
+    <span class="rpill">Malware Analyst 🦠</span>
+  </div>
+  <div class="cquote">
+    <strong style="color:var(--blue)">💬 Real professional says:</strong><br/>
+    <em style="color:var(--tm)">"I get paid to legally break into companies' systems to find weaknesses before real hackers do. Every day is different, every problem is a puzzle. I've never been bored once." — Ethical Hacker, Google</em>
+  </div>
+  <div style="font-size:.83rem;color:var(--green);font-weight:700;margin-bottom:9px">✅ You already have the mindset. You just need the skills.</div>
+  <div style="font-size:.8rem;color:var(--tm);line-height:1.65">Our <strong style="color:var(--td)">BSc Cybersecurity programme</strong> teaches ethical hacking, network defence, digital forensics, and AI security — with industry certifications built in. Students graduate with job offers already lined up. 🎓</div>
+</div>
+
+<!-- Certificate -->
+<div class="certcard" id="certificate">
+  <div class="certshield">🛡️</div>
+  <div class="certtitle">CERTIFICATE OF ACHIEVEMENT</div>
+  <div class="certbody">This certifies that</div>
+  <div class="certname">CyberGuard Agent</div>
+  <div class="certbody">has successfully completed</div>
+  <div style="font-size:.93rem;font-weight:700;color:var(--blue);margin:5px 0">CyberGuard Academy — Cybersecurity Awareness Training</div>
+  <div class="certbody" style="font-size:.8rem;margin-top:3px">Password Security · Social Engineering · DeepFake Detection</div>
+  <div class="certscore" id="certSc">0/9</div>
+  <div id="certBadges" style="display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin:11px 0"></div>
+  <div class="certdate" id="certDt">—</div>
+  <div style="font-size:.73rem;color:rgba(255,255,255,.28);margin-top:5px">Grades 10–12 · Cybersecurity Awareness Programme</div>
+</div>
+
+<div class="actrow">
+  <button class="btn btn-g" id="btnDl" style="flex:1">📥 Download</button>
+  <button class="btn btn-b" id="btnSh" style="flex:1">📤 Share</button>
+</div>
+<button class="btn btn-o" id="btnRst" style="margin-top:7px">🔄 Play Again</button>
+</section>
+
+</div><!-- /wrap -->
+
+<!-- Bottom Nav -->
+<nav class="bnav">
+  <button class="nb on" data-s="intro"><i class="fas fa-home"></i><span>Home</span><div class="nd"></div></button>
+  <button class="nb" data-s="password"><i class="fas fa-key"></i><span>Password</span><div class="nd"></div></button>
+  <button class="nb" data-s="social"><i class="fas fa-user-secret"></i><span>Social</span><div class="nd"></div></button>
+  <button class="nb" data-s="deepfake"><i class="fas fa-brain"></i><span>DeepFake</span><div class="nd"></div></button>
+  <button class="nb" data-s="results"><i class="fas fa-trophy"></i><span>Results</span><div class="nd"></div></button>
+</nav>
+
+<script>
+// ══ STATE ══════════════════════════════════════
+let score=0, MAX=9;
+const answered={}, correct={};
+['pw-q1','pw-q2','pw-q3','so-q1','so-q2','so-q3','df-q1','df-q2','df-q3'].forEach(k=>{answered[k]=false;correct[k]=false});
+let pwDone=false,socDone=false,dfDone=false,dfGameDone=false,startTime=null;
+
+// ══ INIT ═══════════════════════════════════════
+document.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('certDt').textContent='Issued: '+new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+  setupNav(); setupOpts(); setupButtons(); setupPwdDemo();
+  updateXP();
+});
+
+// ══ NAV ════════════════════════════════════════
+function goTo(s){
+  document.querySelectorAll('.gsec').forEach(x=>x.classList.remove('active'));
+  document.getElementById('sec-'+s).classList.add('active');
+  document.querySelectorAll('.nb').forEach(b=>b.classList.toggle('on',b.dataset.s===s));
+  window.scrollTo(0,0);
+}
+function setupNav(){
+  document.querySelectorAll('.nb').forEach(b=>b.addEventListener('click',()=>goTo(b.dataset.s)));
+}
+
+// ══ QUESTIONS ══════════════════════════════════
+const dotPfx={'pw':'pd-p','so':'pd-s','df':'pd-d'};
+const dotN={'pw-q1':1,'pw-q2':2,'pw-q3':3,'so-q1':1,'so-q2':2,'so-q3':3,'df-q1':1,'df-q2':2,'df-q3':3};
+const ptEls={'pw':'pt-pwd','so':'pt-soc','df':'pt-df'};
+
+function setupOpts(){
+  document.querySelectorAll('.opt').forEach(o=>{
+    o.addEventListener('click',function(){
+      const qid=this.dataset.q; if(answered[qid])return;
+      answered[qid]=true;
+      const isC=this.dataset.c==='true';
+      const blk=this.closest('.qb');
+      blk.querySelectorAll('.opt').forEach(x=>x.classList.add('lk'));
+      if(isC){this.classList.add('oc');correct[qid]=true;score++;updateXP();toast('tc','✅ Correct! +10 XP');if(navigator.vibrate)navigator.vibrate([30,20,60]);}
+      else{
+        this.classList.add('ow');
+        blk.querySelectorAll('.opt').forEach(x=>{if(x.dataset.c==='true')x.classList.add('sc')});
+        toast('tw','❌ Not quite — read the explanation!');
+        if(navigator.vibrate)navigator.vibrate([80]);
+      }
+      const ex=document.getElementById('ex-'+qid);
+      if(ex){ex.classList.add('show');if(!isC)ex.classList.add('ew')}
+      const pre=qid.split('-')[0];
+      const dot=document.getElementById(dotPfx[pre]+dotN[qid]);
+      if(dot)dot.classList.add(isC?'cor':'wrg');
+      const cnt=Object.keys(answered).filter(k=>k.startsWith(pre)&&answered[k]).length;
+      const ptEl=document.getElementById(ptEls[pre]);
+      if(ptEl)ptEl.textContent=cnt+' of 3 answered';
+      checkSec(pre);
+    });
+  });
+}
+
+function checkSec(pre){
+  const keys=Object.keys(answered).filter(k=>k.startsWith(pre));
+  if(!keys.every(k=>answered[k]))return;
+  if(pre==='pw'&&!pwDone){
+    pwDone=true;
+    document.getElementById('fb-pwd').classList.add('show');
+    document.getElementById('btnToSoc').disabled=false;
+    toast('ti','🔑 Password mission complete! Move to Mission 2');
+    setTimeout(()=>showMod('🔑','Password Pro!','You\'ve mastered password security. Steve is getting nervous… 😅'),600);
+  }
+  if(pre==='so'&&!socDone){
+    socDone=true;
+    document.getElementById('fb-soc').classList.add('show');
+    document.getElementById('btnToDF').disabled=false;
+    toast('ti','🎭 Social Engineering mission complete! Move to Mission 3');
+    setTimeout(()=>showMod('🎭','Scam Spotter!','Steve\'s Instagram trick won\'t work on you! 😤'),600);
+  }
+  if(pre==='df'&&!dfDone){
+    dfDone=true;
+    document.getElementById('fb-df').classList.add('show');
+    document.getElementById('btnToResults').disabled=false;
+    toast('ti','🧠 All missions complete! See your results');
+    setTimeout(()=>showMod('🤖','DeepFake Detective!','AI can\'t fool you anymore! Steve just rage-quit. 😂'),600);
+  }
+}
+
+// ══ DEEPFAKE GAME ═══════════════════════════════
+function toggleClip(id){if(dfGameDone)return;document.getElementById(id).classList.toggle('sel')}
+
+document.addEventListener('click',e=>{if(e.target.id==='btnAnalyse'||e.target.closest('#btnAnalyse'))runDFGame()});
+
+function runDFGame(){
+  if(dfGameDone)return;
+  dfGameDone=true;
+  let right=0,wrong=0;
+  document.querySelectorAll('.cc').forEach(c=>{
+    const fake=c.dataset.fake==='true';
+    const sel=c.classList.contains('sel');
+    c.classList.remove('sel');
+    c.classList.add(fake?'rfk':'rrl');
+    c.querySelector('.cverd').style.display='inline-block';
+    if(fake&&sel)right++;
+    else if(!fake&&sel)wrong++;
+  });
+  document.getElementById('btnAnalyse').disabled=true;
+  let msg='',bonus=0;
+  if(right===2&&wrong===0){msg='🎯 <strong style="color:var(--green)">PERFECT!</strong> Both deepfakes identified, no false positives! <strong style="color:var(--yellow)">+20 Bonus XP!</strong>';bonus=2;}
+  else if(right===2){msg='👍 <strong style="color:var(--yellow)">Found both fakes</strong> but also flagged '+wrong+' real video(s). <strong style="color:var(--yellow)">+10 Bonus XP</strong>';bonus=1;}
+  else if(right===1){msg='🤔 You found <strong style="color:var(--yellow)">1 of 2 deepfakes</strong>. Study the lip-sync and face edge clues!';}
+  else{msg='😬 Steve got away this time! Review the Real vs Fake guide above and try the questions.';}
+  score=Math.min(MAX,score+bonus);updateXP();
+  const fb=document.getElementById('dfFeedback');fb.style.display='block';fb.innerHTML=msg;
+  toast('ti','Detection game done!'+(bonus>0?' +'+bonus*10+' Bonus XP!':' Study the clues!'));
+}
+
+// ══ PASSWORD DEMO ════════════════════════════════
+function setupPwdDemo(){
+  const inp=document.getElementById('pwdInput');
+  if(inp)inp.addEventListener('input',()=>checkStr(inp.value));
+}
+function togglePwd(){
+  const inp=document.getElementById('pwdInput'),btn=document.getElementById('pwdEye');
+  inp.type=inp.type==='password'?'text':'password';
+  btn.innerHTML=inp.type==='password'?'<i class="fas fa-eye"></i>':'<i class="fas fa-eye-slash"></i>';
+}
+function checkStr(v){
+  const tips=[{id:'t-len',t:v.length>=12},{id:'t-up',t:/[A-Z]/.test(v)},{id:'t-lo',t:/[a-z]/.test(v)},{id:'t-nu',t:/[0-9]/.test(v)},{id:'t-sy',t:/[^A-Za-z0-9]/.test(v)}];
+  const met=tips.filter(x=>x.t).length;
+  tips.forEach(x=>{const el=document.getElementById(x.id);if(el)el.classList.toggle('met',x.t)});
+  const fill=document.getElementById('stFill'),lbl=document.getElementById('stLbl');
+  if(!v){fill.style.width='0%';lbl.textContent='Start typing…';lbl.style.color='var(--tm)';return}
+  const pcts=[0,20,40,60,80,100];
+  const styles=[['#ff4466','Very Weak 😬'],['#ff8c00','Weak 🙁'],['#ffd700','Fair 😐'],['#88cc00','Good 🙂'],['#00cc66','Strong 💪'],['var(--green)','Excellent! 🚀']];
+  fill.style.width=pcts[met]+'%';fill.style.background=styles[met][0];lbl.textContent=styles[met][1];lbl.style.color=styles[met][0];
+}
+
+// ══ XP / SCORE ════════════════════════════════
+function updateXP(){
+  const xp=score*10,pct=(score/MAX)*100;
+  document.getElementById('xpFill').style.width=pct+'%';
+  document.getElementById('xpLbl').textContent=xp+' XP';
+  document.getElementById('scLbl').textContent='Score: '+score+' / '+MAX;
+}
+
+// ══ RESULTS ═══════════════════════════════════
+function showResults(){
+  const pct=Math.round((score/MAX)*100);
+  const circ=264,offset=circ-(pct/100)*circ;
+  const ring=document.getElementById('rFill');
+  const col=score>=8?'var(--green)':score>=5?'var(--yellow)':'var(--red)';
+  ring.style.stroke=col;
+  setTimeout(()=>{ring.style.strokeDashoffset=offset},100);
+  document.getElementById('rNum').textContent=score;
+  document.getElementById('rNum').style.color=col;
+  let grade,msg;
+  if(score===9){grade='🌟 Legendary Cyber Agent';msg='Steve has officially quit scamming and applied to become a barista. You ruined him. Well done. 😂'}
+  else if(score>=7){grade='🥇 Elite Cyber Defender';msg='You\'re Steve\'s worst nightmare. He\'s blocked you on all his alt accounts.'}
+  else if(score>=5){grade='🥈 Digital Guardian';msg='Solid work! Steve is nervous about you. Keep learning!'}
+  else if(score>=3){grade='🥉 Cyber Recruit';msg='Good start! Steve slipped past a few times. Play again!'}
+  else{grade='🔰 Cyber Beginner';msg='Steve sends his thanks... but read the explanations and try again — you\'ve got this!'}
+  document.getElementById('gLbl').textContent=grade;
+  document.getElementById('gLbl').style.color=col;
+  document.getElementById('gMsg').textContent=msg;
+  document.getElementById('certSc').textContent=score+'/9 — '+pct+'%';
+  const pwR=['pw-q1','pw-q2','pw-q3'].filter(k=>correct[k]).length;
+  const soR=['so-q1','so-q2','so-q3'].filter(k=>correct[k]).length;
+  const dfR=['df-q1','df-q2','df-q3'].filter(k=>correct[k]).length;
+  let d=200;
+  const aw=id=>{setTimeout(()=>document.getElementById(id).classList.add('earned'),d);d+=240};
+  aw('b-done');
+  if(pwR===3)aw('b-pwd');
+  if(soR===3)aw('b-soc');
+  if(dfR===3)aw('b-df');
+  if(score>=9)aw('b-perfect');
+  setTimeout(()=>{
+    const cb=document.getElementById('certBadges');cb.innerHTML='';
+    document.querySelectorAll('.bi.earned').forEach(b=>{
+      const ic=b.querySelector('i').className;
+      const cl=b.querySelector('.bico').className.replace('bico ','');
+      cb.innerHTML+=`<div style="width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.9rem;border:2px solid;margin:2px" class="${cl}"><i class="${ic}"></i></div>`;
+    });
+  },d+200);
+  if(score>=6){setTimeout(launchConfetti,400);setTimeout(()=>showMod(score===9?'👑':'🎉',score===9?'PERFECT SCORE! 🌟':'You Crushed It! 🎉',grade+'\n\nCheck out our Cybersecurity programme — you clearly have the mindset for it! 🚀'),1100)}
+}
+
+// ══ BUTTONS ═══════════════════════════════════
+function setupButtons(){
+  document.getElementById('btnStart').addEventListener('click',()=>{startTime=new Date();goTo('password');toast('ti','⚡ Mission 1 started! Good luck, Agent.')});
+  document.getElementById('btnToSoc').addEventListener('click',()=>{goTo('social');toast('ti','🎭 Mission 2 loaded! Steve has a new trick…')});
+  document.getElementById('btnToDF').addEventListener('click',()=>{goTo('deepfake');toast('ti','🤖 Final mission! Can you spot the AI fakes?')});
+  document.getElementById('btnToResults').addEventListener('click',()=>{goTo('results');setTimeout(showResults,200)});
+  document.getElementById('btnRst').addEventListener('click',resetGame);
+  document.getElementById('btnSh').addEventListener('click',shareRes);
+  document.getElementById('btnDl').addEventListener('click',dlCert);
+}
+
+// ══ RESET ═════════════════════════════════════
+function resetGame(){
+  score=0;pwDone=socDone=dfDone=dfGameDone=false;startTime=null;
+  Object.keys(answered).forEach(k=>{answered[k]=false;correct[k]=false});
+  document.querySelectorAll('.opt').forEach(o=>{o.className='opt'});
+  document.querySelectorAll('.exp').forEach(e=>{e.classList.remove('show','ew')});
+  document.querySelectorAll('.pd').forEach(d=>{d.className='pd'});
+  document.querySelectorAll('.fbanner').forEach(f=>{f.classList.remove('show')});
+  ['pt-pwd','pt-soc','pt-df'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent='0 of 3 answered'});
+  ['btnToSoc','btnToDF','btnToResults'].forEach(id=>document.getElementById(id).disabled=true);
+  document.querySelectorAll('.cc').forEach(c=>{c.className='cc';c.querySelector('.cverd').style.display='none'});
+  document.getElementById('dfFeedback').style.display='none';
+  document.getElementById('btnAnalyse').disabled=false;
+  document.querySelectorAll('.bi').forEach(b=>b.classList.remove('earned'));
+  const inp=document.getElementById('pwdInput');if(inp){inp.value='';checkStr('')}
+  updateXP();goTo('intro');toast('ti','🔄 Reset! Ready for another mission?');
+}
+
+// ══ SHARE ═════════════════════════════════════
+function shareRes(){
+  const t=`I scored ${score}/9 on CyberGuard Academy! 🛡️💻 I learned to spot deepfakes, block social engineering, and build unbreakable passwords. Can you beat me? 😈`;
+  if(navigator.share)navigator.share({title:'CyberGuard Academy',text:t,url:window.location.href}).catch(()=>{});
+  else if(navigator.clipboard)navigator.clipboard.writeText(t+'\n'+window.location.href).then(()=>toast('ti','📋 Results copied!'));
+}
+
+// ══ DOWNLOAD CERT ════════════════════════════
+function dlCert(){
+  toast('ti','📄 Opening certificate for saving…');
+  const cert=document.getElementById('certificate');
+  const h2c=document.createElement('script');
+  h2c.src='https://html2canvas.hertzen.com/dist/html2canvas.min.js';
+  h2c.onload=()=>{
+    html2canvas(cert,{scale:2,backgroundColor:'#0d1a2e',useCORS:true}).then(canvas=>{
+      const url=canvas.toDataURL('image/png');
+      if(/iPhone|iPad|iPod/i.test(navigator.userAgent)){window.open(url,'_blank')}
+      else{const a=document.createElement('a');a.href=url;a.download='cyberguard-cert-'+score+'.png';document.body.appendChild(a);a.click();document.body.removeChild(a)}
+    }).catch(()=>toast('ti','Tip: Screenshot your screen to save the certificate!'));
+  };
+  if(typeof html2canvas==='undefined')document.head.appendChild(h2c);else h2c.onload();
+}
+
+// ══ TOAST ════════════════════════════════════
+function toast(type,msg){
+  const w=document.getElementById('twrap');
+  const t=document.createElement('div');
+  t.className='toast '+type;
+  const ico={tc:'✅',tw:'❌',ti:'ℹ️'};
+  t.innerHTML=`<span>${ico[type]||'ℹ️'}</span><span>${msg}</span>`;
+  w.appendChild(t);
+  setTimeout(()=>{t.style.animation='tOut .3s ease forwards';setTimeout(()=>t.remove(),300)},3000);
+}
+
+// ══ MODAL ════════════════════════════════════
+function showMod(em,ti,ms){
+  document.getElementById('memi').textContent=em;
+  document.getElementById('mtit').textContent=ti;
+  document.getElementById('mmsg').textContent=ms;
+  document.getElementById('celmod').classList.add('show');
+}
+function closeMod(){document.getElementById('celmod').classList.remove('show')}
+
+// ══ CONFETTI ══════════════════════════════════
+function launchConfetti(){
+  const lay=document.getElementById('confetti');lay.style.display='block';lay.innerHTML='';
+  const cols=['#00d4ff','#00ff88','#ffd700','#ff4466','#b04fff','#ff8c00'];
+  for(let i=0;i<80;i++){
+    const p=document.createElement('div');p.className='cp';
+    const sz=Math.random()*10+5;
+    p.style.cssText=`width:${sz}px;height:${sz}px;background:${cols[Math.floor(Math.random()*cols.length)]};left:${Math.random()*100}%;top:-20px;border-radius:${Math.random()>.5?'50%':'2px'};animation-duration:${Math.random()*3+2.5}s;animation-delay:${Math.random()*1.5}s;`;
+    lay.appendChild(p);
+  }
+  setTimeout(()=>{lay.style.display='none';lay.innerHTML=''},6500);
+}
+</script>
+</body>
+</html>
